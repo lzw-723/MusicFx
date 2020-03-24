@@ -1,0 +1,19 @@
+# java specific
+*.bak
+*.class
+
+#debug specific
+*.log
+
+#windows Junk
+*.ini
+[Tt]humbs.db
+*.DS_Store
+
+.idea
+.setting
+.vscode
+out
+target
+.classpath
+.project
