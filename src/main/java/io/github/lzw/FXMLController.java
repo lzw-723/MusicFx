@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongO;
+import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongInfoUtil;
 import io.github.lzw.util.SongUtil;
@@ -31,14 +33,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
-import javafx.util.Duration;
-import lzw.musicol.core.Musicol;
 
 public class FXMLController implements Initializable {
     @FXML
@@ -66,15 +63,46 @@ public class FXMLController implements Initializable {
     private ArrayList<Song> lists = new ArrayList<>();
 
     private void initMain() {
-        slider1.setOnTouchMoved(new EventHandler<TouchEvent>() {
+        MusicFx.get().volumeProperty().bind(slider2.valueProperty());
+        MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void handle(TouchEvent event) {
-                System.out.println(event.toString());
-                Musicol.get().getMediaPlayer()
-                        .seek(new Duration(slider1.getValue() * Musicol.get().getTotalTime() * 1000d));
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                slider1.setValue(newValue.doubleValue());
             }
         });
-        Musicol.get().volumeProperty().bind(slider2.valueProperty());
+        MusicFx.get().setHandler(new Handler() {
+
+            @Override
+            public void onStart(Song song) {
+                // TODO Auto-generated method stub
+                title.setText(song.getTitle());
+                try {
+                    Image image;
+                    if (song.isLocal()) {
+                        image = SongInfoUtil.getArtWork(new File(new URI(song.getUri())));
+                    }
+                    else{
+                        image = new Image(song.getPic());
+                    }
+                    
+                    imageView.setImage(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onPause() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void init() {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
 
     private void initLocal() {
@@ -88,20 +116,8 @@ public class FXMLController implements Initializable {
         table.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("length"));
         table.getItems().addAll(FXCollections.observableList(lists));
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Musicol.get().play(newValue.getUri());
-            title.setText(newValue.getTitle());
-            try {
-                Image image = SongInfoUtil.getArtWork(new File(new URI(newValue.getUri())));
-                imageView.setImage(image);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Musicol.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                    slider1.setValue(newValue.doubleValue());
-                }
-            });
+            MusicFx.get().play(newValue);
+
         });
     }
 
@@ -136,15 +152,7 @@ public class FXMLController implements Initializable {
 
             @Override
             public void changed(ObservableValue<? extends SongO> arg0, SongO arg1, SongO arg2) {
-                try {
-                    Musicol.get().play(new URL(arg2.getUrl()).toURI().toString());
-                } catch (MalformedURLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                    MusicFx.get().play(SongUtilO.SongO2song(arg2));
             }
         });
     }

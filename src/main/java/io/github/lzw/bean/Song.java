@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class Song implements Serializable {
     private SimpleStringProperty uri;
@@ -16,6 +17,8 @@ public class Song implements Serializable {
     private SimpleStringProperty artist;
     private SimpleStringProperty album;
     private SimpleLongProperty length;
+    private String pic;
+    private boolean isLocal;
 
     public Song(String uri) throws MalformedURLException {
         try {
@@ -31,7 +34,8 @@ public class Song implements Serializable {
     }
 
     public Song(SongS songS) {
-        this.uri = new SimpleStringProperty(songS.getUri());
+        isLocal = true;
+        uri = new SimpleStringProperty(songS.getUri());
         title = new SimpleStringProperty(songS.getTitle());
         artist = new SimpleStringProperty(songS.getArtist());
         album = new SimpleStringProperty(songS.getAlbum());
@@ -101,11 +105,29 @@ public class Song implements Serializable {
     }
 
     public Song(SongO songO) {
-        uri = new SimpleStringProperty(songO.getLink());
+        isLocal = false;
+        uri = new SimpleStringProperty(songO.getUrl());
+        pic = songO.getPic();
         title = new SimpleStringProperty(songO.getTitle());
         artist = new SimpleStringProperty(songO.getAuthor());
         album = new SimpleStringProperty("unkown");
         length = new SimpleLongProperty(300);
+    }
+
+    public boolean isLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(boolean isLocal) {
+        this.isLocal = isLocal;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
 }

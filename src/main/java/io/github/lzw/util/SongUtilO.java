@@ -33,6 +33,9 @@ public class SongUtilO {
         }
     return songs;
     }
+    public static Song SongO2song(SongO songO) {
+        return new Song(songO);
+    }
     private static ArrayList<Song> SongO2song(ArrayList<SongO> lists){
         ArrayList<Song> list = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++) {

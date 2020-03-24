@@ -49,10 +49,10 @@
                             <children>
                                 <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn editable="false" maxWidth="195.10389703512192" minWidth="169.10389703512192" prefWidth="169.10389703512192" sortable="false" text="Title" />
-                                        <TableColumn maxWidth="194.10394287109375" minWidth="156.10394287109375" prefWidth="192.45455932617188" text="Artist" />
-                                        <TableColumn prefWidth="146.70132446289062" text="Album" />
-                                        <TableColumn prefWidth="75.0" text="Length" />
+                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="Title" />
+                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Artist" />
+                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Album" />
+                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Length" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -71,7 +71,7 @@
                                                 <JFXButton fx:id="search" text="搜索" />
                                             </children>
                                         </HBox>
-                              <JFXListView fx:id="list" />
+                              <JFXListView fx:id="list" VBox.vgrow="ALWAYS" />
                                     </children>
                                 </VBox>
                             </children>

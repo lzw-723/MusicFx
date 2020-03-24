@@ -1,15 +1,12 @@
-package lzw.musicol.core;
+package io.github.lzw.core;
 
+import io.github.lzw.bean.Song;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
-@Deprecated
-public class Musicol {
-    private static final Musicol musicol = new Musicol();
+public class MusicFx {
+    private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(0.3d);
 
@@ -21,7 +18,7 @@ public class Musicol {
         return currentProgress;
     }
 
-    public void setCurrentProgress(double currentProgress) {
+    private void setCurrentProgress(double currentProgress) {
         this.currentProgress.set(currentProgress);
     }
 
@@ -41,20 +38,21 @@ public class Musicol {
 
     private Handler handler;
 
-    private Musicol() {
-        if (musicol != null) throw new RuntimeException("单例异常");
+    private MusicFx() {
+        if (musicfx != null)
+            throw new RuntimeException("单例异常");
     }
 
-    public static Musicol get() {
-        return musicol;
+    public static MusicFx get() {
+        return musicfx;
     }
 
     public void setHandler(Handler handler) {
         this.handler = handler;
     }
 
-    private void getNewPlayer(String url) {
-        mediaPlayer = new MediaPlayer(new Media(url));
+    private void getNewPlayer(Song song) {
+        mediaPlayer = new MediaPlayer(new Media(song.getUri()));
         mediaPlayer.volumeProperty().bind(volume);
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
             setCurrentProgress(newValue.toSeconds() / mediaPlayer.getTotalDuration().toSeconds());
@@ -64,7 +62,7 @@ public class Musicol {
             mediaPlayer.setOnPlaying(new Runnable() {
                 @Override
                 public void run() {
-                    handler.onStart();
+                    handler.onStart(song);
                 }
             });
             mediaPlayer.setOnPaused(new Runnable() {
@@ -76,14 +74,14 @@ public class Musicol {
         }
     }
 
-    public void play(String url) {
+    public void play(Song song) {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
             mediaPlayer.stop();
             mediaPlayer.dispose();
             mediaPlayer = null;
         }
-        getNewPlayer(url);
+        getNewPlayer(song);
         mediaPlayer.play();
     }
 
@@ -124,7 +122,10 @@ public class Musicol {
     }
 
     public interface Handler {
-        void onStart();
+
+        void init();
+
+        void onStart(Song song);
 
         void onPause();
     }
