@@ -8,6 +8,7 @@ package io.github.lzw.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.baronzhang.retrofit2.converter.FastJsonConverterFactory;
 
@@ -36,7 +37,7 @@ public class SongUtilO {
     public static Song SongO2song(SongO songO) {
         return new Song(songO);
     }
-    private static ArrayList<Song> SongO2song(ArrayList<SongO> lists){
+    public static ArrayList<Song> SongO2song(List<SongO> lists){
         ArrayList<Song> list = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++) {
             list.add(new Song(lists.get(i)));

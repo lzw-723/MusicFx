@@ -1,5 +1,8 @@
 package io.github.lzw.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.lzw.bean.Song;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
@@ -9,6 +12,18 @@ public class MusicFx {
     private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(0.3d);
+    private List<Song> list = new ArrayList<>();
+        
+    public void addList(Song song) {
+        list.add(song);
+    }
+    public void addList(List<Song> songs) {
+        list.addAll(songs);
+    }
+    public void setList(List<Song> songs) {
+        list.clear();
+        list.addAll(songs);
+    }
 
     public double getCurrentProgress() {
         return currentProgress.get();
@@ -58,23 +73,13 @@ public class MusicFx {
             setCurrentProgress(newValue.toSeconds() / mediaPlayer.getTotalDuration().toSeconds());
         });
         if (handler != null) {
-
-            mediaPlayer.setOnPlaying(new Runnable() {
-                @Override
-                public void run() {
-                    handler.onStart(song);
-                }
-            });
-            mediaPlayer.setOnPaused(new Runnable() {
-                @Override
-                public void run() {
-                    handler.onPause();
-                }
-            });
+            mediaPlayer.setOnPlaying(() -> handler.onStart(song));
+            mediaPlayer.setOnPaused(() -> handler.onPause());
+            mediaPlayer.setOnEndOfMedia(() -> handler.OnEnd());
         }
     }
 
-    public void play(Song song) {
+    private void play(Song song) {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
             mediaPlayer.stop();
@@ -83,6 +88,10 @@ public class MusicFx {
         }
         getNewPlayer(song);
         mediaPlayer.play();
+    }
+
+    public void play(int index) {
+        play(list.get(index));
     }
 
     public boolean isPlaying() {
@@ -128,5 +137,7 @@ public class MusicFx {
         void onStart(Song song);
 
         void onPause();
+
+        void OnEnd();
     }
 }

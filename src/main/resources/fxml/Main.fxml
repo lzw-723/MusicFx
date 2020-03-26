@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleNode?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -25,18 +32,53 @@
         <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="600.0" spacing="4.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fx:id="imageView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
-                    <image>
-                        <Image url="@../../Pictures/timg.gif" />
-                    </image>
                 </ImageView>
+            <HBox fx:id="layout" alignment="CENTER">
+               <children>
+                  <JFXButton text="上一首" />
+                  <JFXToggleNode>
+                     <graphic>
+                            <JFXButton fx:id="play" text="播放" />
+                     </graphic>
+                  </JFXToggleNode>
+                  <JFXButton text="下一首" />
+               </children>
+            </HBox>
                 <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label fx:id="title" text="title" />
-                        <JFXSlider fx:id="slider1" max="1.0" value="0.3" />
+                  <HBox>
+                     <children>
+                              <Label fx:id="title" text="title" />
+                        <Label text=" - " />
+                        <Label fx:id="artist" text="artist" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="time" text="mm:ss" />
+                     </children>
+                  </HBox>
+                        <JFXSlider fx:id="slider1" max="1.0" value="-1.0" />
                     </children>
                 </VBox>
-                <JFXButton fx:id="Button" text="播放" />
-                <JFXSlider fx:id="slider2" max="1.0" orientation="VERTICAL" value="0.3" />
+            <JFXRippler />
+            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <JFXBadge accessibleText="谷歌" position="CENTER" text="1">
+                     <children>
+                        <JFXButton buttonType="RAISED" />
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
+                     </HBox.margin>
+                  </JFXBadge>
+               </children>
+            </HBox>
+                <JFXSlider fx:id="slider2" max="1.0" orientation="VERTICAL" value="0.3">
+               <HBox.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </padding>
+            </JFXSlider>
             </children>
         </HBox>
     </bottom>
@@ -49,10 +91,10 @@
                             <children>
                                 <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="Title" />
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Artist" />
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Album" />
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Length" />
+                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="标题" />
+                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="艺术家" />
+                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="专辑" />
+                                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="时长" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -82,7 +124,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
@@ -94,15 +136,34 @@
                                     <children>
                                         <HBox alignment="CENTER">
                                             <children>
+                                    <Label text="本地音乐文件夹：" />
                                                 <JFXTextField fx:id="dir" />
                                                 <JFXButton fx:id="dirFinder" text="浏览" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER" GridPane.rowIndex="1">
-                                            <children>
-                                                <TextField />
-                                            </children>
-                                        </HBox>
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="音乐源：" />
+                                          <JFXRadioButton selected="true" text="网易">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="type" />
+                                             </toggleGroup></JFXRadioButton>
+                                          <JFXRadioButton text="酷狗" toggleGroup="$type" />
+                                          <JFXRadioButton text="QQ" toggleGroup="$type" />
+                                          <JFXRadioButton text="酷我" toggleGroup="$type" />
+                                          <JFXRadioButton text="百度" toggleGroup="$type" />
+                                          <RadioButton mnemonicParsing="false" text="RadioButton" />
+                                       </children>
+                                    </HBox>
+                                 </children></HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label text="引擎：" />
+                                    <JFXComboBox promptText="网址" />
+                                 </children>
+                              </HBox>
                                     </children>
                                 </GridPane>
                             </children>
