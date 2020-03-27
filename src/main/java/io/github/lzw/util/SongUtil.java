@@ -1,14 +1,19 @@
 package io.github.lzw.util;
 
+import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongS;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SongUtil {
-    public static ArrayList<Song> getSongs(File dir){
+    public static List<Song> getSongs() {
+        return getSongs(new File(Config.getInstance().getDir()));
+    }
+    private static List<Song> getSongs(File dir){
         File ser = new File(new File(".").getPath(), "songs.ser");
         System.out.println(ser.length());
         if (ser.exists() && ser.length() > 0) {
@@ -33,7 +38,12 @@ public class SongUtil {
                 }
             System.out.println(file);
         }
-        save(list, ser);
+        if (list.size() > 0){
+            save(list, ser);
+        }
+        else{
+            ser.delete();
+        }
         return list;
     }
 
@@ -62,11 +72,9 @@ public class SongUtil {
         }catch(IOException i)
         {
             i.printStackTrace();
-            return null;
         }catch(ClassNotFoundException c)
         {
             c.printStackTrace();
-            return null;
         }
         return SongS2song(lists);
     }

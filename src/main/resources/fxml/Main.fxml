@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -9,14 +8,16 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXToggleNode?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -33,42 +34,37 @@
             <children>
                 <ImageView fx:id="imageView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
                 </ImageView>
-            <HBox fx:id="layout" alignment="CENTER">
+            <HBox fx:id="layout" alignment="CENTER" spacing="4.0">
                <children>
-                  <JFXButton text="上一首" />
-                  <JFXToggleNode>
-                     <graphic>
-                            <JFXButton fx:id="play" text="播放" />
-                     </graphic>
-                  </JFXToggleNode>
-                  <JFXButton text="下一首" />
+                  <JFXButton fx:id="previous" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #ff4081; -fx-background-radius: 50%;" textFill="WHITE" />
+                      <JFXButton fx:id="play" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #ff4081; -fx-background-radius: 50%;" textFill="WHITE" />
+                  <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #ff4081; -fx-background-radius: 50%;" textFill="WHITE" />
                </children>
             </HBox>
                 <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="ALWAYS">
                     <children>
                   <HBox>
                      <children>
-                              <Label fx:id="title" text="title" />
+                              <Label fx:id="title" text="title" wrapText="true">
+                           <effect>
+                              <DropShadow />
+                           </effect></Label>
                         <Label text=" - " />
-                        <Label fx:id="artist" text="artist" />
+                        <Label fx:id="artist" text="artist" wrapText="true">
+                           <effect>
+                              <Bloom />
+                           </effect></Label>
                         <Pane HBox.hgrow="ALWAYS" />
-                        <Label fx:id="time" text="mm:ss" />
+                        <Label fx:id="time" text="mm:ss" wrapText="true" />
                      </children>
                   </HBox>
                         <JFXSlider fx:id="slider1" max="1.0" value="-1.0" />
                     </children>
                 </VBox>
             <JFXRippler />
-            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER">
                <children>
-                  <JFXBadge accessibleText="谷歌" position="CENTER" text="1">
-                     <children>
-                        <JFXButton buttonType="RAISED" />
-                     </children>
-                     <HBox.margin>
-                        <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
-                     </HBox.margin>
-                  </JFXBadge>
+                  <JFXButton fx:id="method" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
                </children>
             </HBox>
                 <JFXSlider fx:id="slider2" max="1.0" orientation="VERTICAL" value="0.3">
@@ -83,13 +79,13 @@
         </HBox>
     </bottom>
     <center>
-        <JFXTabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #66ccff;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <JFXTabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="本地音乐">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="table" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="标题" />
                                         <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="艺术家" />
@@ -107,11 +103,14 @@
                             <children>
                                 <VBox layoutX="95.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <HBox alignment="CENTER_LEFT">
+                                        <HBox alignment="CENTER_LEFT" spacing="4.0">
                                             <children>
                                                 <JFXTextField fx:id="input" promptText="请输入" HBox.hgrow="ALWAYS" />
-                                                <JFXButton fx:id="search" text="搜索" />
+                                                <JFXButton fx:id="search" alignment="CENTER" contentDisplay="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" style="-fx-background-radius: 50%;" />
                                             </children>
+                                 <padding>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </padding>
                                         </HBox>
                               <JFXListView fx:id="list" VBox.vgrow="ALWAYS" />
                                     </children>
@@ -124,48 +123,70 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <HBox alignment="CENTER">
-                                            <children>
-                                    <Label text="本地音乐文件夹：" />
-                                                <JFXTextField fx:id="dir" />
-                                                <JFXButton fx:id="dirFinder" text="浏览" />
-                                            </children>
-                                        </HBox>
-                                        <HBox alignment="CENTER" GridPane.rowIndex="1">
+                        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER" minHeight="-Infinity" HBox.hgrow="SOMETIMES">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="https://user-gold-cdn.xitu.io/2020/3/27/1711b82d892fea0a?w=600&amp;h=900&amp;f=png&amp;s=38415" />
+                                       </image>
+                                    </ImageView>
+                                    <Label text="如果对你有用，欢迎打赏" />
+                                 </children>
+                              </VBox>
+                                      <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
+                                          <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                          <children>
+                                              <HBox alignment="CENTER">
+                                                  <children>
+                                          <Label text="本地音乐文件夹：" />
+                                                      <JFXTextField fx:id="dir" promptText="单个目录" />
+                                                      <JFXButton fx:id="dirFinder" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
+                                                  </children>
+                                              </HBox>
+                                              <HBox alignment="CENTER" GridPane.rowIndex="1">
                                        <children>
-                                          <Label text="音乐源：" />
-                                          <JFXRadioButton selected="true" text="网易">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="type" />
-                                             </toggleGroup></JFXRadioButton>
-                                          <JFXRadioButton text="酷狗" toggleGroup="$type" />
-                                          <JFXRadioButton text="QQ" toggleGroup="$type" />
-                                          <JFXRadioButton text="酷我" toggleGroup="$type" />
-                                          <JFXRadioButton text="百度" toggleGroup="$type" />
-                                          <RadioButton mnemonicParsing="false" text="RadioButton" />
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label text="在线音乐源：" />
+                                                <JFXRadioButton selected="true" text="网易">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="type" />
+                                                   </toggleGroup>
+                                                </JFXRadioButton>
+                                                <JFXRadioButton text="酷狗" toggleGroup="$type" />
+                                                <JFXRadioButton text="QQ" toggleGroup="$type" />
+                                                <JFXRadioButton text="酷我" toggleGroup="$type" />
+                                                <JFXRadioButton text="百度" toggleGroup="$type" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </HBox>
-                                 </children></HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label text="引擎：" />
-                                    <JFXComboBox promptText="网址" />
-                                 </children>
-                              </HBox>
-                                    </children>
-                                </GridPane>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label text="引擎：" />
+                                          <JFXComboBox promptText="网址" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label text="项目地址：" />
+                                          <Hyperlink text="https://gitee.com/lzw-723/MusicFx" underline="true" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                          </children>
+                                      </GridPane>
+                           </children>
+                        </HBox>
                             </children>
                         </AnchorPane>
                     </content>

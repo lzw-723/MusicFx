@@ -8,6 +8,7 @@ import com.jfoenix.svg.SVGGlyph;
 import com.jfoenix.svg.SVGGlyphLoader;
 
 import io.github.lzw.util.Reporter;
+import io.github.lzw.util.SongUtil;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +61,12 @@ public class MainApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        initSongs();
         launch(args);
+    }
+
+    public static void initSongs() {
+        new Thread(() -> SongUtil.getSongs()).start();;
     }
 
 }

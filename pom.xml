@@ -18,35 +18,30 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
             <version>11</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>11</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>11</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
@@ -55,39 +50,21 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
         <dependency>
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>
             <version>8.0.8</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.62</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/it.sauronsoftware/jave -->
-        <dependency>
-            <groupId>it.sauronsoftware</groupId>
-            <artifactId>jave</artifactId>
-            <version>1.0.2</version>
-            <scope>system</scope>
-            <systemPath>${basedir}\src\lib\jave.jar</systemPath>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org/jaudiotagger -->
         <dependency>
             <groupId>org</groupId>
             <artifactId>jaudiotagger</artifactId>
             <version>2.0.3</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
-        <dependency>
-            <groupId>com.squareup.retrofit2</groupId>
-            <artifactId>retrofit</artifactId>
-            <version>2.7.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>

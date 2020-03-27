@@ -45,6 +45,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 
@@ -64,7 +66,13 @@ public class FXMLController implements Initializable {
     @FXML
     private Slider slider1;
     @FXML
+    private Button previous;
+    @FXML
     private Button play;
+    @FXML
+    private Button next;
+    @FXML
+    private Button method;
     @FXML
     private HBox layout;
     @FXML
@@ -83,8 +91,7 @@ public class FXMLController implements Initializable {
     private List<SongO> songOs = new ArrayList<>();
 
     private void initMain() {
-        // layout.getChildren().add(new SVGGlyph("M8 5v14l11-7z"));
-
+        freshControllBiutton();
         MusicFx.get().volumeProperty().bind(slider2.valueProperty());
         MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -98,28 +105,15 @@ public class FXMLController implements Initializable {
         MusicFx.get().setHandler(new Handler() {
 
             @Override
-            public void onStart(final Song song) {
+            public void onStart() {
                 // TODO Auto-generated method stub
-                title.setText(song.getTitle());
-                artist.setText(song.getArtist());
-                try {
-                    Image image;
-                    if (song.isLocal()) {
-                        image = SongInfoUtil.getArtWork(new File(new URI(song.getUri())));
-                    } else {
-                        image = new Image(song.getPic());
-                    }
-
-                    imageView.setImage(image);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                freshControllBiutton();
             }
 
             @Override
             public void onPause() {
                 // TODO Auto-generated method stub
-
+                freshControllBiutton();
             }
 
             @Override
@@ -130,11 +124,48 @@ public class FXMLController implements Initializable {
 
             @Override
             public void OnEnd() {
+
+            }
+
+            @Override
+            public void onReady(Song song) {
                 // TODO Auto-generated method stub
-                final int index = table.getSelectionModel().getSelectedIndex() + 1;
-                table.getSelectionModel().select(index);
+                // table.getSelectionModel().select(song);
+                title.setText(song.getTitle());
+                artist.setText(song.getArtist());
+                try {
+                Image image;
+                if (song.isLocal()) {
+                image = SongInfoUtil.getArtWork(new File(new URI(song.getUri())));
+                } else {
+                image = new Image(song.getPic());
+                }
+
+                imageView.setImage(image);
+                } catch (final Exception e) {
+                e.printStackTrace();
+                }
             }
         });
+    }
+    
+    // 设定控制按钮（初始化、刷新状态）
+    private void freshControllBiutton(){
+        SVGGlyph playGlyph = MusicFx.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z") : new SVGGlyph("M8 5v14l11-7z");
+        playGlyph.setFill(Paint.valueOf("#FFFFFF"));
+        playGlyph.setSize(16);
+        play.setGraphic(playGlyph);
+        SVGGlyph previousGlyph = new SVGGlyph("M6 6h2v12H6zm3.5 6l8.5 6V6z");
+        previousGlyph.setFill(Paint.valueOf("#FFFFFF"));
+        previousGlyph.setSize(12);
+        previous.setGraphic(previousGlyph);
+        SVGGlyph nextGlyph = new SVGGlyph("M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z");
+        nextGlyph.setFill(Paint.valueOf("#FFFFFF"));
+        nextGlyph.setSize(12);
+        next.setGraphic(nextGlyph);
+        SVGGlyph methodGlyph = new SVGGlyph("M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z");
+        methodGlyph.setSize(10);
+        method.setGraphic(methodGlyph);
     }
 
     private void initLocal() {
@@ -200,23 +231,43 @@ public class FXMLController implements Initializable {
         });
         table.getItems().addAll(FXCollections.observableList(lists));
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (MusicFx.get().getCurrentSong() != null && lists.get(table.getSelectionModel().getSelectedIndex())
+                    .toString().equals(MusicFx.get().getCurrentSong().toString())) {
+                return;
+            }
             MusicFx.get().setList(lists);
+            System.out.println("setList");
             MusicFx.get().play(table.getSelectionModel().getSelectedIndex());
+            System.gc();
         });
         play.setOnAction(event -> MusicFx.get().playOrPause());
+        previous.setOnAction(event -> MusicFx.get().previous());
+        next.setOnAction(event -> MusicFx.get().next());
     }
 
     private void initSetting() {
-        final File dir = new File(Config.getInstance().getDir());
-        if (SongUtil.getSongs(dir) != null)
-            lists.addAll(SongUtil.getSongs(dir));
+        SVGGlyph dirFinderGlyph = new SVGGlyph("M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z");
+        dirFinderGlyph.setSize(12);
+        dirFinder.setGraphic(dirFinderGlyph);
+        lists.addAll(SongUtil.getSongs());
         dirFinder.setOnMouseClicked(event -> FXMLController.this.dir
                 .setText(new DirectoryChooser().showDialog(dirFinder.getScene().getWindow()).getPath()));
         this.dir.setText(Config.getInstance().getDir());
         Config.getInstance().dirProperty().bind(this.dir.textProperty());
+        dir.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                // TODO Auto-generated method stub
+                MainApp.initSongs();
+            }
+        });
     }
 
     private void initOnline() {
+        SVGGlyph searchGlyph = new SVGGlyph("M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z");
+        searchGlyph.setSize(12);
+        search.setGraphic(searchGlyph);
         list.setCellFactory(new Callback<ListView<SongO>, ListCell<SongO>>() {
 
             @Override
@@ -231,7 +282,7 @@ public class FXMLController implements Initializable {
             public void handle(final ActionEvent arg0) {
                 list.getItems().clear();
                 songOs = SongUtilO.getSongOs(input.getText());
-                list.getItems().addAll(FXCollections.observableArrayList());
+                list.getItems().addAll(FXCollections.observableArrayList(songOs));
             }
         });
         list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SongO>() {

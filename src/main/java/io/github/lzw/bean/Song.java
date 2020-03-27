@@ -130,4 +130,21 @@ public class Song implements Serializable {
         this.pic = pic;
     }
 
+
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getTitle())
+        .append("@")
+        .append(getArtist())
+        .append("@")
+        .append(getAlbum())
+        .append("@")
+        .append(getLength())
+        .append("@")
+        .append(getUri());
+        return stringBuilder.toString();
+    }
+
 }

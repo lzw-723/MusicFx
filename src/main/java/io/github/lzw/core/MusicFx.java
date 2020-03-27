@@ -12,14 +12,18 @@ public class MusicFx {
     private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(0.3d);
+    private int index = 0;
+    private Song currentSong;
     private List<Song> list = new ArrayList<>();
-        
+
     public void addList(Song song) {
         list.add(song);
     }
+
     public void addList(List<Song> songs) {
         list.addAll(songs);
     }
+
     public void setList(List<Song> songs) {
         list.clear();
         list.addAll(songs);
@@ -73,9 +77,13 @@ public class MusicFx {
             setCurrentProgress(newValue.toSeconds() / mediaPlayer.getTotalDuration().toSeconds());
         });
         if (handler != null) {
-            mediaPlayer.setOnPlaying(() -> handler.onStart(song));
+            mediaPlayer.setOnReady(() -> handler.onReady(song));
+            mediaPlayer.setOnPlaying(() -> handler.onStart());
             mediaPlayer.setOnPaused(() -> handler.onPause());
-            mediaPlayer.setOnEndOfMedia(() -> handler.OnEnd());
+            mediaPlayer.setOnEndOfMedia(() -> {
+                handler.OnEnd();
+                next();
+            });
         }
     }
 
@@ -88,16 +96,26 @@ public class MusicFx {
         }
         getNewPlayer(song);
         mediaPlayer.play();
+        currentSong = song;
     }
 
     public void play(int index) {
+        this.index = index;
         play(list.get(index));
     }
 
+    public void previous() {
+        play(--index);
+    }
+
+    public void next() {
+        play(++index);
+    }
+
     public boolean isPlaying() {
-        System.out.println(mediaPlayer.getStatus().name());
-        if (mediaPlayer == null) return false;
-        return  mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
+        if (mediaPlayer == null)
+            return false;
+        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
     public MediaPlayer getMediaPlayer() {
@@ -112,7 +130,8 @@ public class MusicFx {
     }
 
     public int getCurrentTime() {
-        if (mediaPlayer == null) return 0;
+        if (mediaPlayer == null)
+            return 0;
         return (int) mediaPlayer.getCurrentTime().toSeconds();
     }
 
@@ -124,9 +143,12 @@ public class MusicFx {
     }
 
     public boolean playOrPause() {
-        if (mediaPlayer == null) return false;
-        if (isPlaying()) mediaPlayer.pause();
-        else mediaPlayer.play();
+        if (mediaPlayer == null)
+            return false;
+        if (isPlaying())
+            mediaPlayer.pause();
+        else
+            mediaPlayer.play();
         return isPlaying();
     }
 
@@ -134,10 +156,21 @@ public class MusicFx {
 
         void init();
 
-        void onStart(Song song);
+        void onReady(Song song);
+
+        void onStart();
 
         void onPause();
 
         void OnEnd();
     }
+
+    public Song getCurrentSong() {
+        return currentSong;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
 }
