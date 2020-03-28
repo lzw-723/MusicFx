@@ -10,11 +10,11 @@
 [Tt]humbs.db
 *.DS_Store
 
-.idea
-.setting
-.vscode
-out
-target
+/.idea
+/.settings
+/.vscode
+/out
+/target
 .classpath
 .project
 .settings.p
