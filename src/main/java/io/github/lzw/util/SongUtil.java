@@ -1,95 +1,68 @@
 package io.github.lzw.util;
 
-import io.github.lzw.Config;
-import io.github.lzw.bean.Song;
-import io.github.lzw.bean.SongS;
-
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+
+import org.apache.commons.io.FileUtils;
+
+import io.github.lzw.Config;
+import io.github.lzw.bean.Song;
+import io.github.lzw.bean.SongL;
 
 public class SongUtil {
     public static List<Song> getSongs() {
         return getSongs(new File(Config.getInstance().getDir()));
     }
-    private static List<Song> getSongs(File dir){
-        File ser = new File(new File(".").getPath(), "songs.ser");
-        System.out.println(ser.length());
-        if (ser.exists() && ser.length() > 0) {
+
+    private static List<Song> getSongs(File dir) {
+        File ser = new File(new File(".").getPath(), "songs.json");
+        if (ser.exists()) {
             return read(ser);
-        }
-        else {
-            try {
-                ser.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        ArrayList<Song> list = new ArrayList<>();
-        if(dir.exists() && dir.listFiles().length > 0)
-        for (File file : dir.listFiles()) {
-            String path = file.getAbsolutePath().toLowerCase();
-            if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma"))
-                try {
-                    list.add(new Song(file.toPath().toUri().toString()));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+        } else {
+            List<Song> list = new ArrayList<>();
+            if (dir.exists() && dir.listFiles().length > 0)
+                for (File file : dir.listFiles()) {
+                    String path = file.getAbsolutePath().toLowerCase();
+                    if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma")) {
+                        list.add(new SongL(file.toPath().toUri().toString()));
+                    }
                 }
-            System.out.println(file);
+            if (list.size() > 0) {
+                save(list, ser);
+            } else {
+                ser.delete();
+            }
+            return list;
         }
-        if (list.size() > 0){
-            save(list, ser);
-        }
-        else{
-            ser.delete();
-        }
-        return list;
+
     }
 
-    private static void save(ArrayList<Song> list, File file) {
+    private static void save(List<Song> list, File file) {
+        String data = JSON.toJSONString(list);
         try {
-            FileOutputStream fileOut =
-                    new FileOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(Song2songs(list));
-            out.close();
-            fileOut.close();
-            System.out.printf("Serialized data is saved in /tmp/employee.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
+            FileUtils.writeStringToFile(file, data);
+        } catch (IOException e) {
+            Logger.getLogger(SongUtil.class.getSimpleName()).warning("数据保存失败");
+            e.printStackTrace();
         }
     }
-    private static ArrayList<Song> read(File file){
-        ArrayList<SongS> lists = new ArrayList<>();
-        try
-        {
-            FileInputStream fileIn = new FileInputStream(file);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            lists = (ArrayList<SongS>) in.readObject();
-            in.close();
-            fileIn.close();
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-        }catch(ClassNotFoundException c)
-        {
-            c.printStackTrace();
+
+    private static List<Song> read(File file) {
+        List<Song> list = new ArrayList<>();
+        try {
+            String data = FileUtils.readFileToString(file);
+            List<Song> songs = JSON.parseArray(FileUtils.readFileToString(file), Song.class);
+            return songs;
+        } catch (Exception e) {
+            Logger.getLogger(SongUtil.class.getSimpleName()).warning("数据读取失败," + e.getMessage());
+            e.printStackTrace();
         }
-        return SongS2song(lists);
-    }
-    private static ArrayList<SongS> Song2songs(ArrayList<Song> list){
-        ArrayList<SongS> lists = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            lists.add(new SongS(list.get(i)));
-        }
-        return lists;
-    }
-    private static ArrayList<Song> SongS2song(ArrayList<SongS> lists){
-        ArrayList<Song> list = new ArrayList<>();
-        for (int i = 0; i < lists.size(); i++) {
-            list.add(new Song(lists.get(i)));
-        }
-        return list;
+        return null;
     }
 }

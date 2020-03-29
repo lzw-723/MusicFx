@@ -29,6 +29,10 @@ public class MusicFx {
         list.addAll(songs);
     }
 
+    public int count() {
+        return list.size();
+    }
+
     public double getCurrentProgress() {
         return currentProgress.get();
     }

@@ -1,6 +1,6 @@
 package io.github.lzw;
 
-import io.github.lzw.util.Reporter;
+import javafx.application.Application;
 
 /**
  * Main
@@ -8,7 +8,7 @@ import io.github.lzw.util.Reporter;
 public class Main {
 
     public static void main(String[] args) {
-        
-        Reporter.get().send("msg");
+        Application.launch(MainApp.class, args);
     }
+
 }

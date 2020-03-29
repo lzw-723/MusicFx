@@ -18,4 +18,6 @@
 .classpath
 .project
 .settings.p
-songs.ser
+songs.json
+settings.xml
+/pic

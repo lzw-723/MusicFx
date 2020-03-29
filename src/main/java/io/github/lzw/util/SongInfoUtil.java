@@ -1,14 +1,14 @@
 package io.github.lzw.util;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
+import org.apache.commons.io.FileUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
-
-import javafx.scene.image.Image;
 
 public class SongInfoUtil {
     public static AudioFile getAudioFile(File file) {
@@ -25,38 +25,67 @@ public class SongInfoUtil {
     public static String getTitle(File file) {
         AudioFile audioFile = getAudioFile(file);
         Tag tag = audioFile.getTag();
-        String title = tag.getFirst(FieldKey.TITLE);
-        return "".equals(title) || title == null ? "Unkown" : title;
+        String title = "";
+        if (tag != null) {
+            title = tag.getFirst(FieldKey.TITLE);
+        }
+        return "".equals(title) || title == null ? "Unknown" : title;
     }
 
     public static String getArtist(File file) {
         AudioFile audioFile = getAudioFile(file);
         Tag tag = audioFile.getTag();
-        String artist = tag.getFirst(FieldKey.ARTIST);
-        return "".equals(artist) || artist == null ? "Unkown" : artist;
+        String artist = "";
+        if (tag != null) {
+            artist = tag.getFirst(FieldKey.ARTIST);
+        }
+        return "".equals(artist) || artist == null ? "Unknown" : artist;
     }
 
     public static String getAlbum(File file) {
         AudioFile audioFile = getAudioFile(file);
         Tag tag = audioFile.getTag();
-        String album = tag.getFirst(FieldKey.ALBUM);
-        return "".equals(album) || album == null ? "Unkown" : album;
+        String album = "";
+        if (tag != null) {
+            tag.getFirst(FieldKey.ALBUM);
+        }
+        return "".equals(album) || album == null ? "Unknown" : album;
     }
 
-    public static long getLength(File file) {
+    public static int getLength(File file) {
         try {
             return getAudioFile(file).getAudioHeader().getTrackLength();
         } catch (Exception e) {
             e.printStackTrace();
-            return 1l;
+            return 1;
         }
     }
 
-    public static Image getArtWork(File file) {
-        AudioFile audioFile = getAudioFile(file);
-        Tag tag = audioFile.getTag();
-        byte[] artWork = tag.getFirstArtwork().getBinaryData();
-        Image image = new Image(new ByteArrayInputStream(artWork));
-        return image;
+    public static String getArtWork(File file){
+        File pic = new File(".", "pic/" + file.getName() + ".jpg");
+        if (!pic.exists()) {
+            AudioFile audioFile = getAudioFile(file);
+            Tag tag = audioFile.getTag();
+            byte[] artWork = null;
+            if (tag != null && tag.getFirstArtwork() != null) {
+                artWork = tag.getFirstArtwork().getBinaryData();
+                try {
+                    FileUtils.writeByteArrayToFile(pic, artWork);
+                    return pic.toURI().toURL().toString();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            try {
+                return pic.toURI().toURL().toString();
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return "";
     }
 }

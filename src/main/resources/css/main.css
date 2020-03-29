@@ -833,3 +833,17 @@
 .jfx-slider {
     -jfx-default-thumb: #3f51b5;
 }
+
+.jfx-badge .badge-pane {
+    -fx-background-color: #ff4081;
+    -fx-background-radius: 23;
+    -fx-pref-width: 23;
+    -fx-pref-height: 23;
+    -fx-alignment: center;
+}
+
+.jfx-badge Label {
+    -fx-font-weight: BOLD;
+    -fx-font-size: 14.0px;
+    -fx-text-fill: WHITE;
+}

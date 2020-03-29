@@ -1,13 +1,10 @@
 package io.github.lzw;
 
-import java.io.IOException;
 import java.net.URL;
 
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
-import com.jfoenix.svg.SVGGlyphLoader;
 
-import io.github.lzw.util.Reporter;
 import io.github.lzw.util.SongUtil;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -22,17 +19,11 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new Thread(() -> {
-            try {
-                SVGGlyphLoader.loadGlyphsFont(MainApp.class.getResourceAsStream("/fonts/icomoon.svg"), "icomoon.svg");
-            } catch (IOException ioExc) {
-                ioExc.printStackTrace();
-            }
-        }).start();
+        System.out.println("Java-" + SystemInfo.javaVersion() + " || Javafx-" + SystemInfo.javafxVersion());
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
         JFXDecorator decorator = new JFXDecorator(stage, root);
         decorator.setCustomMaximize(true);
-        decorator.setGraphic(new SVGGlyph(""));
+        decorator.setGraphic(new SVGGlyph("M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"));
         double width = 800;
         double height = 600;
         try {
