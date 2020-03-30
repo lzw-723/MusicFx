@@ -34,7 +34,7 @@ public class MainApp extends Application {
         }
         Scene scene = new Scene(decorator, width, height);
         final ObservableList<String> stylesheets = scene.getStylesheets();
-        URL cssUrl = getClass().getResource("/css/main.css");
+        URL cssUrl = getClass().getResource("/styles/main.css");
         if (cssUrl != null) {
             stylesheets.addAll(cssUrl.toExternalForm());
         }

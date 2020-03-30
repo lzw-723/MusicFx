@@ -1,17 +1,69 @@
 package io.github.lzw.item;
 
+import java.io.IOException;
+import java.net.URL;
+
+import com.jfoenix.svg.SVGGlyph;
+
+import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
 
 public class SongOCell extends ListCell<Song> {
-        @Override
-        public void updateItem(Song item, boolean empty) {
-            super.updateItem(item, empty);
-            Label label = new Label();
-            if (item != null) {
-                label.setText(item.getTitle());
-                setGraphic(label);
+    private Handler handler;
+
+    @Override
+    public void updateItem(Song item, boolean empty) {
+        super.updateItem(item, empty);
+        if (item != null) {
+            try {
+                prefWidthProperty().bind(getListView().widthProperty());
+                HBox hBox = FXMLLoader.load(MainApp.class.getResource("/fxml/item/ItemO.fxml"));
+                hBox.prefWidthProperty().bind(widthProperty());
+                Button play = (Button) hBox.lookup("#play");
+                SVGGlyph playGlyph = new SVGGlyph("M8 5v14l11-7z");
+                playGlyph.setSize(16);
+                play.setGraphic(playGlyph);
+                play.setOnAction(event -> {if (handler != null) handler.play(item);});
+                selectedProperty().addListener((ChangeListener<Boolean>) (arg1, arg2, arg3) -> {
+                    play.setVisible(arg3);
+                });
+                Label title = (Label) hBox.lookup("#title");
+                title.setText(item.getTitle());
+                // title.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+                Label artist = (Label) hBox.lookup("#artist");
+                artist.setText(item.getArtist());
+                artist.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+                ObservableList<String> stylesheets = hBox.getStylesheets();
+                URL cssUrl = getClass().getResource("/styles/itemo.css");
+                if (cssUrl != null) {
+                    stylesheets.addAll(cssUrl.toExternalForm());
+                }
+                setGraphic(hBox);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
+        } else {
+            setGraphic(new HBox());
         }
     }
+
+    public static interface Handler {
+        void play(Song song);
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+}

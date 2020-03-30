@@ -11,6 +11,7 @@ import com.jfoenix.svg.SVGGlyph;
 import io.github.lzw.bean.Song;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
+import io.github.lzw.core.MusicFx.Method;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongUtil;
 import io.github.lzw.util.SongUtilO;
@@ -92,8 +93,8 @@ public class FXMLController implements Initializable {
         MusicFx.get().volumeProperty().bind(slider2.valueProperty());
         MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(final ObservableValue<? extends Number> observable, final Number oldValue,
-                    final Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                    Number newValue) {
                 slider1.setValue(newValue.doubleValue());
                 time.setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
                         + TimeFormater.format(MusicFx.get().getTotalTime() * 1000));
@@ -138,6 +139,32 @@ public class FXMLController implements Initializable {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onMethodChanged(Method method) {
+                SVGGlyph methodGlyph;
+                switch (method) {
+                    case Loop:
+                        methodGlyph = new SVGGlyph("M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z");
+                        break;
+
+                    case Repeat:
+                        methodGlyph = new SVGGlyph(
+                                "M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z");
+                        break;
+
+                    case Shuffle:
+                        methodGlyph = new SVGGlyph(
+                                "M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z");
+                        break;
+
+                    default:
+                        methodGlyph = new SVGGlyph("M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z");
+                        break;
+                }
+                methodGlyph.setSize(10);
+                FXMLController.this.method.setGraphic(methodGlyph);
+            }
         });
     }
 
@@ -156,9 +183,6 @@ public class FXMLController implements Initializable {
         nextGlyph.setFill(Paint.valueOf("#FFFFFF"));
         nextGlyph.setSize(12);
         next.setGraphic(nextGlyph);
-        SVGGlyph methodGlyph = new SVGGlyph("M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z");
-        methodGlyph.setSize(10);
-        method.setGraphic(methodGlyph);
         // play_list_badge.getClip().set
         play_list_badge.setText(String.valueOf(MusicFx.get().count()));
         play_list_badge.setEnabled(true);
@@ -262,6 +286,7 @@ public class FXMLController implements Initializable {
         play.setOnAction(event -> MusicFx.get().playOrPause());
         previous.setOnAction(event -> MusicFx.get().previous());
         next.setOnAction(event -> MusicFx.get().next());
+        method.setOnAction(event -> MusicFx.get().changeMethod());
     }
 
     private void initSetting() {
@@ -292,9 +317,17 @@ public class FXMLController implements Initializable {
         list.setCellFactory(new Callback<ListView<Song>, ListCell<Song>>() {
 
             @Override
-            public ListCell<Song> call(final ListView<Song> arg0) {
-                // TODO Auto-generated method stub
-                return new SongOCell();
+            public ListCell<Song> call(ListView<Song> arg0) {
+                SongOCell cell = new SongOCell();
+                cell.setHandler(new SongOCell.Handler(){
+                
+                    @Override
+                    public void play(Song song) {
+                        MusicFx.get().setList(songOs);
+                        MusicFx.get().playInList(song);
+                    }
+                });
+                return cell;
             }
         });
         search.setOnAction(new EventHandler<ActionEvent>() {
@@ -304,14 +337,6 @@ public class FXMLController implements Initializable {
                 list.getItems().clear();
                 songOs = SongUtilO.getSongOs(input.getText());
                 list.getItems().addAll(songOs);
-            }
-        });
-        list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Song> arg0, Song arg1, Song arg2) {
-                MusicFx.get().setList(songOs);
-                MusicFx.get().play(list.getSelectionModel().getSelectedIndex());
             }
         });
     }

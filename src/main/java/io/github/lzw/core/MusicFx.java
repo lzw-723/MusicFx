@@ -15,6 +15,7 @@ public class MusicFx {
     private int index = 0;
     private Song currentSong;
     private List<Song> list = new ArrayList<>();
+    private Method method = Method.Loop;
 
     public void addList(Song song) {
         list.add(song);
@@ -62,8 +63,9 @@ public class MusicFx {
     private Handler handler;
 
     private MusicFx() {
-        if (musicfx != null)
+        if (musicfx != null) {
             throw new RuntimeException("单例异常");
+        }
     }
 
     public static MusicFx get() {
@@ -72,6 +74,7 @@ public class MusicFx {
 
     public void setHandler(Handler handler) {
         this.handler = handler;
+        this.handler.onMethodChanged(method);
     }
 
     private void getNewPlayer(Song song) {
@@ -108,12 +111,51 @@ public class MusicFx {
         play(list.get(index));
     }
 
+    public void playInList(Song song) {
+        for (int i = 0; i < list.size(); i++) {
+            if (song.toString().equals(list.get(i).toString())) {
+                play(i);
+                return;
+            }
+        }
+    }
+
     public void previous() {
-        play(--index);
+        switch (method) {
+            case Loop:
+            play(--index);
+                break;
+
+            case Repeat:
+            play(index);
+                break;
+
+            case Shuffle:
+            play((int) (Math.random() * count()));
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void next() {
-        play(++index);
+        switch (method) {
+            case Loop:
+            play(++index);
+                break;
+
+            case Repeat:
+            play(index);
+                break;
+
+            case Shuffle:
+            play((int) (Math.random() * count()));
+                break;
+
+            default:
+                break;
+        }
     }
 
     public boolean isPlaying() {
@@ -167,6 +209,8 @@ public class MusicFx {
         void onPause();
 
         void OnEnd();
+
+        void onMethodChanged(Method method);
     }
 
     public Song getCurrentSong() {
@@ -175,6 +219,34 @@ public class MusicFx {
 
     public int getIndex() {
         return index;
+    }
+
+    public enum Method {
+        Loop, Repeat, Shuffle;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void changeMethod() {
+        switch (method) {
+            case Loop:
+                method = Method.Repeat;
+                break;
+            case Repeat:
+                method = Method.Shuffle;
+                break;
+            case Shuffle:
+                method = Method.Loop;
+                break;
+            default:
+                method = Method.Loop;
+                break;
+        }
+        if (handler != null) {
+            handler.onMethodChanged(method);
+        }
     }
 
 }
