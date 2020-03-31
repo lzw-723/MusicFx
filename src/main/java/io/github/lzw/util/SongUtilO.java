@@ -30,6 +30,9 @@ public class SongUtilO {
         ArrayList<Song> songs = new ArrayList<>();
         try {
             List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", "netease", 1).execute().body().getData();
+            if (songBOs.size() == 10) {
+                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", "netease", 2).execute().body().getData());
+            }
             for (SongBeanO songBeanO : songBOs) {
                 songs.add(new SongO(songBeanO));
             }

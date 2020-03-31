@@ -41,7 +41,7 @@
                   <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #ff4081; -fx-background-radius: 50%;" textFill="WHITE" />
                </children>
             </HBox>
-            <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="SOMETIMES">
                <children>
                   <HBox>
                      <children>

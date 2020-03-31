@@ -28,8 +28,9 @@ public class MainApp extends Application {
         double height = 600;
         try {
             Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
+            width = bounds.getWidth() > bounds.getHeight() ? bounds.getWidth() : bounds.getHeight();
             width = bounds.getWidth() * 0.618d;
-            height = bounds.getHeight() * 0.618d;
+            height = width * 0.618d;
         } catch (Exception e) {
         }
         Scene scene = new Scene(decorator, width, height);

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 
 import org.apache.commons.io.FileUtils;
 
@@ -17,7 +16,9 @@ import io.github.lzw.bean.SongL;
 
 public class SongUtil {
     public static List<Song> getSongs() {
-        return getSongs(new File(Config.getInstance().getDir()));
+        File dir = new File(Config.getInstance().getDir());
+        System.out.println(dir.exists());
+        return getSongs(dir);
     }
 
     private static List<Song> getSongs(File dir) {

@@ -17,17 +17,21 @@ public class MusicFx {
     private List<Song> list = new ArrayList<>();
     private Method method = Method.Loop;
 
-    public void addList(Song song) {
+    public synchronized void addList(Song song) {
         list.add(song);
     }
 
-    public void addList(List<Song> songs) {
+    public synchronized void addList(List<Song> songs) {
         list.addAll(songs);
     }
 
-    public void setList(List<Song> songs) {
+    public synchronized void setList(List<Song> songs) {
         list.clear();
         list.addAll(songs);
+    }
+
+    public List<Song> getList() {
+        return list;
     }
 
     public int count() {
@@ -94,7 +98,7 @@ public class MusicFx {
         }
     }
 
-    private void play(Song song) {
+    private synchronized void play(Song song) {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
             mediaPlayer.stop();

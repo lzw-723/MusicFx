@@ -6,16 +6,22 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXBadge;
+import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXPopup.PopupHPosition;
+import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.bean.Song;
+import io.github.lzw.bean.SongL;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.core.MusicFx.Method;
+import io.github.lzw.item.SongList;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongUtil;
 import io.github.lzw.util.SongUtilO;
 import io.github.lzw.util.TimeFormater;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -87,10 +93,13 @@ public class FXMLController implements Initializable {
     private TextField dir;
     private List<Song> lists = new ArrayList<>();
     private List<Song> songOs = new ArrayList<>();
+    private JFXPopup jfxPopup;
 
     private void initMain() {
         freshControllBiutton();
+        slider2.setValue(Config.getInstance().getVolume());
         MusicFx.get().volumeProperty().bind(slider2.valueProperty());
+        Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
         MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,
@@ -122,7 +131,7 @@ public class FXMLController implements Initializable {
 
             @Override
             public void OnEnd() {
-
+                freshControllBiutton();
             }
 
             @Override
@@ -132,11 +141,17 @@ public class FXMLController implements Initializable {
                 title.setText(song.getTitle());
                 artist.setText(song.getArtist());
                 try {
-                    Image image;
-                    image = new Image(song.getArtwork());
-                    imageView.setImage(image);
+                    new Thread(() -> {
+                        Image image = new Image(song.getArtwork());
+                        Platform.runLater(() -> imageView.setImage(image));
+                    }).start();;
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+                if (song instanceof SongL) {
+                    table.getSelectionModel().select(song);
+                } else {
+                    list.getSelectionModel().select(song);
                 }
             }
 
@@ -287,6 +302,10 @@ public class FXMLController implements Initializable {
         previous.setOnAction(event -> MusicFx.get().previous());
         next.setOnAction(event -> MusicFx.get().next());
         method.setOnAction(event -> MusicFx.get().changeMethod());
+        play_list.setOnAction(event -> {
+            jfxPopup = new JFXPopup(new SongList(MusicFx.get().getList()));
+            jfxPopup.show(play_list, PopupVPosition.BOTTOM, PopupHPosition.RIGHT);
+        });
     }
 
     private void initSetting() {
