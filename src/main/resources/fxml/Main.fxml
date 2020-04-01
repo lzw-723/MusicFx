@@ -7,6 +7,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -70,7 +71,7 @@
                   <HBox>
                      <children>
                         <JFXBadge fx:id="play_list_badge" position="BOTTOM_CENTER" text="1" HBox.hgrow="ALWAYS">
-                           <JFXButton fx:id="play_list" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
+                           <JFXButton fx:id="play_list" alignment="CENTER" contentDisplay="RIGHT" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
                         </JFXBadge>
                      </children>
                   </HBox>
@@ -158,8 +159,9 @@
                                     <HBox alignment="CENTER">
                                        <children>
                                           <Label text="本地音乐文件夹：" />
-                                          <JFXTextField fx:id="dir" promptText="单个目录" />
+                                          <JFXTextField fx:id="dir" editable="false" promptText="单个目录" />
                                           <JFXButton fx:id="dirFinder" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
+                                          <JFXSpinner fx:id="spinner" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" visible="false" />
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER" GridPane.rowIndex="1">

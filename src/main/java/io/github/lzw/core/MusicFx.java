@@ -91,6 +91,10 @@ public class MusicFx {
             mediaPlayer.setOnReady(() -> handler.onReady(song));
             mediaPlayer.setOnPlaying(() -> handler.onStart());
             mediaPlayer.setOnPaused(() -> handler.onPause());
+            mediaPlayer.setOnError(() -> {
+                handler.onError();
+                next();
+            });
             mediaPlayer.setOnEndOfMedia(() -> {
                 handler.OnEnd();
                 next();
@@ -127,15 +131,15 @@ public class MusicFx {
     public void previous() {
         switch (method) {
             case Loop:
-            play(--index);
+                play(--index);
                 break;
 
             case Repeat:
-            play(index);
+                play(index);
                 break;
 
             case Shuffle:
-            play((int) (Math.random() * count()));
+                play((int) (Math.random() * count()));
                 break;
 
             default:
@@ -146,15 +150,15 @@ public class MusicFx {
     public void next() {
         switch (method) {
             case Loop:
-            play(++index);
+                play(++index);
                 break;
 
             case Repeat:
-            play(index);
+                play(index);
                 break;
 
             case Shuffle:
-            play((int) (Math.random() * count()));
+                play((int) (Math.random() * count()));
                 break;
 
             default:
@@ -205,6 +209,8 @@ public class MusicFx {
     public interface Handler {
 
         void init();
+
+        void onError();
 
         void onReady(Song song);
 

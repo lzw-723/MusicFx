@@ -47,7 +47,7 @@ public class SongInfoUtil {
         Tag tag = audioFile.getTag();
         String album = "";
         if (tag != null) {
-            tag.getFirst(FieldKey.ALBUM);
+            album = tag.getFirst(FieldKey.ALBUM);
         }
         return "".equals(album) || album == null ? "Unknown" : album;
     }

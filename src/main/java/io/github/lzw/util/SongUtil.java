@@ -17,13 +17,17 @@ import io.github.lzw.bean.SongL;
 public class SongUtil {
     public static List<Song> getSongs() {
         File dir = new File(Config.getInstance().getDir());
-        System.out.println(dir.exists());
-        return getSongs(dir);
+        return getSongs(dir, true);
     }
 
-    private static List<Song> getSongs(File dir) {
+    public static List<Song> getSongsIgnoreCache() {
+        File dir = new File(Config.getInstance().getDir());
+        return getSongs(dir, false);
+    }
+
+    private synchronized static List<Song> getSongs(File dir, boolean cacheable) {
         File ser = new File(new File(".").getPath(), "songs.json");
-        if (ser.exists()) {
+        if (ser.exists() && cacheable) {
             return read(ser);
         } else {
             List<Song> list = new ArrayList<>();

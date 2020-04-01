@@ -53,12 +53,7 @@ public class MainApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        initSongs();
         launch(args);
-    }
-
-    public static void initSongs() {
-        new Thread(() -> SongUtil.getSongs()).start();;
     }
 
 }

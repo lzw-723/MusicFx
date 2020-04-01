@@ -7,6 +7,9 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
@@ -37,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -46,6 +50,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
@@ -90,10 +95,13 @@ public class FXMLController implements Initializable {
     @FXML
     private Button dirFinder;
     @FXML
-    private TextField dir;
+    private JFXTextField dir;
+    @FXML
+    private JFXSpinner spinner;
     private List<Song> lists = new ArrayList<>();
     private List<Song> songOs = new ArrayList<>();
     private JFXPopup jfxPopup;
+    private JFXSnackbar snackbar;
 
     private void initMain() {
         freshControllBiutton();
@@ -102,8 +110,7 @@ public class FXMLController implements Initializable {
         Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
         MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-                    Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 slider1.setValue(newValue.doubleValue());
                 time.setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
                         + TimeFormater.format(MusicFx.get().getTotalTime() * 1000));
@@ -144,7 +151,8 @@ public class FXMLController implements Initializable {
                     new Thread(() -> {
                         Image image = new Image(song.getArtwork());
                         Platform.runLater(() -> imageView.setImage(image));
-                    }).start();;
+                    }).start();
+                    ;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -158,6 +166,7 @@ public class FXMLController implements Initializable {
             @Override
             public void onMethodChanged(Method method) {
                 SVGGlyph methodGlyph;
+                snackbar = new JFXSnackbar();
                 switch (method) {
                     case Loop:
                         methodGlyph = new SVGGlyph("M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z");
@@ -180,6 +189,12 @@ public class FXMLController implements Initializable {
                 methodGlyph.setSize(10);
                 FXMLController.this.method.setGraphic(methodGlyph);
             }
+
+            @Override
+            public void onError() {
+                // TODO Auto-generated method stub
+
+            }
         });
     }
 
@@ -199,8 +214,7 @@ public class FXMLController implements Initializable {
         nextGlyph.setSize(12);
         next.setGraphic(nextGlyph);
         // play_list_badge.getClip().set
-        play_list_badge.setText(String.valueOf(MusicFx.get().count()));
-        play_list_badge.setEnabled(true);
+        play_list.setText(String.valueOf(MusicFx.get().count()));
         SVGGlyph play_list_Glyph = new SVGGlyph("M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z");
         play_list_Glyph.setSize(10);
         play_list.setGraphic(play_list_Glyph);
@@ -314,18 +328,23 @@ public class FXMLController implements Initializable {
         dirFinderGlyph.setSize(12);
         dirFinder.setGraphic(dirFinderGlyph);
         lists.addAll(SongUtil.getSongs());
-        dirFinder.setOnMouseClicked(event -> FXMLController.this.dir
-                .setText(new DirectoryChooser().showDialog(dirFinder.getScene().getWindow()).getPath()));
+        dirFinder.setOnMouseClicked(event -> {
+            FXMLController.this.dir
+                    .setText(new DirectoryChooser().showDialog(dirFinder.getScene().getWindow()).getPath());
+            spinner.setVisible(true);
+            new Thread(() -> {
+                SongUtil.getSongsIgnoreCache();
+                try {
+                    Thread.sleep(8000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                    Platform.runLater(() -> spinner.setVisible(false));
+                }).start();
+            });
         this.dir.setText(Config.getInstance().getDir());
         Config.getInstance().dirProperty().bind(this.dir.textProperty());
-        dir.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-                // TODO Auto-generated method stub
-                MainApp.initSongs();
-            }
-        });
     }
 
     private void initOnline() {
@@ -338,8 +357,8 @@ public class FXMLController implements Initializable {
             @Override
             public ListCell<Song> call(ListView<Song> arg0) {
                 SongOCell cell = new SongOCell();
-                cell.setHandler(new SongOCell.Handler(){
-                
+                cell.setHandler(new SongOCell.Handler() {
+
                     @Override
                     public void play(Song song) {
                         MusicFx.get().setList(songOs);
