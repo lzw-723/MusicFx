@@ -26,12 +26,12 @@ public class SongUtilO {
     private static final Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.songe.cc/")
             .addConverterFactory(FastJsonConverterFactory.create()).build();
 
-    public static ArrayList<Song> getSongOs(String input) {
+    public static ArrayList<Song> getSongOs(String input, Type type) {
         ArrayList<Song> songs = new ArrayList<>();
         try {
-            List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", "netease", 1).execute().body().getData();
+            List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 1).execute().body().getData();
             if (songBOs.size() == 10) {
-                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", "netease", 2).execute().body().getData());
+                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 2).execute().body().getData());
             }
             for (SongBeanO songBeanO : songBOs) {
                 songs.add(new SongO(songBeanO));
@@ -41,5 +41,22 @@ public class SongUtilO {
             e.printStackTrace();
         }
     return songs;
+    }
+    public enum Type {
+        Kugou("kugou"), Netease("netease"), Baidu("baidu"), QQ("qq"), Kuwo("kuwo");
+    
+        private String type;
+    
+        private Type(String type) {
+            this.type = type;
+        }
+    
+        public String getType() {
+            return type;
+        }
+    
+        public void setType(String type) {
+            this.type = type;
+        }
     }
 }

@@ -60,7 +60,7 @@ public class Config {
         }
         properties.load(new FileInputStream(file));
         setDir(properties.getProperty("dir", "C://Music"));
-        setVolume(0.3f);
+        setVolume(Float.valueOf(properties.getProperty("volume", "0.3")));
         dir.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

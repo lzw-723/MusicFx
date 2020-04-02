@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
@@ -24,6 +25,7 @@ import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongUtil;
 import io.github.lzw.util.SongUtilO;
 import io.github.lzw.util.TimeFormater;
+import io.github.lzw.util.SongUtilO.Type;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -98,6 +100,8 @@ public class FXMLController implements Initializable {
     private JFXTextField dir;
     @FXML
     private JFXSpinner spinner;
+    @FXML
+    private JFXRadioButton netease;
     private List<Song> lists = new ArrayList<>();
     private List<Song> songOs = new ArrayList<>();
     private JFXPopup jfxPopup;
@@ -373,7 +377,13 @@ public class FXMLController implements Initializable {
             @Override
             public void handle(ActionEvent arg0) {
                 list.getItems().clear();
-                songOs = SongUtilO.getSongOs(input.getText());
+                Type type;
+                if (netease.isSelected()) {
+                    type = Type.Netease;
+                } else {
+                    type = Type.QQ;
+                }
+                songOs = SongUtilO.getSongOs(input.getText(), type);
                 list.getItems().addAll(songOs);
             }
         });

@@ -11,6 +11,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -64,15 +65,17 @@
                   <JFXSlider fx:id="slider1" max="1.0" value="-1.0" />
                </children>
             </VBox>
-            <JFXRippler />
             <HBox alignment="CENTER">
                <children>
                   <JFXButton fx:id="method" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
+                  <JFXRippler maskType="CIRCLE">
+                     <children>
+                        <JFXButton fx:id="play_list" alignment="CENTER" maxHeight="24.0" maxWidth="-Infinity" minHeight="24.0" minWidth="-Infinity" prefHeight="24.0" style="-fx-background-radius: 50%;" text="Button" textAlignment="CENTER" />
+                     </children>
+                  </JFXRippler>
                   <HBox>
                      <children>
-                        <JFXBadge fx:id="play_list_badge" position="BOTTOM_CENTER" text="1" HBox.hgrow="ALWAYS">
-                           <JFXButton fx:id="play_list" alignment="CENTER" contentDisplay="RIGHT" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
-                        </JFXBadge>
+                        <JFXBadge fx:id="play_list_badge" position="BOTTOM_CENTER" text="1" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -80,7 +83,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </HBox>
-            <JFXSlider fx:id="slider2" max="1.0" orientation="VERTICAL" value="0.3">
+            <JFXSlider fx:id="slider2" blockIncrement="0.0" max="1.0" orientation="VERTICAL" value="-1.0">
                <HBox.margin>
                   <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                </HBox.margin>
@@ -169,7 +172,7 @@
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                              <children>
                                                 <Label text="在线音乐源：" />
-                                                <JFXRadioButton selected="true" text="网易">
+                                                <JFXRadioButton fx:id="netease" selected="true" text="网易">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="type" />
                                                    </toggleGroup>
@@ -178,6 +181,7 @@
                                                 <JFXRadioButton text="QQ" toggleGroup="$type" />
                                                 <JFXRadioButton text="酷我" toggleGroup="$type" />
                                                 <JFXRadioButton text="百度" toggleGroup="$type" />
+                                                <Group />
                                              </children>
                                           </HBox>
                                        </children>

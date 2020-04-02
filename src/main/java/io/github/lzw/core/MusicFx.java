@@ -3,6 +3,7 @@ package io.github.lzw.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
@@ -11,7 +12,7 @@ import javafx.scene.media.MediaPlayer;
 public class MusicFx {
     private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
-    private SimpleDoubleProperty volume = new SimpleDoubleProperty(0.3d);
+    private SimpleDoubleProperty volume = new SimpleDoubleProperty(Config.getInstance().getVolume());
     private int index = 0;
     private Song currentSong;
     private List<Song> list = new ArrayList<>();
