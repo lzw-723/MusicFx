@@ -10,6 +10,7 @@
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Hyperlink?>
@@ -70,7 +71,7 @@
                   <JFXButton fx:id="method" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" />
                   <JFXRippler maskType="CIRCLE">
                      <children>
-                        <JFXButton fx:id="play_list" alignment="CENTER" maxHeight="24.0" maxWidth="-Infinity" minHeight="24.0" minWidth="-Infinity" prefHeight="24.0" style="-fx-background-radius: 50%;" text="Button" textAlignment="CENTER" />
+                        <JFXButton fx:id="play_list" alignment="CENTER" maxHeight="24.0" maxWidth="-Infinity" minHeight="24.0" minWidth="-Infinity" prefHeight="24.0" text="Button" textAlignment="CENTER" />
                      </children>
                   </JFXRippler>
                   <HBox>
@@ -138,7 +139,7 @@
                      <children>
                         <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox alignment="CENTER" minHeight="-Infinity" HBox.hgrow="SOMETIMES">
+                              <VBox alignment="CENTER" minHeight="-Infinity" visible="false" HBox.hgrow="SOMETIMES">
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                                        <image>
@@ -209,4 +210,17 @@
          </tabs>
       </JFXTabPane>
    </center>
+   <left>
+      <JFXToolbar minHeight="-Infinity" minWidth="60.0" prefWidth="60.0" style="-fx-background-color: #3f51b5;" BorderPane.alignment="CENTER">
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" text="搜索" textFill="WHITE" />
+                  <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" text="本地" textFill="WHITE" />
+                  <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" text="设置" textFill="WHITE" />
+               </children>
+            </VBox>
+         </center>
+      </JFXToolbar>
+   </left>
 </BorderPane>

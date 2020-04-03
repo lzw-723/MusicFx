@@ -21,7 +21,3 @@
 [retrofit2](https://square.github.io/retrofit/)
 
 [commons-io](http://commons.apache.org/proper/commons-io/)
-
-## 打赏
-
-![支付宝](https://user-gold-cdn.xitu.io/2020/3/27/1711b82d892fea0a?w=600&amp;h=900&amp;f=png&amp;s=38415)
