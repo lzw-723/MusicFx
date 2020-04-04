@@ -11,26 +11,25 @@ import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
 
 import io.github.lzw.Config;
-import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
 
 public class SongUtil {
-    public static List<Song> getSongs() {
+    public static List<SongL> getSongs() {
         File dir = new File(Config.getInstance().getDir());
         return getSongs(dir, true);
     }
 
-    public static List<Song> getSongsIgnoreCache() {
+    public static List<SongL> getSongsIgnoreCache() {
         File dir = new File(Config.getInstance().getDir());
         return getSongs(dir, false);
     }
 
-    private synchronized static List<Song> getSongs(File dir, boolean cacheable) {
+    private synchronized static List<SongL> getSongs(File dir, boolean cacheable) {
         File ser = new File(new File(".").getPath(), "songs.json");
         if (ser.exists() && cacheable) {
             return read(ser);
         } else {
-            List<Song> list = new ArrayList<>();
+            List<SongL> list = new ArrayList<>();
             if (dir.exists() && dir.listFiles().length > 0)
                 for (File file : dir.listFiles()) {
                     String path = file.getAbsolutePath().toLowerCase();
@@ -48,7 +47,7 @@ public class SongUtil {
 
     }
 
-    private static void save(List<Song> list, File file) {
+    private static void save(List<SongL> list, File file) {
         String data = JSON.toJSONString(list);
         try {
             FileUtils.writeStringToFile(file, data);
@@ -58,11 +57,9 @@ public class SongUtil {
         }
     }
 
-    private static List<Song> read(File file) {
-        List<Song> list = new ArrayList<>();
+    private static List<SongL> read(File file) {
         try {
-            String data = FileUtils.readFileToString(file);
-            List<Song> songs = JSON.parseArray(FileUtils.readFileToString(file), Song.class);
+            List<SongL> songs = JSON.parseArray(FileUtils.readFileToString(file), SongL.class);
             return songs;
         } catch (Exception e) {
             Logger.getLogger(SongUtil.class.getSimpleName()).warning("数据读取失败," + e.getMessage());

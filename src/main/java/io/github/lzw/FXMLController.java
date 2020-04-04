@@ -159,6 +159,7 @@ public class FXMLController implements Initializable {
 
             @Override
             public void onMethodChanged(Method method) {
+
                 SVGGlyph methodGlyph;
                 snackbar = new JFXSnackbar();
                 switch (method) {

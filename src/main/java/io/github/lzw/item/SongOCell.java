@@ -7,6 +7,7 @@ import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
+import io.github.lzw.bean.SongL;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -38,13 +39,26 @@ public class SongOCell extends ListCell<Song> {
                 selectedProperty().addListener((ChangeListener<Boolean>) (arg1, arg2, arg3) -> {
                     play.setVisible(arg3);
                 });
+
                 Label title = (Label) hBox.lookup("#title");
                 title.setText(item.getTitle());
+
                 HBox left = (HBox) hBox.lookup("#left");
                 left.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+
                 Label artist = (Label) hBox.lookup("#artist");
                 artist.setText(item.getArtist());
-                artist.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+
+                HBox right = (HBox) hBox.lookup("#right");
+                right.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+
+                if (item instanceof SongL) {
+                    Label album = (Label) hBox.lookup("#album");
+                    album.setText(item.getAlbum());
+                    Label time = (Label) hBox.lookup("#time");
+                    time.setText(String.valueOf(item.getLength()));
+                }
+
                 ObservableList<String> stylesheets = hBox.getStylesheets();
                 URL cssUrl = getClass().getResource("/styles/itemo.css");
                 if (cssUrl != null) {

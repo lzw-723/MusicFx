@@ -12,8 +12,12 @@
             <JFXButton fx:id="play" alignment="CENTER" contentDisplay="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 50%;" visible="false" />
          </children>
       </HBox>
-      <Label fx:id="artist" alignment="CENTER" />
-      <Label fx:id="album" />
-      <Label fx:id="time" />
+      <HBox fx:id="right" alignment="CENTER">
+         <children>
+            <Label fx:id="artist" alignment="CENTER" />
+            <Label fx:id="album" />
+            <Label fx:id="time" />
+         </children>
+      </HBox>
    </children>
 </HBox>

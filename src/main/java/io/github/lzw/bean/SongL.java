@@ -9,9 +9,8 @@ import io.github.lzw.util.SongInfoUtil;
 public class SongL extends Song {
 
     public SongL(String uri) {
-        File file;
         try {
-            file = new File(new URI(uri));
+            File file = new File(new URI(uri));
             setUri(uri);
             setTitle(SongInfoUtil.getTitle(file));
             setArtist(SongInfoUtil.getArtist(file));
