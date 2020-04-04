@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXBadge;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXPopup.PopupHPosition;
+import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
-import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
+import io.github.lzw.bean.SongO;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.core.MusicFx.Method;
@@ -24,35 +26,25 @@ import io.github.lzw.item.SongList;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongUtil;
 import io.github.lzw.util.SongUtilO;
-import io.github.lzw.util.TimeFormater;
 import io.github.lzw.util.SongUtilO.Type;
+import io.github.lzw.util.TimeFormater;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
@@ -61,7 +53,7 @@ public class FXMLController implements Initializable {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private TableView<Song> table;
+    private JFXListView<Song> table;
     @FXML
     private ImageView imageView;
     @FXML
@@ -81,8 +73,6 @@ public class FXMLController implements Initializable {
     @FXML
     private Button method;
     @FXML
-    private JFXBadge play_list_badge;
-    @FXML
     private Button play_list;
     @FXML
     private HBox layout;
@@ -93,7 +83,7 @@ public class FXMLController implements Initializable {
     @FXML
     private Button search;
     @FXML
-    private ListView<Song> list;
+    private JFXListView<Song> list;
     @FXML
     private Button dirFinder;
     @FXML
@@ -160,10 +150,10 @@ public class FXMLController implements Initializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (song instanceof SongL) {
-                    table.getSelectionModel().select(song);
-                } else {
+                if (song instanceof SongO) {
                     list.getSelectionModel().select(song);
+                } else {
+                    table.getSelectionModel().select(song);
                 }
             }
 
@@ -225,97 +215,26 @@ public class FXMLController implements Initializable {
     }
 
     private void initLocal() {
-        table.getColumns().get(0).prefWidthProperty().bind(table.widthProperty().divide(4));
-        ((TableColumn<Song, String>) table.getColumns().get(0))
-                .setCellValueFactory(new Callback<CellDataFeatures<Song, String>, ObservableValue<String>>() {
+        lists.addAll(SongUtil.getSongs());
+        table.setCellFactory(new Callback<ListView<Song>, ListCell<Song>>(){
+
+            @Override
+            public ListCell<Song> call(ListView<Song> arg0) {
+                SongOCell cell = new SongOCell();
+                cell.setHandler(new SongOCell.Handler() {
+
                     @Override
-                    public ObservableValue<String> call(CellDataFeatures<Song, String> arg0) {
-                        return new SimpleStringProperty(arg0.getValue().getTitle());
+                    public void play(Song song) {
+                        MusicFx.get().setList(lists);
+                        MusicFx.get().playInList(song);
                     }
                 });
-        ((TableColumn<Song, String>) table.getColumns().get(0)).setCellFactory(arg0 -> new TableCell<Song, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                // TODO Auto-generated method stub
-                super.updateItem(item, empty);
-                if (!empty) {
-                    HBox hBox = new HBox(new Label(item));
-                    hBox.setAlignment(Pos.CENTER);
-                    setGraphic(hBox);
-                }
+                return cell;
             }
+            
         });
-        table.getColumns().get(1).prefWidthProperty().bind(table.widthProperty().divide(4));
-        ((TableColumn<Song, String>) table.getColumns().get(1))
-                .setCellValueFactory(new Callback<CellDataFeatures<Song, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(CellDataFeatures<Song, String> arg0) {
-                        return new SimpleStringProperty(arg0.getValue().getArtist());
-                    }
-                });
-        ((TableColumn<Song, String>) table.getColumns().get(1)).setCellFactory(arg0 -> new TableCell<Song, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                // TODO Auto-generated method stub
-                super.updateItem(item, empty);
-                if (!empty) {
-                    HBox hBox = new HBox(new Label(item));
-                    hBox.setAlignment(Pos.CENTER);
-                    setGraphic(hBox);
-                }
-            }
-        });
-        table.getColumns().get(2).prefWidthProperty().bind(table.widthProperty().divide(4));
-        ((TableColumn<Song, String>) table.getColumns().get(2))
-                .setCellValueFactory(new Callback<CellDataFeatures<Song, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(CellDataFeatures<Song, String> arg0) {
-                        return new SimpleStringProperty(arg0.getValue().getAlbum());
-                    }
-                });
-        ((TableColumn<Song, String>) table.getColumns().get(2)).setCellFactory(arg0 -> new TableCell<Song, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                // TODO Auto-generated method stub
-                super.updateItem(item, empty);
-                if (!empty) {
-                    HBox hBox = new HBox(new Label(item));
-                    hBox.setAlignment(Pos.CENTER);
-                    setGraphic(hBox);
-                }
-            }
-        });
-        table.getColumns().get(3).prefWidthProperty().bind(table.widthProperty().divide(4));
-        ((TableColumn<Song, Number>) table.getColumns().get(3))
-                .setCellValueFactory(new Callback<CellDataFeatures<Song, Number>, ObservableValue<Number>>() {
-                    @Override
-                    public ObservableValue<Number> call(CellDataFeatures<Song, Number> arg0) {
-                        return new SimpleIntegerProperty(arg0.getValue().getLength());
-                    }
-                });
-        ((TableColumn<Song, Number>) table.getColumns().get(3)).setCellFactory(arg0 -> new TableCell<Song, Number>() {
-            @Override
-            protected void updateItem(Number arg0, boolean arg1) {
-                // TODO Auto-generated method stub
-                super.updateItem(arg0, arg1);
-                if (!arg1) {
-                    HBox hBox = new HBox(new Label(TimeFormater.format(arg0.intValue() * 1000)));
-                    hBox.setAlignment(Pos.CENTER);
-                    setGraphic(hBox);
-                }
-            }
-        });
-        table.getItems().addAll(FXCollections.observableList(lists));
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (MusicFx.get().getCurrentSong() != null && lists.get(table.getSelectionModel().getSelectedIndex())
-                    .toString().equals(MusicFx.get().getCurrentSong().toString())) {
-                return;
-            }
-            MusicFx.get().setList(lists);
-            System.out.println("setList");
-            MusicFx.get().play(table.getSelectionModel().getSelectedIndex());
-            System.gc();
-        });
+        table.getItems().addAll(lists);
+        
         play.setOnAction(event -> MusicFx.get().playOrPause());
         previous.setOnAction(event -> MusicFx.get().previous());
         next.setOnAction(event -> MusicFx.get().next());
@@ -331,7 +250,6 @@ public class FXMLController implements Initializable {
                 "M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z");
         dirFinderGlyph.setSize(12);
         dirFinder.setGraphic(dirFinderGlyph);
-        lists.addAll(SongUtil.getSongs());
         dirFinder.setOnMouseClicked(event -> {
             FXMLController.this.dir
                     .setText(new DirectoryChooser().showDialog(dirFinder.getScene().getWindow()).getPath());

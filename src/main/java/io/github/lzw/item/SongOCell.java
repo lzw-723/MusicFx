@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 
 public class SongOCell extends ListCell<Song> {
     private Handler handler;
+    private long time = 0;
 
     @Override
     public void updateItem(Song item, boolean empty) {
@@ -30,13 +31,17 @@ public class SongOCell extends ListCell<Song> {
                 SVGGlyph playGlyph = new SVGGlyph("M8 5v14l11-7z");
                 playGlyph.setSize(16);
                 play.setGraphic(playGlyph);
-                play.setOnAction(event -> {if (handler != null) handler.play(item);});
+                play.setOnAction(event -> {
+                    if (handler != null)
+                        handler.play(item);
+                });
                 selectedProperty().addListener((ChangeListener<Boolean>) (arg1, arg2, arg3) -> {
                     play.setVisible(arg3);
                 });
                 Label title = (Label) hBox.lookup("#title");
                 title.setText(item.getTitle());
-                // title.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+                HBox left = (HBox) hBox.lookup("#left");
+                left.prefWidthProperty().bind(hBox.widthProperty().divide(2));
                 Label artist = (Label) hBox.lookup("#artist");
                 artist.setText(item.getArtist());
                 artist.prefWidthProperty().bind(hBox.widthProperty().divide(2));
@@ -45,6 +50,16 @@ public class SongOCell extends ListCell<Song> {
                 if (cssUrl != null) {
                     stylesheets.addAll(cssUrl.toExternalForm());
                 }
+                hBox.setOnMouseClicked(event -> {
+                    if (handler == null) {
+                        return;
+                    }
+                    if (System.currentTimeMillis() - time < 500) {
+                        handler.play(item);
+                    } else {
+                        time = System.currentTimeMillis();
+                    }
+                });
                 setGraphic(hBox);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
