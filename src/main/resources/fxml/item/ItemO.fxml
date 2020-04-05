@@ -15,8 +15,8 @@
       <HBox fx:id="right" alignment="CENTER" spacing="6.0">
          <children>
             <Label fx:id="artist" alignment="CENTER" />
-            <Label fx:id="album" />
-            <Label fx:id="time" />
+            <Label fx:id="album" HBox.hgrow="NEVER" />
+            <Label fx:id="time" HBox.hgrow="NEVER" />
          </children>
       </HBox>
    </children>

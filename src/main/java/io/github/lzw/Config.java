@@ -59,7 +59,7 @@ public class Config {
             }
         }
         properties.load(new FileInputStream(file));
-        setDir(properties.getProperty("dir", "C://Music"));
+        setDir(properties.getProperty("dir", "请选择目录"));
         setVolume(Float.valueOf(properties.getProperty("volume", "0.3")));
         dir.addListener(new ChangeListener<String>() {
             @Override

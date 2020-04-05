@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.Config;
+import io.github.lzw.bean.Song;
 import io.github.lzw.util.SongUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -35,12 +36,6 @@ public class SettingController implements Initializable, ControllerImp {
             spinner.setVisible(true);
             new Thread(() -> {
                 SongUtil.getSongsIgnoreCache();
-                try {
-                    Thread.sleep(8000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 Platform.runLater(() -> spinner.setVisible(false));
             }).start();
         });
@@ -58,6 +53,11 @@ public class SettingController implements Initializable, ControllerImp {
     public ControllerImp getController() {
         // TODO Auto-generated method stub
         return this;
+    }
+
+    @Override
+    public void play(Song song) {
+
     }
 
 }

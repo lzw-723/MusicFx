@@ -3,6 +3,7 @@ package io.github.lzw.item;
 import java.io.IOException;
 import java.net.URL;
 
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.MainApp;
@@ -14,10 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 
-public class SongOCell extends ListCell<Song> {
+public class SongOCell extends JFXListCell<Song> {
     private Handler handler;
     private long time = 0;
 

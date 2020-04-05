@@ -80,4 +80,12 @@ public class OnlineController implements Initializable, ControllerImp {
         return this;
     }
 
+    @Override
+    public void play(Song song) {
+        // TODO Auto-generated method stub
+        if (song instanceof SongO) {
+            list.getSelectionModel().select(song);
+        }
+    }
+
 }

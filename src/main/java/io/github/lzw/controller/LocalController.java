@@ -72,4 +72,12 @@ public class LocalController implements Initializable, ControllerImp {
         return this;
     }
 
+    @Override
+    public void play(Song song) {
+        // TODO Auto-generated method stub
+        if (song instanceof SongL) {
+            table.getSelectionModel().select(song);
+        }
+    }
+
 }

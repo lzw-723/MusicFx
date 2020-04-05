@@ -1,4 +1,4 @@
 .label:hover {
     -fx-text-fill: grey;
-    -fx-text-decoration: underline;
+    -fx-underline: true;
 }
