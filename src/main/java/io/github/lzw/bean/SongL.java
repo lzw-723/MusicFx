@@ -22,4 +22,8 @@ public class SongL extends Song {
             e.printStackTrace();
         }
     }
+
+    // 供FastJson反序列化使用
+    public SongL() {
+    }
 }
