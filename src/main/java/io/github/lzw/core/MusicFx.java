@@ -22,11 +22,11 @@ public class MusicFx {
         list.add(song);
     }
 
-    public synchronized void addList(List<Song> songs) {
+    public synchronized void addList(List<? extends Song> songs) {
         list.addAll(songs);
     }
 
-    public synchronized void setList(List<Song> songs) {
+    public synchronized void setList(List<? extends Song> songs) {
         list.clear();
         list.addAll(songs);
     }

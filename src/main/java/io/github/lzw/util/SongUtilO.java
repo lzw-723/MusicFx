@@ -26,8 +26,8 @@ public class SongUtilO {
     private static final Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.songe.cc/")
             .addConverterFactory(FastJsonConverterFactory.create()).build();
 
-    public static ArrayList<Song> getSongOs(String input, Type type) {
-        ArrayList<Song> songs = new ArrayList<>();
+    public static ArrayList<SongO> getSongOs(String input, Type type) {
+        ArrayList<SongO> songs = new ArrayList<>();
         try {
             List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 1).execute().body().getData();
             if (songBOs.size() == 10) {

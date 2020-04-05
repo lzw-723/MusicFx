@@ -8,6 +8,7 @@ import com.jfoenix.svg.SVGGlyph;
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
+import io.github.lzw.util.TimeFormater;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +57,7 @@ public class SongOCell extends ListCell<Song> {
                     Label album = (Label) hBox.lookup("#album");
                     album.setText(item.getAlbum());
                     Label time = (Label) hBox.lookup("#time");
-                    time.setText(String.valueOf(item.getLength()));
+                    time.setText(TimeFormater.format(item.getLength() * 1000));
                 }
 
                 ObservableList<String> stylesheets = hBox.getStylesheets();
