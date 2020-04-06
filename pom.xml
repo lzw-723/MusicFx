@@ -4,7 +4,7 @@
 
     <groupId>io.github.lzw-723</groupId>
     <artifactId>MusicFx</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>MusicFx</name>

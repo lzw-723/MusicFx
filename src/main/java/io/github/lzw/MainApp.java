@@ -5,13 +5,14 @@ import java.net.URL;
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
 
-import io.github.lzw.util.SongUtil;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -33,6 +34,12 @@ public class MainApp extends Application {
             height = width * 0.618d;
         } catch (Exception e) {
         }
+        Image icon = new Image(getClass().getResource("/img/icon.png").toURI().toURL().toString());
+        stage.getIcons().add(icon);
+        ImageView imageView = new ImageView(icon);
+        imageView.setFitHeight(24);;
+        imageView.setFitWidth(24);
+        decorator.setGraphic(imageView);
         Scene scene = new Scene(decorator, width, height);
         final ObservableList<String> stylesheets = scene.getStylesheets();
         URL cssUrl = getClass().getResource("/styles/main.css");
