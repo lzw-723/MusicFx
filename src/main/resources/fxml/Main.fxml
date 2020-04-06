@@ -7,13 +7,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.lzw.MainController">
    <bottom>
@@ -32,9 +32,9 @@
                   <HBox>
                      <children>
                         <Label fx:id="title_song" text="title" wrapText="true">
-                           <effect>
-                              <DropShadow />
-                           </effect>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Label>
                         <Label text=" - " />
                         <Label fx:id="artist" text="artist" wrapText="true" HBox.hgrow="NEVER">

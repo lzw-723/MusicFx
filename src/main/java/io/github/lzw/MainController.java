@@ -11,6 +11,9 @@ import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.bean.Song;
 import io.github.lzw.controller.ControllerImp;
+import io.github.lzw.controller.LocalController;
+import io.github.lzw.controller.OnlineController;
+import io.github.lzw.controller.SettingController;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.core.MusicFx.Method;
@@ -194,12 +197,21 @@ public class MainController implements Initializable {
         settingSvg.setSize(16);
         setting.setGraphic(settingSvg);
         search.setOnAction(event -> {
+            if (controller instanceof OnlineController) {
+                return;
+            }
             loadContent("/fxml/Online.fxml");
         });
         local.setOnAction(event -> {
+            if (controller instanceof LocalController) {
+                return;
+            }
             loadContent("/fxml/Local.fxml");
         });
         setting.setOnAction(event -> {
+            if (controller instanceof SettingController) {
+                return;
+            }
             loadContent("/fxml/Setting.fxml");
         });
         loadContent("/fxml/Local.fxml");

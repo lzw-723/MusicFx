@@ -29,9 +29,11 @@ public class SongUtilO {
     public static ArrayList<SongO> getSongOs(String input, Type type) {
         ArrayList<SongO> songs = new ArrayList<>();
         try {
-            List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 1).execute().body().getData();
+            List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 1)
+                    .execute().body().getData();
             if (songBOs.size() == 10) {
-                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 2).execute().body().getData());
+                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 2).execute()
+                        .body().getData());
             }
             for (SongBeanO songBeanO : songBOs) {
                 songs.add(new SongO(songBeanO));
@@ -40,23 +42,56 @@ public class SongUtilO {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    return songs;
+        return songs;
     }
+
     public enum Type {
-        Kugou("kugou"), Netease("netease"), Baidu("baidu"), QQ("qq"), Kuwo("kuwo");
-    
+        Kugou("kugou", "酷狗"), Netease("netease", "网易"), Baidu("baidu", "百度"), QQ("qq", "QQ"), Kuwo("kuwo", "酷我");
+
         private String type;
-    
-        private Type(String type) {
+        private String name;
+
+        private Type(String type, String name) {
             this.type = type;
+            this.name = name;
         }
-    
+
         public String getType() {
             return type;
         }
-    
+
         public void setType(String type) {
             this.type = type;
+        }
+
+        public static Type stringOf(String typename) {
+            Type type = Netease;
+            switch (typename) {
+                case "网易":
+                    type = Netease;
+                    break;
+                case "百度":
+                    type = Baidu;
+                    break;
+                case "酷狗":
+                    type = Kugou;
+                    break;
+                case "酷我":
+                    type = Kuwo;
+                    break;
+                case "QQ":
+                type = QQ;
+                break;
+            }
+            return type;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

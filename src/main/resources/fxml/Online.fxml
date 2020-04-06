@@ -11,8 +11,8 @@
    <children>
       <HBox alignment="CENTER" spacing="6.0">
          <children>
-            <JFXTextField fx:id="input" HBox.hgrow="SOMETIMES" />
-            <JFXButton fx:id="search" style="-fx-background-radius: 50%;" />
+            <JFXTextField fx:id="input" promptText="例如：东京不太热" HBox.hgrow="SOMETIMES" />
+            <JFXButton fx:id="search" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" style="-fx-background-radius: 50%;" />
          </children>
          <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />

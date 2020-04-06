@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -32,10 +33,21 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
             <Label text="在线音乐源：" />
-            <JFXRadioButton text="网易" />
-            <JFXRadioButton text="酷狗" />
+            <JFXRadioButton fx:id="netease" text="网易">
+               <toggleGroup>
+                  <ToggleGroup fx:id="type" />
+               </toggleGroup></JFXRadioButton>
+            <JFXRadioButton fx:id="qq" text="QQ" toggleGroup="$type" />
+            <JFXRadioButton fx:id="kuwo" text="酷我" toggleGroup="$type" />
+            <JFXRadioButton fx:id="baidu" text="百度" toggleGroup="$type" />
+            <JFXRadioButton fx:id="kugou" disable="true" text="酷狗" toggleGroup="$type" />
          </children>
       </HBox>
-      <Hyperlink text="lzw-723.github.io" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" />
+      <HBox alignment="CENTER" GridPane.rowIndex="2">
+         <children>
+            <Label text="开源地址：" />
+            <Hyperlink fx:id="link" text="https://gitee.com/lzw-723/MusicFx" />
+         </children>
+      </HBox>
    </children>
 </GridPane>

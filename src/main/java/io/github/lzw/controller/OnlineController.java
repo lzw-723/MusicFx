@@ -8,12 +8,12 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.svg.SVGGlyph;
 
+import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongO;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.SongUtilO;
-import io.github.lzw.util.SongUtilO.Type;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -61,8 +61,7 @@ public class OnlineController implements Initializable, ControllerImp {
             @Override
             public void handle(ActionEvent arg0) {
                 list.getItems().clear();
-                Type type = Type.Netease;
-                songs = SongUtilO.getSongOs(input.getText(), type);
+                songs = SongUtilO.getSongOs(input.getText(), Config.getInstance().getType());
                 list.getItems().addAll(songs);
             }
         });

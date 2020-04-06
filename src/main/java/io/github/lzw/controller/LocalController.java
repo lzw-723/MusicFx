@@ -57,6 +57,10 @@ public class LocalController implements Initializable, ControllerImp {
         new Thread(() -> {
             songs.addAll(SongUtil.getSongs());
             table.getItems().addAll(FXCollections.observableList(songs));
+            Song song = MusicFx.get().getCurrentSong();
+            if (song != null && song instanceof SongL) {
+                play(song);
+            }
         }).start();;
     }
 
