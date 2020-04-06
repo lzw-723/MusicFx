@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXSlider?>
@@ -62,11 +61,6 @@
                         <JFXButton fx:id="play_list" alignment="CENTER" maxHeight="24.0" maxWidth="-Infinity" minHeight="24.0" minWidth="-Infinity" prefHeight="24.0" text="Button" textAlignment="CENTER" />
                      </children>
                   </JFXRippler>
-                  <HBox>
-                     <children>
-                        <JFXBadge fx:id="play_list_badge" position="BOTTOM_CENTER" text="1" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
                </children>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

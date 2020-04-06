@@ -116,8 +116,11 @@ public class MusicFx {
     }
 
     public void play(int index) {
+        if (index < 0) {
+            index = list.size() + index;
+        }
         this.index = index;
-        play(list.get(index));
+        play(list.get(index % list.size()));
     }
 
     public void playInList(Song song) {
