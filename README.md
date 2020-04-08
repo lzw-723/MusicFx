@@ -1,4 +1,17 @@
+<!--
+ * @Author: lzw-723
+ * @Date: 2020-03-27 18:37:23
+ * @LastEditTime: 2020-04-08 20:07:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \MusicFx\README.md
+ -->
+
 # MusicFX
+
+![JDK Version](https://img.shields.io/badge/JDK-1.8-red)
+![JavaFx Version](https://img.shields.io/badge/JavaFx-8-blue)
+![Maven](https://img.shields.io/badge/构建工具-Maven-green)
 
 ## 简介
 
@@ -6,9 +19,13 @@
 
 ## 功能
 
-1.本地音乐播放  
-2.在线音乐搜索播放  
-3.等待开发
+* [x] 本地音乐播放
+* [x] 在线音乐搜索播放
+* [ ] 快捷键
+* [ ] 歌曲下载
+* [ ] 歌词批量下载
+* [ ] 歌词显示
+* [ ] 听歌统计
 
 ## 截图
 
@@ -28,8 +45,9 @@
 
 [commons-io](http://commons.apache.org/proper/commons-io/)
 
-## 开发环境
+## 参与贡献
 
-> JDK-1.8  
-> Javafx-1.8  
-> Maven
+1. Fork 本项目
+2. 新建 Feat_xxx 分支
+3. 提交代码
+4. 新建 Pull Request

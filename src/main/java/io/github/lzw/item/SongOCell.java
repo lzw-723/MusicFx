@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-24 10:31:24
+ * @LastEditTime: 2020-04-08 20:18:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\SongOCell.java
+ */
 package io.github.lzw.item;
 
 import java.io.IOException;
@@ -24,6 +32,7 @@ public class SongOCell extends JFXListCell<Song> {
     @Override
     public void updateItem(Song item, boolean empty) {
         super.updateItem(item, empty);
+        setStyle("-fx-background-color:TRANSPARENT;");
         if (item != null) {
             try {
                 prefWidthProperty().bind(getListView().widthProperty());

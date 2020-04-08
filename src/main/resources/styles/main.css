@@ -847,3 +847,19 @@
     -fx-font-size: 14.0px;
     -fx-text-fill: WHITE;
 }
+
+.jfx-list-view {
+    -fx-background-color:TRANSPARENT;
+}
+
+.jfx-list-cell {
+    -fx-background-color:TRANSPARENT;
+}
+
+/* 隐藏水平滚动条 */
+.jfx-list-view .scroll-bar:horizontal{
+    visibility: hidden;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
