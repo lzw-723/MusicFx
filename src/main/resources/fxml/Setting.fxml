@@ -7,53 +7,64 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.lzw.controller.SettingController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.lzw.controller.SettingController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <StackPane fx:id="root" layoutX="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="本地音乐目录：" />
-            <JFXTextField fx:id="dir" editable="false" />
-            <JFXButton fx:id="dirChooser" />
-            <JFXSpinner fx:id="spinner" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="本地音乐目录：" />
+                        <JFXTextField fx:id="dir" editable="false" />
+                        <JFXButton fx:id="dirChooser" />
+                        <JFXSpinner fx:id="spinner" prefHeight="25.0" prefWidth="25.0" visible="false" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="在线音乐源：" />
+                        <JFXRadioButton fx:id="netease" text="网易">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="type" />
+                           </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="qq" text="QQ" toggleGroup="$type" />
+                        <JFXRadioButton fx:id="kuwo" text="酷我" toggleGroup="$type" />
+                        <JFXRadioButton fx:id="baidu" text="百度" toggleGroup="$type" />
+                        <JFXRadioButton fx:id="kugou" disable="true" text="酷狗" toggleGroup="$type" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="开源地址：" />
+                        <Hyperlink fx:id="link" text="https://gitee.com/lzw-723/MusicFx" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                     <children>
+                        <JFXButton fx:id="log" text="显示日志" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
          </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-         <children>
-            <Label text="在线音乐源：" />
-            <JFXRadioButton fx:id="netease" text="网易">
-               <toggleGroup>
-                  <ToggleGroup fx:id="type" />
-               </toggleGroup></JFXRadioButton>
-            <JFXRadioButton fx:id="qq" text="QQ" toggleGroup="$type" />
-            <JFXRadioButton fx:id="kuwo" text="酷我" toggleGroup="$type" />
-            <JFXRadioButton fx:id="baidu" text="百度" toggleGroup="$type" />
-            <JFXRadioButton fx:id="kugou" disable="true" text="酷狗" toggleGroup="$type" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" GridPane.rowIndex="2">
-         <children>
-            <Label text="开源地址：" />
-            <Hyperlink fx:id="link" text="https://gitee.com/lzw-723/MusicFx" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-         <children>
-            <JFXButton fx:id="log" text="日志上报" />
-         </children>
-      </HBox>
+      </StackPane>
    </children>
-</GridPane>
+</AnchorPane>

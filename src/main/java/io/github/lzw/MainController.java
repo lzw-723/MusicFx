@@ -206,9 +206,7 @@ public class MainController implements Initializable {
             if (controller instanceof LocalController) {
                 return;
             }
-            long time = System.currentTimeMillis();
             loadContent("/fxml/Local.fxml");
-            System.out.println(System.currentTimeMillis() - time);
         });
         setting.setOnAction(event -> {
             if (controller instanceof SettingController) {
