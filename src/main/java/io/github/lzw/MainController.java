@@ -10,7 +10,7 @@ import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.bean.Song;
-import io.github.lzw.controller.ControllerImp;
+import io.github.lzw.controller.ControllerImpl;
 import io.github.lzw.controller.LocalController;
 import io.github.lzw.controller.OnlineController;
 import io.github.lzw.controller.SettingController;
@@ -77,7 +77,7 @@ public class MainController implements Initializable {
     private JFXPopup jfxPopup;
     private Tooltip tooltip = new Tooltip();
 
-    private ControllerImp controller;
+    private ControllerImpl controller;
 
     private void initMain() {
         freshControllBiutton();
@@ -206,7 +206,9 @@ public class MainController implements Initializable {
             if (controller instanceof LocalController) {
                 return;
             }
+            long time = System.currentTimeMillis();
             loadContent("/fxml/Local.fxml");
+            System.out.println(System.currentTimeMillis() - time);
         });
         setting.setOnAction(event -> {
             if (controller instanceof SettingController) {

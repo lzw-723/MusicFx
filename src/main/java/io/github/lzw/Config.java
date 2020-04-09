@@ -1,15 +1,17 @@
 package io.github.lzw;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import io.github.lzw.service.SongOService.Type;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-
-import java.io.*;
-import java.util.Properties;
-
-import io.github.lzw.util.SongUtilO.Type;
 
 public class Config {
     private final static Config config = new Config();

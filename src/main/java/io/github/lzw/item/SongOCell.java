@@ -1,7 +1,7 @@
 /*
- * @Author: your name
+ * @Author: lzw-723
  * @Date: 2020-03-24 10:31:24
- * @LastEditTime: 2020-04-08 20:18:49
+ * @LastEditTime: 2020-04-08 21:20:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\SongOCell.java

@@ -28,7 +28,7 @@ import javafx.util.Callback;
 /**
  * LocalController
  */
-public class LocalController implements Initializable, ControllerImp {
+public class LocalController implements Initializable, ControllerImpl {
     @FXML
     private JFXListView<Song> table;
     private List<SongL> songs = new ArrayList<>();
@@ -61,7 +61,7 @@ public class LocalController implements Initializable, ControllerImp {
             if (song != null && song instanceof SongL) {
                 play(song);
             }
-        }).start();;
+        }).start();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LocalController implements Initializable, ControllerImp {
     }
 
     @Override
-    public ControllerImp getController() {
+    public ControllerImpl getController() {
         // TODO Auto-generated method stub
         return this;
     }

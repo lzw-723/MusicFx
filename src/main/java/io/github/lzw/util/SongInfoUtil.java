@@ -1,8 +1,17 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-02-01 14:55:10
+ * @LastEditTime: 2020-04-09 09:39:32
+ * @LastEditors: Please set LastEditors
+ * @Description: 获取本地音频信息的工具类
+ */
 package io.github.lzw.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.jaudiotagger.audio.AudioFile;
@@ -13,7 +22,8 @@ import org.jaudiotagger.tag.Tag;
 public class SongInfoUtil {
     public static AudioFile getAudioFile(File file) {
         try {
-            System.out.println(file.exists());
+            // 关闭jaudiotagger日志输出
+            Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);
             AudioFile audioFile = AudioFileIO.read(file);
             return audioFile;
         } catch (Exception e) {
@@ -62,7 +72,7 @@ public class SongInfoUtil {
     }
 
     public static String getArtWork(File file){
-        File pic = new File(".", "pic/" + getAlbum(file) + ".jpg");
+        File pic = new File(".", "pic/" + getAlbum(file).hashCode() + ".jpg");
         if (!pic.exists()) {
             AudioFile audioFile = getAudioFile(file);
             Tag tag = audioFile.getTag();

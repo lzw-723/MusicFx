@@ -2,8 +2,8 @@ package io.github.lzw.controller;
 
 import io.github.lzw.bean.Song;
 
-public interface ControllerImp {
+public interface ControllerImpl {
     String getTitle();
-    ControllerImp getController();
+    ControllerImpl getController();
     void play(Song song);
 }

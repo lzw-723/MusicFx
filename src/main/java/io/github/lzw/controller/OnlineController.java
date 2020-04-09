@@ -1,3 +1,11 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-04-05 11:03:40
+ * @LastEditTime: 2020-04-09 11:29:14
+ * @LastEditors: Please set LastEditors
+ * @Description: 在线音乐搜索面板
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\OnlineController.java
+ */
 package io.github.lzw.controller;
 
 import java.net.URL;
@@ -13,7 +21,7 @@ import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongO;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.item.SongOCell;
-import io.github.lzw.util.SongUtilO;
+import io.github.lzw.service.SongOService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
-public class OnlineController implements Initializable, ControllerImp {
+public class OnlineController implements Initializable, ControllerImpl {
 
     @FXML
     private TextField input;
@@ -61,7 +69,7 @@ public class OnlineController implements Initializable, ControllerImp {
             @Override
             public void handle(ActionEvent arg0) {
                 list.getItems().clear();
-                songs = SongUtilO.getSongOs(input.getText(), Config.getInstance().getType());
+                songs = SongOService.getSongOs(input.getText(), Config.getInstance().getType());
                 list.getItems().addAll(songs);
             }
         });
@@ -74,7 +82,7 @@ public class OnlineController implements Initializable, ControllerImp {
     }
 
     @Override
-    public ControllerImp getController() {
+    public ControllerImpl getController() {
         // TODO Auto-generated method stub
         return this;
     }

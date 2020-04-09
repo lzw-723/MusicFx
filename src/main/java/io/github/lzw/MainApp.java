@@ -1,3 +1,11 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-01-27 17:35:16
+ * @LastEditTime: 2020-04-09 09:19:45
+ * @LastEditors: lzw-723
+ * @Description: 启动类（Java-8）
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
+ */
 package io.github.lzw;
 
 import java.net.URL;
@@ -24,7 +32,8 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
         JFXDecorator decorator = new JFXDecorator(stage, root);
         decorator.setCustomMaximize(true);
-        decorator.setGraphic(new SVGGlyph("M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"));
+        decorator.setGraphic(new SVGGlyph(
+                "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"));
         double width = 800;
         double height = 600;
         try {
@@ -37,7 +46,7 @@ public class MainApp extends Application {
         Image icon = new Image(getClass().getResource("/img/icon.png").toURI().toURL().toString());
         stage.getIcons().add(icon);
         ImageView imageView = new ImageView(icon);
-        imageView.setFitHeight(24);;
+        imageView.setFitHeight(24);
         imageView.setFitWidth(24);
         decorator.setGraphic(imageView);
         Scene scene = new Scene(decorator, width, height);

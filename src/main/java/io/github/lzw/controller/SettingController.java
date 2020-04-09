@@ -1,22 +1,31 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-04-05 11:04:02
+ * @LastEditTime: 2020-04-09 11:32:18
+ * @LastEditors: Please set LastEditors
+ * @Description: 设置面板
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\SettingController.java
+ */
 package io.github.lzw.controller;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import java.awt.Desktop;
-import java.io.IOException;
 
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.svg.SVGGlyph;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import io.github.lzw.util.SongUtil;
-import io.github.lzw.util.SongUtilO;
-import io.github.lzw.util.SongUtilO.Type;
+import io.github.lzw.service.LogService;
+import io.github.lzw.service.SongOService.Type;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,7 +37,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.stage.DirectoryChooser;
 
-public class SettingController implements Initializable, ControllerImp {
+public class SettingController implements Initializable, ControllerImpl {
+
+    private static final Logger logger = LoggerFactory.getLogger(SettingController.class);
 
     @FXML
     private Button dirChooser;
@@ -48,6 +59,8 @@ public class SettingController implements Initializable, ControllerImp {
     private RadioButton kugou;
     @FXML
     private Hyperlink link;
+    @FXML
+    private Button log;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -56,7 +69,12 @@ public class SettingController implements Initializable, ControllerImp {
         dirChooserGlyph.setSize(12);
         dirChooser.setGraphic(dirChooserGlyph);
         dirChooser.setOnMouseClicked(event -> {
-            dir.setText(new DirectoryChooser().showDialog(dirChooser.getScene().getWindow()).getPath());
+            File dir_music = new DirectoryChooser().showDialog(dirChooser.getScene().getWindow());
+            if (dir_music == null || !dir_music.exists()) {
+                logger.warn("未选择本地歌曲目录");
+                return;
+            }
+            dir.setText(dir_music.toPath().toString());
             spinner.setVisible(true);
             new Thread(() -> {
                 SongUtil.getSongsIgnoreCache();
@@ -98,6 +116,9 @@ public class SettingController implements Initializable, ControllerImp {
                 e.printStackTrace();
             }
         });
+        log.setOnAction(event -> {
+            LogService.sendLog();
+        });
     }
 
     @Override
@@ -107,7 +128,7 @@ public class SettingController implements Initializable, ControllerImp {
     }
 
     @Override
-    public ControllerImp getController() {
+    public ControllerImpl getController() {
         // TODO Auto-generated method stub
         return this;
     }
