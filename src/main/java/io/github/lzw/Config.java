@@ -56,7 +56,7 @@ public class Config {
         }
     }
     private void init() throws IOException {
-        File file = new File(new File(".").getPath() + "settings.properties");
+        File file = FileUtil.getFile("settings.properties");
         if (!file.exists()) {
             try {
                 file.createNewFile();

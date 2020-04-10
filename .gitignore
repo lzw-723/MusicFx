@@ -17,7 +17,7 @@
 /target
 .classpath
 .project
-.settings.properties
+settings.properties
 songs.json
 settings.xml
 /pic

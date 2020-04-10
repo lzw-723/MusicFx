@@ -1,20 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDialog?>
-<?import com.jfoenix.controls.JFXDialogLayout?>
-<?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXButton ?>
+<?import com.jfoenix.controls.JFXDialog ?>
+<?import com.jfoenix.controls.JFXDialogLayout ?>
+<?import javafx.scene.control.Label ?>
+<?import javafx.scene.control.ScrollPane ?>
 
 <JFXDialog fx:id="dialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-        <JFXDialogLayout>
-            <heading>
-                <Label>日志</Label>
-            </heading>
-            <body>
-                <Label fx:id="text"></Label>
-            </body>
-            <actions>
-                <JFXButton fx:id="accept" styleClass="dialog-accept">确定</JFXButton>
-            </actions>
-        </JFXDialogLayout>
-    </JFXDialog>
+    <JFXDialogLayout>
+        <heading>
+            <Label>日志</Label>
+        </heading>
+        <body>
+            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity">
+                <content>
+                    <Label fx:id="text"></Label>
+                </content>
+            </ScrollPane>
+        </body>
+        <actions>
+            <JFXButton fx:id="accept" styleClass="dialog-accept">确定</JFXButton>
+        </actions>
+    </JFXDialogLayout>
+</JFXDialog>

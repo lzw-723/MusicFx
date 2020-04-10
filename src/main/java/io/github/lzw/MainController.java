@@ -178,7 +178,6 @@ public class MainController implements Initializable {
             @Override
             public void onError() {
                 // TODO Auto-generated method stub
-
             }
         });
 
@@ -248,7 +247,6 @@ public class MainController implements Initializable {
         nextGlyph.setFill(Paint.valueOf("#FFFFFF"));
         nextGlyph.setSize(12);
         next.setGraphic(nextGlyph);
-        // play_list_badge.getClip().set
         play_list.setText(String.valueOf(MusicFx.get().count()));
         SVGGlyph play_list_Glyph = new SVGGlyph("M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z");
         play_list_Glyph.setSize(10);

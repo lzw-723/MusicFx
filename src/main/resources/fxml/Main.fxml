@@ -99,7 +99,10 @@
                   </Label>
                </left>
             </JFXToolbar>
-            <VBox fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <Pane fx:id="pane" VBox.vgrow="SOMETIMES">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Pane>
          </children>
       </VBox>
    </center>

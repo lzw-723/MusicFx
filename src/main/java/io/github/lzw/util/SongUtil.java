@@ -1,16 +1,21 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-02-02 13:32:29
+ * @LastEditors: lzw-723
+ * @LastEditTime: 2020-04-10 08:53:35
+ * @Description: 描述信息
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\\util\SongUtil.java
+ */
 package io.github.lzw.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.alibaba.fastjson.JSON;
 
-import org.apache.commons.io.FileUtils;
-
 import io.github.lzw.Config;
+import io.github.lzw.FileUtil;
 import io.github.lzw.bean.SongL;
 
 public class SongUtil {
@@ -25,7 +30,7 @@ public class SongUtil {
     }
 
     private synchronized static List<SongL> getSongs(File dir, boolean cacheable) {
-        File ser = new File(new File(".").getPath(), "songs.json");
+        File ser = FileUtil.getFile("songs.json");
         if (ser.exists() && cacheable) {
             return read(ser);
         } else {
@@ -49,22 +54,11 @@ public class SongUtil {
 
     private static void save(List<SongL> list, File file) {
         String data = JSON.toJSONString(list);
-        try {
-            FileUtils.writeStringToFile(file, data);
-        } catch (IOException e) {
-            Logger.getLogger(SongUtil.class.getSimpleName()).warning("数据保存失败");
-            e.printStackTrace();
-        }
+        FileUtil.writeStringToFile(file, data);
     }
 
     private static List<SongL> read(File file) {
-        try {
-            List<SongL> songs = JSON.parseArray(FileUtils.readFileToString(file), SongL.class);
-            return songs;
-        } catch (Exception e) {
-            Logger.getLogger(SongUtil.class.getSimpleName()).warning("数据读取失败," + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
+        List<SongL> songs = JSON.parseArray(FileUtil.readFileToString(file), SongL.class);
+        return songs;
     }
 }
