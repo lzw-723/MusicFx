@@ -1,4 +1,4 @@
-package io.github.lzw;
+package io.github.lzw.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,11 +9,9 @@ import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
 
+import io.github.lzw.Config;
+import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
-import io.github.lzw.controller.ControllerImpl;
-import io.github.lzw.controller.LocalController;
-import io.github.lzw.controller.OnlineController;
-import io.github.lzw.controller.SettingController;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.core.MusicFx.Method;
@@ -232,7 +230,9 @@ public class MainController implements Initializable {
         }
     }
 
-    // 设定控制按钮（初始化、刷新状态）
+    /**
+     * @description: 设定控制按钮（初始化、刷新状态）
+     */    
     private void freshControllBiutton() {
         SVGGlyph playGlyph = MusicFx.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z")
                 : new SVGGlyph("M8 5v14l11-7z");
