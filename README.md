@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-10 10:36:36
+ * @LastEditTime: 2020-04-10 14:45:34
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -22,7 +22,7 @@
 * [x] 本地音乐播放
 * [x] 在线音乐搜索播放
 * [x] 快捷键
-* [ ] 全局快捷键
+* [x] 全局快捷键
 * [ ] 歌曲下载
 * [ ] 歌词批量下载
 * [ ] 歌词显示
