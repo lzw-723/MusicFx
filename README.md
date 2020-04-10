@@ -1,8 +1,8 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-08 20:07:12
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-10 10:36:36
+ * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
  -->
@@ -21,7 +21,8 @@
 
 * [x] 本地音乐播放
 * [x] 在线音乐搜索播放
-* [ ] 快捷键
+* [x] 快捷键
+* [ ] 全局快捷键
 * [ ] 歌曲下载
 * [ ] 歌词批量下载
 * [ ] 歌词显示
@@ -33,7 +34,7 @@
 
 ![GIF](https://s1.ax1x.com/2020/04/06/GymDG4.gif)
 
-## 开源使用
+## 开源使用（部分）
 
 [FastJson](https://github.com/alibaba/fastjson)
 

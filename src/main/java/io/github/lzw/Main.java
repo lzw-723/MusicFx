@@ -1,9 +1,9 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-03-25 14:58:16
- * @LastEditTime: 2020-04-09 10:28:00
- * @LastEditors: Please set LastEditors
- * @Description: 启动类(Java-11)
+ * @LastEditTime: 2020-04-10 10:21:40
+ * @LastEditors: lzw-723
+ * @Description: 启动类(Java-11，非模块化，需要将OpenJfx打包进Jar)
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\Main.java
  */
 package io.github.lzw;

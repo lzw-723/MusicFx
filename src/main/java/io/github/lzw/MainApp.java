@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-01-27 17:35:16
- * @LastEditTime: 2020-04-09 09:19:45
+ * @LastEditTime: 2020-04-10 10:33:08
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
@@ -13,6 +13,8 @@ import java.net.URL;
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
 
+import io.github.lzw.core.MusicFx;
+import io.github.lzw.util.HotkeyUtil;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -50,6 +55,7 @@ public class MainApp extends Application {
         imageView.setFitWidth(24);
         decorator.setGraphic(imageView);
         Scene scene = new Scene(decorator, width, height);
+        HotkeyUtil.initHotKey(scene);
         final ObservableList<String> stylesheets = scene.getStylesheets();
         URL cssUrl = getClass().getResource("/styles/main.css");
         if (cssUrl != null) {

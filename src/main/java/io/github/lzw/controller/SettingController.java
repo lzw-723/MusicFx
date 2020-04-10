@@ -1,8 +1,8 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:04:02
- * @LastEditTime: 2020-04-09 16:59:55
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-10 10:53:24
+ * @LastEditors: lzw-723
  * @Description: 设置面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\SettingController.java
  */
@@ -26,9 +26,8 @@ import org.slf4j.LoggerFactory;
 import io.github.lzw.Config;
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
-import io.github.lzw.util.LogUtil;
-import io.github.lzw.util.SongUtil;
 import io.github.lzw.service.SongOService.Type;
+import io.github.lzw.util.SongUtil;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,10 +36,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 
@@ -69,7 +67,7 @@ public class SettingController implements Initializable, ControllerImpl {
     @FXML
     private Hyperlink link;
     @FXML
-    private Button log;
+    private ToggleButton hotkey;
     private JFXDialog dialog;
 
     @Override
@@ -129,14 +127,15 @@ public class SettingController implements Initializable, ControllerImpl {
         try {
             dialog = FXMLLoader.load(MainApp.class.getResource("/fxml/dialog/LogDialog.fxml"));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        log.setOnAction(event -> {
-            ((Label)dialog.lookup("#text")).setText(LogUtil.getLog());
-            ((Button)dialog.lookup("#accept")).setOnAction(event2 -> dialog.close());
-            dialog.show(root);
-        });
+        hotkey.setSelected(Config.getInstance().getHotkeyAble());
+        Config.getInstance().hotkeyAbleProperty().bind(hotkey.selectedProperty());
+        // log.setOnAction(event -> {
+        //     ((Label)dialog.lookup("#text")).setText(LogUtil.getLog());
+        //     ((Button)dialog.lookup("#accept")).setOnAction(event2 -> dialog.close());
+        //     dialog.show(root);
+        // });
     }
 
     @Override
