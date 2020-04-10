@@ -52,15 +52,16 @@
                         <JFXRadioButton fx:id="kugou" disable="true" text="酷狗" toggleGroup="$type" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" GridPane.rowIndex="2">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <JFXToggleButton fx:id="hotkey" contentDisplay="RIGHT" text="快捷键：" />
+                        <JFXButton fx:id="hotkey_help" text="快捷键详情" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.rowIndex="3">
                      <children>
                         <Label text="开源地址：" />
                         <Hyperlink fx:id="link" text="https://gitee.com/lzw-723/MusicFx" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-                     <children>
-                        <JFXToggleButton fx:id="hotkey" contentDisplay="RIGHT" text="快捷键：" />
                      </children>
                   </HBox>
                </children>

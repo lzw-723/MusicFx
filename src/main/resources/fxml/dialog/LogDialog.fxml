@@ -12,11 +12,7 @@
             <Label>日志</Label>
         </heading>
         <body>
-            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity">
-                <content>
-                    <Label fx:id="text"></Label>
-                </content>
-            </ScrollPane>
+            <Label fx:id="text"></Label>
         </body>
         <actions>
             <JFXButton fx:id="accept" styleClass="dialog-accept">确定</JFXButton>

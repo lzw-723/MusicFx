@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:04:02
- * @LastEditTime: 2020-04-10 10:53:24
+ * @LastEditTime: 2020-04-10 15:05:56
  * @LastEditors: lzw-723
  * @Description: 设置面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\SettingController.java
@@ -36,6 +36,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
@@ -68,6 +69,8 @@ public class SettingController implements Initializable, ControllerImpl {
     private Hyperlink link;
     @FXML
     private ToggleButton hotkey;
+    @FXML
+    private Button hotkey_help;
     private JFXDialog dialog;
 
     @Override
@@ -124,18 +127,19 @@ public class SettingController implements Initializable, ControllerImpl {
                 e.printStackTrace();
             }
         });
-        try {
-            dialog = FXMLLoader.load(MainApp.class.getResource("/fxml/dialog/LogDialog.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         hotkey.setSelected(Config.getInstance().getHotkeyAble());
         Config.getInstance().hotkeyAbleProperty().bind(hotkey.selectedProperty());
-        // log.setOnAction(event -> {
-        //     ((Label)dialog.lookup("#text")).setText(LogUtil.getLog());
-        //     ((Button)dialog.lookup("#accept")).setOnAction(event2 -> dialog.close());
-        //     dialog.show(root);
-        // });
+        hotkey_help.setOnAction(event -> {
+            try {
+                dialog = FXMLLoader.load(MainApp.class.getResource("/fxml/dialog/LogDialog.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ((Label)dialog.lookup("#text")).setText("当前窗口快捷键：\nCtrl + P 播放或暂停\nCtrl + Left 上一首\nCtrl + Right 下一首\n全局快捷键：\nCtrl + Alt + P 播放或暂停\nCtrl + Alt + Left 上一首\nCtrl + Alt + Right 下一首");
+            ((Button)dialog.lookup("#accept")).setOnAction(event2 -> dialog.close());
+            dialog.show(root);
+        });
     }
 
     @Override

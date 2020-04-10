@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-01-27 17:35:16
- * @LastEditTime: 2020-04-10 14:40:39
+ * @LastEditTime: 2020-04-10 15:02:21
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
@@ -12,6 +12,9 @@ import java.net.URL;
 
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.lzw.util.HotkeyUtil;
 import javafx.application.Application;
@@ -27,9 +30,11 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
+
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("Java-" + SystemInfo.javaVersion() + " || Javafx-" + SystemInfo.javafxVersion());
+        logger.info("MusicFx启动，Java版本{}，Javafx版本{}", SystemInfo.javaVersion(), SystemInfo.javafxVersion());
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
         JFXDecorator decorator = new JFXDecorator(stage, root);
         decorator.setCustomMaximize(true);
@@ -63,11 +68,6 @@ public class MainApp extends Application {
     }
 
     /**
-     * The main() method is ignored in correctly deployed JavaFX application. main()
-     * serves only as fallback in case the application can not be launched through
-     * deployment artifacts, e.g., in IDEs with limited FX support. NetBeans ignores
-     * main().
-     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
