@@ -23,23 +23,28 @@ public class SongOService {
     private static final Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.songe.cc/")
             .addConverterFactory(FastJsonConverterFactory.create()).build();
 
-    public static ArrayList<SongO> getSongOs(String input, Type type) {
-        ArrayList<SongO> songs = new ArrayList<>();
-        try {
-            List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 1)
-                    .execute().body().getData();
-            if (songBOs.size() == 10) {
-                songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 2).execute()
-                        .body().getData());
+    public static void getSongOs(String input, Type type, CallBack callBack) {
+        new Thread(() -> {
+
+            List<SongO> songs = new ArrayList<>();
+            try {
+                List<SongBean.SongBeanO> songBOs = retrofit.create(SongApi.class)
+                        .getSongs(input, "name", type.getType(), 1).execute().body().getData();
+                if (songBOs.size() == 10) {
+                    songBOs.addAll(retrofit.create(SongApi.class).getSongs(input, "name", type.getType(), 2).execute()
+                            .body().getData());
+                }
+                for (SongBeanO songBeanO : songBOs) {
+                    songs.add(new SongO(songBeanO));
+                }
+                callBack.onSuccess(songs);
+            } catch (IOException e) {
+                callBack.onError(e);
+                e.printStackTrace();
             }
-            for (SongBeanO songBeanO : songBOs) {
-                songs.add(new SongO(songBeanO));
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return songs;
+
+        }).start();
+
     }
 
     public enum Type {
@@ -77,8 +82,8 @@ public class SongOService {
                     type = Kuwo;
                     break;
                 case "QQ":
-                type = QQ;
-                break;
+                    type = QQ;
+                    break;
             }
             return type;
         }
@@ -90,5 +95,11 @@ public class SongOService {
         public void setName(String name) {
             this.name = name;
         }
+
+    }
+    public static interface CallBack {
+        void onSuccess(List<SongO> songs);
+
+        void onError(IOException e);
     }
 }

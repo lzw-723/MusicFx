@@ -34,8 +34,12 @@
                      <children>
                         <Label text="本地音乐目录：" />
                         <JFXTextField fx:id="dir" editable="false" />
-                        <JFXButton fx:id="dirChooser" />
-                        <JFXSpinner fx:id="spinner" prefHeight="25.0" prefWidth="25.0" visible="false" />
+                        <StackPane>
+                           <children>
+                              <JFXButton fx:id="dirChooser" />
+                              <JFXSpinner fx:id="spinner" prefHeight="25.0" prefWidth="25.0" visible="false" />
+                           </children>
+                        </StackPane>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">

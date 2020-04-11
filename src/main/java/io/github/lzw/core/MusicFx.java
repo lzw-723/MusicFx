@@ -8,12 +8,14 @@ import io.github.lzw.bean.Song;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class MusicFx {
     private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(Config.getInstance().getVolume());
     private int index = 0;
+    private SimpleDoubleProperty currentProgress = new SimpleDoubleProperty(0);
     private Song currentSong;
     private List<Song> list = new ArrayList<>();
     private Method method = Method.Loop;
@@ -51,8 +53,6 @@ public class MusicFx {
         this.currentProgress.set(currentProgress);
     }
 
-    private SimpleDoubleProperty currentProgress = new SimpleDoubleProperty(0);
-
     public double getVolume() {
         return volume.get();
     }
@@ -63,6 +63,12 @@ public class MusicFx {
 
     public void setVolume(double volume) {
         this.volume.set(volume);
+    }
+
+    public void seek(Double progress) {
+        if (mediaPlayer != null) {
+            mediaPlayer.seek(Duration.seconds(getTotalTime() * progress));
+        }
     }
 
     private Handler handler;

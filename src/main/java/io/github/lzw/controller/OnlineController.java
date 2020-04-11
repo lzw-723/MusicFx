@@ -1,19 +1,21 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:03:40
- * @LastEditTime: 2020-04-09 11:29:14
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-11 15:46:52
+ * @LastEditors: lzw-723
  * @Description: 在线音乐搜索面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\OnlineController.java
  */
 package io.github.lzw.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.Config;
@@ -22,8 +24,10 @@ import io.github.lzw.bean.SongO;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.service.SongOService;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -39,8 +43,11 @@ public class OnlineController implements Initializable, ControllerImpl {
     @FXML
     private Button search;
     @FXML
+    private JFXSpinner searching;
+    @FXML
     private JFXListView<Song> list;
-    private List<SongO> songs = new ArrayList<>();
+    private SimpleBooleanProperty searchingProperty = new SimpleBooleanProperty(false);
+    private ObservableList<SongO> songs = FXCollections.observableArrayList(new ArrayList<>());
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -51,28 +58,40 @@ public class OnlineController implements Initializable, ControllerImpl {
         list.setCellFactory(new Callback<ListView<Song>, ListCell<Song>>() {
 
             @Override
-            public ListCell<Song> call(ListView<Song> arg0) {
+            public ListCell<Song> call(ListView<Song> listview) {
                 SongOCell cell = new SongOCell();
-                cell.setHandler(new SongOCell.Handler() {
-
-                    @Override
-                    public void play(Song song) {
-                        MusicFx.get().setList(songs);
-                        MusicFx.get().playInList(song);
-                    }
+                cell.setHandler(song -> {
+                    MusicFx.get().setList(songs);
+                    MusicFx.get().playInList(song);
                 });
                 return cell;
             }
         });
-        search.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                list.getItems().clear();
-                songs = SongOService.getSongOs(input.getText(), Config.getInstance().getType());
-                list.getItems().addAll(songs);
+        songs.addListener((ListChangeListener<SongO>) change -> list.getItems().addAll(change.getList()));
+        input.editableProperty().bind(searchingProperty.not());
+        search.visibleProperty().bind(searchingProperty.not());
+        searching.visibleProperty().bind(searchingProperty);
+        search.setOnAction(event -> {
+            if (searchingProperty.get()) {
+                return;
             }
-        });
+            searchingProperty.set(true);
+            SongOService.getSongOs(input.getText(), Config.getInstance().getType(),
+                new SongOService.CallBack() {
+
+                    @Override
+                    public void onSuccess(List<SongO> songs) {
+                        OnlineController.this.songs.clear();
+                        OnlineController.this.songs.addAll(songs);
+                        searchingProperty.set(false);
+                    }
+
+                    @Override
+                    public void onError(IOException e) {
+                        searchingProperty.set(false);
+                    }
+                });
+            });
     }
 
     @Override

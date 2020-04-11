@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:04:02
- * @LastEditTime: 2020-04-10 15:05:56
+ * @LastEditTime: 2020-04-11 15:47:34
  * @LastEditors: lzw-723
  * @Description: 设置面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\SettingController.java
@@ -28,9 +28,8 @@ import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
 import io.github.lzw.service.SongOService.Type;
 import io.github.lzw.util.SongUtil;
-import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -72,6 +71,7 @@ public class SettingController implements Initializable, ControllerImpl {
     @FXML
     private Button hotkey_help;
     private JFXDialog dialog;
+    private SimpleBooleanProperty scanningProperty = new SimpleBooleanProperty(false);
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -86,21 +86,20 @@ public class SettingController implements Initializable, ControllerImpl {
                 return;
             }
             dir.setText(dir_music.toPath().toString());
-            spinner.setVisible(true);
+            scanningProperty.set(true);
             new Thread(() -> {
                 SongUtil.getSongsIgnoreCache();
-                Platform.runLater(() -> spinner.setVisible(false));
+                scanningProperty.set(false);
             }).start();
         });
         this.dir.setText(Config.getInstance().getDir());
         Config.getInstance().dirProperty().bind(this.dir.textProperty());
-        netease.getToggleGroup().selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        dirChooser.visibleProperty().bind(scanningProperty.not());
+        spinner.visibleProperty().bind(scanningProperty);
 
-            @Override
-            public void changed(ObservableValue<? extends Toggle> arg0, Toggle arg1, Toggle arg2) {
-                Config.getInstance().setType(Type.stringOf(((RadioButton) arg2).getText()));
-            }
-        });
+
+        netease.getToggleGroup().selectedToggleProperty().addListener((ChangeListener<Toggle>) (arg01, arg11,
+                arg2) -> Config.getInstance().setType(Type.stringOf(((RadioButton) arg2).getText())));
         switch (Config.getInstance().getType()) {
             case Netease:
                 netease.setSelected(true);

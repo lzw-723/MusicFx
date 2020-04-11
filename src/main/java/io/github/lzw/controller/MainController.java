@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXToggleNode;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
@@ -19,8 +20,8 @@ import io.github.lzw.core.MusicFx.Method;
 import io.github.lzw.item.SongList;
 import io.github.lzw.util.TimeFormater;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
+import okhttp3.Call;
 
 public class MainController implements Initializable {
 
@@ -57,7 +59,7 @@ public class MainController implements Initializable {
     @FXML
     private Label time;
     @FXML
-    private Slider slider1;
+    private JFXSlider slider1;
     @FXML
     private Button previous;
     @FXML
@@ -71,7 +73,7 @@ public class MainController implements Initializable {
     @FXML
     private HBox layout;
     @FXML
-    private Slider slider2;
+    private JFXSlider slider2;
 
     private JFXPopup jfxPopup;
     private Tooltip tooltip = new Tooltip();
@@ -93,14 +95,22 @@ public class MainController implements Initializable {
         });
         Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
 
-        MusicFx.get().currentProgressProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                slider1.setValue(newValue.doubleValue());
-                time.setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
-                        + TimeFormater.format(MusicFx.get().getTotalTime() * 1000));
-            }
+        slider1.setValueFactory(slider -> Bindings.createStringBinding(
+                () -> TimeFormater.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime() + 1)),
+                slider.valueProperty()));
+        slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+        slider1.setOnMousePressed(event -> slider1.valueProperty().unbind());
+        slider1.setOnMouseReleased(event -> {
+            MusicFx.get().seek(slider1.getValue());
+            slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         });
+        slider2.setValueFactory(slider -> Bindings.createStringBinding(
+            () -> String.valueOf(Math.round(slider.getValue() * 100)) + "%",
+            slider.valueProperty()));
+        MusicFx.get().currentProgressProperty()
+                .addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> time
+                        .setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
+                                + TimeFormater.format(MusicFx.get().getTotalTime() * 1000)));
 
         MusicFx.get().setHandler(new Handler() {
 
