@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXToggleNode?>
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -27,7 +28,7 @@
                   <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #ff4081; -fx-background-radius: 50%;" textFill="WHITE" />
                </children>
             </HBox>
-            <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="SOMETIMES">
+            <VBox alignment="CENTER" spacing="6.0" HBox.hgrow="SOMETIMES">
                <children>
                   <HBox>
                      <children>
@@ -47,6 +48,11 @@
                      </children>
                   </HBox>
                   <JFXSlider fx:id="slider1" max="1.0" value="-1.0" VBox.vgrow="NEVER" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lrc" text="歌词" visible="false" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <HBox alignment="CENTER">
@@ -77,11 +83,23 @@
    <left>
       <JFXToolbar minHeight="-Infinity" minWidth="60.0" prefWidth="60.0" style="-fx-background-color: #3f51b5;" BorderPane.alignment="CENTER">
          <center>
-            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="search" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
-                  <JFXButton fx:id="local" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
-                  <JFXButton fx:id="setting" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
+                  <JFXToggleNode fx:id="search" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textAlignment="CENTER">
+                     <graphic>
+                        <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
+                     </graphic>
+                  </JFXToggleNode>
+                  <JFXToggleNode fx:id="local" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;">
+                     <graphic>
+                        <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
+                     </graphic>
+                  </JFXToggleNode>
+                  <JFXToggleNode fx:id="setting" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;">
+                     <graphic>
+                        <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
+                     </graphic>
+                  </JFXToggleNode>
                </children>
             </VBox>
          </center>

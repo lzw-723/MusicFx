@@ -46,9 +46,9 @@
                               <ToggleGroup fx:id="type" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="qq" text="QQ" toggleGroup="$type" />
+                        <JFXRadioButton fx:id="qq" disable="true" text="QQ" toggleGroup="$type" />
                         <JFXRadioButton fx:id="kuwo" text="酷我" toggleGroup="$type" />
-                        <JFXRadioButton fx:id="baidu" text="百度" toggleGroup="$type" />
+                        <JFXRadioButton fx:id="baidu" disable="true" text="百度" toggleGroup="$type" />
                         <JFXRadioButton fx:id="kugou" disable="true" text="酷狗" toggleGroup="$type" />
                      </children>
                   </HBox>

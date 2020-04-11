@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXToggleNode;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.svg.SVGGlyph;
@@ -29,8 +30,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -38,11 +37,11 @@ import javafx.scene.paint.Paint;
 public class MainController implements Initializable {
 
     @FXML
-    private Button search;
+    private JFXToggleNode search;
     @FXML
-    private Button local;
+    private JFXToggleNode local;
     @FXML
-    private Button setting;
+    private JFXToggleNode setting;
 
     @FXML
     private Label title;
@@ -196,18 +195,27 @@ public class MainController implements Initializable {
         settingSvg.setSize(16);
         setting.setGraphic(settingSvg);
         search.setOnAction(event -> {
+            search.setSelected(true);
+            local.setSelected(false);
+            setting.setSelected(false);
             if (controller instanceof OnlineController) {
                 return;
             }
             loadContent("/fxml/Online.fxml");
         });
         local.setOnAction(event -> {
+            search.setSelected(false);
+            local.setSelected(true);
+            setting.setSelected(false);
             if (controller instanceof LocalController) {
                 return;
             }
             loadContent("/fxml/Local.fxml");
         });
         setting.setOnAction(event -> {
+            search.setSelected(false);
+            local.setSelected(false);
+            setting.setSelected(true);
             if (controller instanceof SettingController) {
                 return;
             }

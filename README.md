@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-10 14:45:34
+ * @LastEditTime: 2020-04-11 10:51:59
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -16,6 +16,10 @@
 ## 简介
 
 一个基于`Javafx`开发的`Material Design`风格音乐播放器
+
+## 体验
+
+[下载](https://lanzous.com/b02yu3pqb)
 
 ## 功能
 
