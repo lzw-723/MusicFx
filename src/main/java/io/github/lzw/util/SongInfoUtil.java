@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-01 14:55:10
- * @LastEditTime: 2020-04-12 11:22:04
+ * @LastEditTime: 2020-04-12 16:38:54
  * @LastEditors: lzw-723
  * @Description: 获取本地音频信息的工具类
  */
@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ import io.github.lzw.FileUtil;
 
 public class SongInfoUtil {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SongInfoUtil.class);
+
     public static AudioFile getAudioFile(File file) {
         try {
             // 关闭jaudiotagger日志输出
@@ -31,14 +33,14 @@ public class SongInfoUtil {
             AudioFile audioFile = AudioFileIO.read(file);
             return audioFile;
         } catch (Exception e) {
+            logger.warn("获取音频文件{}失败，{}", file.getName(), e.getMessage());
             e.printStackTrace();
         }
         return null;
     }
 
     public static String getTitle(File file) {
-        AudioFile audioFile = getAudioFile(file);
-        Tag tag = audioFile.getTag();
+        Tag tag = getAudioFile(file).getTag();
         String title = "";
         if (tag != null) {
             title = tag.getFirst(FieldKey.TITLE);
@@ -47,8 +49,7 @@ public class SongInfoUtil {
     }
 
     public static String getArtist(File file) {
-        AudioFile audioFile = getAudioFile(file);
-        Tag tag = audioFile.getTag();
+        Tag tag = getAudioFile(file).getTag();
         String artist = "";
         if (tag != null) {
             artist = tag.getFirst(FieldKey.ARTIST);
@@ -57,8 +58,7 @@ public class SongInfoUtil {
     }
 
     public static String getAlbum(File file) {
-        AudioFile audioFile = getAudioFile(file);
-        Tag tag = audioFile.getTag();
+        Tag tag = getAudioFile(file).getTag();
         String album = "";
         if (tag != null) {
             album = tag.getFirst(FieldKey.ALBUM);
@@ -75,11 +75,10 @@ public class SongInfoUtil {
         }
     }
 
-    public static String getArtWork(File file){
+    public static String getArtWork(File file) {
         File pic = FileUtil.getFile("pic/" + getAlbum(file).hashCode() + ".jpg");
         if (!pic.exists()) {
-            AudioFile audioFile = getAudioFile(file);
-            Tag tag = audioFile.getTag();
+            Tag tag = getAudioFile(file).getTag();
             byte[] artWork = null;
             if (tag != null && tag.getFirstArtwork() != null) {
                 artWork = tag.getFirstArtwork().getBinaryData();
@@ -100,6 +99,30 @@ public class SongInfoUtil {
             }
         }
 
+        return "";
+    }
+
+    public static String getArtistCover(File file) {
+        File cover_art = FileUtil.getFile("artist/" + getArtist(file).hashCode() + ".jpg");
+        if (!cover_art.exists()) {
+            Tag tag = getAudioFile(file).getTag();
+            if (tag != null) {
+                try {
+                    FileUtils.writeByteArrayToFile(cover_art, tag.getFields(FieldKey.COVER_ART).get(0).getRawContent());
+                    return cover_art.toURI().toURL().toString();
+                } catch (KeyNotFoundException | IOException e) {
+                    logger.error("艺术家图片{}缓存失败，{}", cover_art.getName(), e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            try {
+                return cover_art.toURI().toURL().toString();
+            } catch (MalformedURLException e) {
+                logger.error("专辑图片缓存{}返回失败，{}", cover_art.getName(), e.getMessage());
+                e.printStackTrace();
+            }
+        }
         return "";
     }
 }

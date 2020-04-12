@@ -1,3 +1,11 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-01-31 18:56:08
+ * @LastEditors: lzw-723
+ * @LastEditTime: 2020-04-12 15:57:12
+ * @Description: 音乐
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\Song.java
+ */
 package io.github.lzw.bean;
 
 import java.io.Serializable;

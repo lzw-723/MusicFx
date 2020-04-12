@@ -5,10 +5,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXPopup;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXToggleNode;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
+import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXToggleNode;
 import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.Config;
@@ -27,14 +27,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
-import okhttp3.Call;
 
 public class MainController implements Initializable {
 
@@ -94,9 +92,12 @@ public class MainController implements Initializable {
             jfxPopup.show(play_list, PopupVPosition.BOTTOM, PopupHPosition.RIGHT);
         });
         Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
-
+        // slider1.setOnTouchMoved(event -> {
+        //     MusicFx.get().seek(slider1.getValue());
+        //     slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+        // });
         slider1.setValueFactory(slider -> Bindings.createStringBinding(
-                () -> TimeFormater.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime() + 1)),
+                () -> TimeFormater.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime())),
                 slider.valueProperty()));
         slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         slider1.setOnMousePressed(event -> slider1.valueProperty().unbind());

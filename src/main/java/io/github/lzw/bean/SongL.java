@@ -1,3 +1,11 @@
+/*
+ * @Author: lzw-723
+ * @Date: 2020-02-02 15:16:06
+ * @LastEditors: lzw-723
+ * @LastEditTime: 2020-04-12 15:58:24
+ * @Description: 本地歌曲
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\SongL.java
+ */
 package io.github.lzw.bean;
 
 import java.io.File;

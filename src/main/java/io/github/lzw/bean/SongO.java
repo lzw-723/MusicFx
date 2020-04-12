@@ -1,9 +1,12 @@
 /*
- * @Author: lzw-723 
- * @Date: 2020-03-23 15:11:13 
- * @Last Modified by: lzw-723
- * @Last Modified time: 2020-03-23 15:17:20
+ * @Author: lzw-723
+ * @Date: 2020-03-23 15:09:05
+ * @LastEditors: lzw-723
+ * @LastEditTime: 2020-04-12 15:59:06
+ * @Description: 网络歌曲
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\SongO.java
  */
+
 package io.github.lzw.bean;
 
 import io.github.lzw.bean.SongBean.SongBeanO;

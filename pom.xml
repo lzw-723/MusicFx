@@ -152,7 +152,7 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.3</version>
                 <configuration>
                     <mainClass>io.github.lzw.Main</mainClass>
                 </configuration>

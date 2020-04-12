@@ -2,9 +2,8 @@
  * @Author: lzw-723
  * @Date: 2020-02-02 13:32:29
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-10 08:53:35
- * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\\util\SongUtil.java
+ * @LastEditTime: 2020-04-12 14:59:53
+ * @Description: 本地歌曲工具类
  */
 package io.github.lzw.util;
 
@@ -19,46 +18,50 @@ import io.github.lzw.FileUtil;
 import io.github.lzw.bean.SongL;
 
 public class SongUtil {
+    private static final List<SongL> songs = new ArrayList<>();
     public static List<SongL> getSongs() {
         File dir = new File(Config.getInstance().getDir());
-        return getSongs(dir, true);
+        songs.clear();
+        getSongs(dir, true);
+        return songs;
     }
 
     public static List<SongL> getSongsIgnoreCache() {
         File dir = new File(Config.getInstance().getDir());
-        return getSongs(dir, false);
+        songs.clear();
+        getSongs(dir, false);
+        return songs;
     }
 
-    private synchronized static List<SongL> getSongs(File dir, boolean cacheable) {
+    private synchronized static void getSongs(File dir, boolean cacheable) {
         File ser = FileUtil.getFile("songs.json");
         if (ser.exists() && cacheable) {
-            return read(ser);
+            read(ser);
         } else {
-            List<SongL> list = new ArrayList<>();
             if (dir.exists() && dir.listFiles().length > 0)
                 for (File file : dir.listFiles()) {
                     String path = file.getAbsolutePath().toLowerCase();
                     if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma")) {
-                        list.add(new SongL(file.toPath().toUri().toString()));
+                        songs.add(new SongL(file.toPath().toUri().toString()));
                     }
                 }
-            if (list.size() > 0) {
-                save(list, ser);
+            if (songs.size() > 0) {
+                save(ser);
             } else {
                 ser.delete();
             }
-            return list;
         }
 
     }
 
-    private static void save(List<SongL> list, File file) {
-        String data = JSON.toJSONString(list);
+    private static void save(File file) {
+        String data = JSON.toJSONString(songs);
         FileUtil.writeStringToFile(file, data);
     }
 
     private static List<SongL> read(File file) {
-        List<SongL> songs = JSON.parseArray(FileUtil.readFileToString(file), SongL.class);
+        songs.clear();
+        songs.addAll(JSON.parseArray(FileUtil.readFileToString(file), SongL.class));
         return songs;
     }
 }
