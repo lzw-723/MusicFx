@@ -1,8 +1,8 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-01 14:55:10
- * @LastEditTime: 2020-04-09 09:39:32
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-12 11:22:04
+ * @LastEditors: lzw-723
  * @Description: 获取本地音频信息的工具类
  */
 package io.github.lzw.util;
@@ -18,8 +18,12 @@ import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.slf4j.LoggerFactory;
+
+import io.github.lzw.FileUtil;
 
 public class SongInfoUtil {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SongInfoUtil.class);
     public static AudioFile getAudioFile(File file) {
         try {
             // 关闭jaudiotagger日志输出
@@ -72,7 +76,7 @@ public class SongInfoUtil {
     }
 
     public static String getArtWork(File file){
-        File pic = new File(".", "pic/" + getAlbum(file).hashCode() + ".jpg");
+        File pic = FileUtil.getFile("pic/" + getAlbum(file).hashCode() + ".jpg");
         if (!pic.exists()) {
             AudioFile audioFile = getAudioFile(file);
             Tag tag = audioFile.getTag();
@@ -83,7 +87,7 @@ public class SongInfoUtil {
                     FileUtils.writeByteArrayToFile(pic, artWork);
                     return pic.toURI().toURL().toString();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    logger.error("专辑图片{}缓存失败，{}", file.getName(), e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -91,7 +95,7 @@ public class SongInfoUtil {
             try {
                 return pic.toURI().toURL().toString();
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
+                logger.error("专辑图片缓存{}返回失败，{}", pic.getName(), e.getMessage());
                 e.printStackTrace();
             }
         }

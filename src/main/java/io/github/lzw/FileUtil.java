@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-09 19:54:03
- * @LastEditTime: 2020-04-10 09:51:03
+ * @LastEditTime: 2020-04-12 11:41:00
  * @LastEditors: lzw-723
  * @Description: 文件工具类
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\FileUtil.java
@@ -33,7 +33,20 @@ public class FileUtil {
      * @return: file
      */    
     public static File getFile(String child) {
-        return new File(getDir(), child);
+        File file = new File(getDir(), child);
+        // if (!file.exists()) {
+            File parent = file.getParentFile();
+            if (!parent.exists()) {
+                parent.mkdirs();
+            }
+            // try {
+            //     file.createNewFile();
+            // } catch (IOException e) {
+            //     logger.error("文件{}新建失败，{}", file.getName(), e.getMessage());
+            //     e.printStackTrace();
+            // }
+        // }
+        return file;
     }
 
     public static String readFileToString(File file) {
