@@ -20,17 +20,24 @@ public class MusicFx {
     private List<Song> list = new ArrayList<>();
     private Method method = Method.Loop;
 
-    public synchronized void addList(Song song) {
-        list.add(song);
-    }
+    // public synchronized void addList(Song song) {
+    //     list.add(song);
+    // }
 
-    public synchronized void addList(List<? extends Song> songs) {
-        list.addAll(songs);
-    }
+    // public synchronized void addList(List<? extends Song> songs) {
+    //     list.addAll(songs);
+    // }
 
     public synchronized void setList(List<? extends Song> songs) {
+        if (list.equals(songs)) {
+            // System.out.println("重复设置列表");
+            return;
+        }
         list.clear();
         list.addAll(songs);
+        if (handler != null) {
+            handler.OnSetNewList();
+        }
     }
 
     public List<Song> getList() {
@@ -88,7 +95,13 @@ public class MusicFx {
         this.handler.onMethodChanged(method);
     }
 
-    private void getNewPlayer(Song song) {
+    private synchronized void getNewPlayer(Song song) {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+            mediaPlayer = null;
+        }
         mediaPlayer = new MediaPlayer(new Media(song.getUri()));
         mediaPlayer.volumeProperty().bind(volume);
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
@@ -110,12 +123,6 @@ public class MusicFx {
     }
 
     private synchronized void play(Song song) {
-        if (mediaPlayer != null) {
-            mediaPlayer.pause();
-            mediaPlayer.stop();
-            mediaPlayer.dispose();
-            mediaPlayer = null;
-        }
         getNewPlayer(song);
         mediaPlayer.play();
         currentSong = song;
@@ -229,6 +236,8 @@ public class MusicFx {
         void onPause();
 
         void OnEnd();
+
+        void OnSetNewList();
 
         void onMethodChanged(Method method);
     }

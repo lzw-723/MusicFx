@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-02-19 16:29:34
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-10 10:50:41
+ * @LastEditTime: 2020-04-13 12:20:27
  * @Description: 配置信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\Config.java
  */
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.lzw.service.SongOService.Type;
+import io.github.lzw.util.FileUtil;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;

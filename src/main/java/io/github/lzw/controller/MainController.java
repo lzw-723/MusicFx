@@ -189,6 +189,12 @@ public class MainController implements Initializable {
             public void onError() {
                 // TODO Auto-generated method stub
             }
+
+            @Override
+            public void OnSetNewList() {
+                freshControllBiutton();
+                MusicFx.get().play(0);
+            }
         });
 
         SVGGlyph searchSvg = new SVGGlyph(

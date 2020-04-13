@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-01 14:55:10
- * @LastEditTime: 2020-04-12 16:38:54
+ * @LastEditTime: 2020-04-13 17:55:20
  * @LastEditors: lzw-723
  * @Description: 获取本地音频信息的工具类
  */
@@ -20,8 +20,6 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.slf4j.LoggerFactory;
-
-import io.github.lzw.FileUtil;
 
 public class SongInfoUtil {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SongInfoUtil.class);
@@ -70,6 +68,7 @@ public class SongInfoUtil {
         try {
             return getAudioFile(file).getAudioHeader().getTrackLength();
         } catch (Exception e) {
+            logger.error("音频{}长度获取失败，{}", file.getName(), e.getMessage());
             e.printStackTrace();
             return 1;
         }
@@ -103,6 +102,9 @@ public class SongInfoUtil {
     }
 
     public static String getArtistCover(File file) {
+        if (1 > 0) {
+            return "";
+        }
         File cover_art = FileUtil.getFile("artist/" + getArtist(file).hashCode() + ".jpg");
         if (!cover_art.exists()) {
             Tag tag = getAudioFile(file).getTag();

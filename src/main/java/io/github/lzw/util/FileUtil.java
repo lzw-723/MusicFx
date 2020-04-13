@@ -6,7 +6,7 @@
  * @Description: 文件工具类
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\FileUtil.java
  */
-package io.github.lzw;
+package io.github.lzw.util;
 
 import java.io.File;
 import java.io.IOException;

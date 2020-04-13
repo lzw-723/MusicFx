@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-02-02 13:32:29
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-12 14:59:53
+ * @LastEditTime: 2020-04-13 12:20:16
  * @Description: 本地歌曲工具类
  */
 package io.github.lzw.util;
@@ -14,7 +14,6 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 
 import io.github.lzw.Config;
-import io.github.lzw.FileUtil;
 import io.github.lzw.bean.SongL;
 
 public class SongUtil {
