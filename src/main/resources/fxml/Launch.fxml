@@ -3,17 +3,30 @@
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.lzw.controller.LaunchController">
+
+<StackPane fx:id="root" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.lzw.controller.LaunchController">
    <children>
-      <GridPane alignment="CENTER" VBox.vgrow="ALWAYS">
+      <ImageView fitHeight="427.0" fitWidth="640.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+         <image>
+            <Image url="@../img/welcome.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <GridPane alignment="CENTER" maxHeight="427.0" maxWidth="640.0" minHeight="427.0" minWidth="640.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,22 +41,22 @@
          <children>
             <HBox alignment="CENTER" GridPane.columnIndex="1">
                <children>
-                  <Label text="MusicFx">
+                  <Label text="MusicFx" textFill="WHITE">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+            <HBox alignment="BOTTOM_CENTER" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <children>
-                  <Label text="by lzw-723" />
+                  <Label text="by lzw-723" textFill="WHITE" />
                </children>
             </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <VBox alignment="TOP_CENTER" spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <JFXSpinner VBox.vgrow="ALWAYS" />
-                  <Label text="资源加载中" />
+                  <Label text="资源加载中" textFill="WHITE" />
                </children>
                <GridPane.margin>
                   <Insets />
@@ -60,4 +73,4 @@
          </children>
       </GridPane>
    </children>
-</VBox>
+</StackPane>

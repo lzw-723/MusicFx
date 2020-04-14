@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-01-27 17:35:16
- * @LastEditTime: 2020-04-13 16:48:12
+ * @LastEditTime: 2020-04-14 10:31:35
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
 
@@ -63,6 +64,8 @@ public class MainApp extends Application {
         //     stylesheets.addAll(cssUrl.toExternalForm());
         // }
         // stage.setTitle("MusicFX");
+        scene.setFill(null);
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
     }

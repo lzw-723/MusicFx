@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-04-12 15:59:33
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-13 17:53:00
+ * @LastEditTime: 2020-04-14 11:21:28
  * @Description: 艺术家工具类
  */
 package io.github.lzw.util;
@@ -36,11 +36,13 @@ public class ArtistUtil {
         artists.clear();
         SongUtil.getSongs().forEach(song -> {
             try {
-                if (map.get(song.getArtist()) == null) {
-                    artists.add(
-                        new Artist(song.getArtist(), SongInfoUtil.getArtistCover(new File(new URI(song.getUri())))));
+                for (String str : song.getArtist().split("/")) {
+                    if (map.get(str) == null) {
+                        artists.add(new Artist(str, SongInfoUtil.getArtistCover(new File(new URI(song.getUri())))));
+                    }
+                    map.put(song.getArtist(), true);
                 }
-                map.put(song.getArtist(), true);
+
             } catch (URISyntaxException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -55,9 +57,10 @@ public class ArtistUtil {
         }
         List<SongL> songs = new ArrayList<>();
         SongUtil.getSongs().forEach(song -> {
-            if (song.getArtist().equals(artist.getName())) {
+            if (song.getArtist().indexOf(artist.getName()) != -1) {
                 songs.add(song);
             }
+
         });
         map_song.put(artist.getName(), songs);
         logger.info("{}歌单完成获取", artist.getName());
