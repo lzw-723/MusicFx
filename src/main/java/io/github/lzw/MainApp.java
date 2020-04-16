@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-01-27 17:35:16
- * @LastEditTime: 2020-04-16 08:25:55
+ * @LastEditTime: 2020-04-16 15:02:49
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
@@ -37,13 +37,13 @@ public class MainApp extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
+        // Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
         
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                logger.error("{}线程, {}异常未捕捉", t.getName(), e.getMessage());
-            }
-        });
+        //     @Override
+        //     public void uncaughtException(Thread t, Throwable e) {
+        //         logger.error("{}线程, {}异常未捕捉", t.getName(), e.getMessage());
+        //     }
+        // });
     }
 
     /**

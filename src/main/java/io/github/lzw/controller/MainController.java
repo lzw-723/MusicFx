@@ -78,6 +78,9 @@ public class MainController implements Initializable {
     private Tooltip tooltip = new Tooltip();
 
     private ControllerImpl controller;
+    private ControllerImpl controller_search;
+    private ControllerImpl controller_local;
+    private ControllerImpl controller_setting;
     private Parent content_search;
     private Parent content_local;
     private Parent content_setting;
@@ -245,27 +248,42 @@ public class MainController implements Initializable {
     }
 
     private void loadSearch() {
+        if (controller instanceof OnlineController) {
+            return;
+        }
         if (content_search == null) {
             content_search = getContent("/fxml/Online.fxml");
         }
         pane.getChildren().clear();
         pane.getChildren().add(content_search);
+        controller = controller_search;
+        title.setText(controller.getTitle());
     }
 
     private void loadLocal() {
+        if (controller instanceof LocalController) {
+            return;
+        }
         if (content_local == null) {
             content_local = getContent("/fxml/Local.fxml");
         }
         pane.getChildren().clear();
         pane.getChildren().add(content_local);
+        controller = controller_local;
+        title.setText(controller.getTitle());
     }
 
     private void loadSetting() {
+        if (controller instanceof SettingController) {
+            return;
+        }
         if (content_setting == null) {
             content_setting = getContent("/fxml/Setting.fxml");
         }
         pane.getChildren().clear();
         pane.getChildren().add(content_setting);
+        controller = controller_setting;
+        title.setText(controller.getTitle());
     }
 
     private Parent getContent(String fxml) {
@@ -275,8 +293,21 @@ public class MainController implements Initializable {
             content.prefHeightProperty().bind(pane.heightProperty());
             content.prefWidthProperty().bind(pane.widthProperty());
             pane.getChildren().add(content);
-            controller = loader.getController();
-            title.setText(controller.getTitle());
+            // controller = loader.getController();
+            switch (fxml) {
+                case "/fxml/Online.fxml":
+                    controller_search = loader.getController();
+                    break;
+                case "/fxml/Local.fxml":
+                    controller_local = loader.getController();
+                    break;
+                case "/fxml/Setting.fxml":
+                    controller_setting = loader.getController();
+                    break;
+                default:
+                    break;
+            }
+            
             return content;
         } catch (IOException e) {
             // TODO Auto-generated catch block

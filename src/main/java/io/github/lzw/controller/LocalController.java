@@ -24,6 +24,7 @@ import io.github.lzw.item.SongOCell;
 import io.github.lzw.util.AlbumUtil;
 import io.github.lzw.util.ArtistUtil;
 import io.github.lzw.util.SongUtil;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +51,7 @@ public class LocalController implements Initializable, ControllerImpl {
     private ScrollPane scroll_albums;
     @FXML
     private JFXMasonryPane masonry_albums;
-    
+
     ArrayList<Node> children = new ArrayList<>();
 
     ArrayList<Node> children_albums = new ArrayList<>();
@@ -101,9 +102,11 @@ public class LocalController implements Initializable, ControllerImpl {
 
     private void initAlbumPane() {
         AlbumUtil.getAlbums().forEach(album -> children_albums.add(new AlbumCell(album)));
+
         masonry_albums.getChildren().addAll(children_albums);
-        scroll_albums.requestLayout();;
+        scroll_albums.requestLayout();
         JFXScrollPane.smoothScrolling(scroll_albums);
+
     }
 
     @Override

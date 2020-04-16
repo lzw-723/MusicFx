@@ -4,7 +4,7 @@
 
     <groupId>io.github.lzw-723</groupId>
     <artifactId>MusicFx</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2 dev</version>
     <packaging>jar</packaging>
 
     <name>MusicFx</name>
@@ -17,37 +17,30 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-          <id>UGent Repository</id>
-          <url>http://genesis.ugent.be/maven2/</url>
-        </repository>
-      </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>14</version>
-            <!-- <scope>provided</scope> -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
             <version>14</version>
-            <!-- <scope>provided</scope> -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>14</version>
-            <!-- <scope>provided</scope> -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>14</version>
-            <!-- <scope>provided</scope> -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -57,38 +50,10 @@
         </dependency>
 
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>5.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>platform</artifactId>
-            <version>3.5.2</version>
-        </dependency>
-
-        <!-- 快捷方式 -->
-        <dependency>
-            <groupId>net.jimmc</groupId>
-            <artifactId>jshortcut</artifactId>
-            <version>0.4</version>
-            <systemPath>${basedir}\src\lib\jshortcut-0.4-oberzalek.jar</systemPath>
-            <scope>system</scope>
-        </dependency>
-
-
-        <dependency>
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>
             <version>8.0.8</version>
         </dependency>
-
-        <!-- <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-            <version>3.114.0</version>
-        </dependency> -->
-
 
         <dependency>
             <groupId>com.alibaba</groupId>

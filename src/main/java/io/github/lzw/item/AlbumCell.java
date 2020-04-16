@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-04-15 20:52:19
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 10:20:25
+ * @LastEditTime: 2020-04-16 14:14:30
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\AlbumCell.java
  */
@@ -67,12 +67,12 @@ public class AlbumCell extends VBox {
         // Label count = (Label) content.lookup("#album");
         // count.setText(String.valueOf(AlbumUtil.getSongs(album).size()));
 
-        ImageView artwork = (ImageView) content.lookup("#artwork");
-        try {
-            artwork.setImage(new Image(album.getPic()));
-        } catch (Exception e) {
-            logger.warn("专辑{}图片加载失败", album.getName());
-        }
+        // ImageView artwork = (ImageView) content.lookup("#artwork");
+        // try {
+        //     artwork.setImage(new Image(album.getPic()));
+        // } catch (Exception e) {
+        //     logger.warn("专辑{}图片加载失败", album.getName());
+        // }
 
         StackPane body = (StackPane) content.lookup("#body");
         body.setStyle("-fx-background-color: " + getRandomColor());

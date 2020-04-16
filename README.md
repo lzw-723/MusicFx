@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-16 11:27:39
+ * @LastEditTime: 2020-04-16 11:31:14
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -48,8 +48,8 @@
 
 ## 已知问题
 
-[ ] 迁移至jdk11、Javafx-11
-[ ] 内存占用过高
+* [ ] 迁移至jdk11、Javafx-11  
+* [ ] 内存占用过高
 
 ## 开源使用（部分）
 
