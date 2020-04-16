@@ -2,16 +2,13 @@
  * @Author: lzw-723
  * @Date: 2020-04-13 15:51:34
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-14 11:15:00
+ * @LastEditTime: 2020-04-16 08:18:59
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\LaunchController.java
  */
 package io.github.lzw.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,12 +20,11 @@ import org.slf4j.LoggerFactory;
 
 import io.github.lzw.Config;
 import io.github.lzw.MainApp;
+import io.github.lzw.util.AlbumUtil;
 import io.github.lzw.util.ArtistUtil;
 import io.github.lzw.util.HotkeyUtil;
 import io.github.lzw.util.SongUtil;
-import io.reactivex.Observable;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,7 +36,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -64,8 +59,10 @@ public class LaunchController implements Initializable {
                         File dir = new DirectoryChooser().showDialog(root.getScene().getWindow());
                         if (dir != null && dir.exists()) {
                             Config.getInstance().setDir(dir.getAbsolutePath());
-                            initData();
-                            runMainInJavaFxThread();
+                            new Thread(() -> {
+                                initData();
+                                runMainInJavaFxThread();
+                            }).start();
                         } else {
                             root.getScene().getWindow().hide();
                         }
@@ -82,8 +79,12 @@ public class LaunchController implements Initializable {
     }
 
     private void initData() {
+        logger.info("开始加载配置");
+        long time = System.currentTimeMillis();
         SongUtil.getSongs();
         ArtistUtil.getArtists().forEach(artist -> ArtistUtil.getSongs(artist));
+        AlbumUtil.getAlbums().forEach(album -> AlbumUtil.getSongs(album));
+        logger.info("配置加载完成，耗时{}秒，即将启动", (System.currentTimeMillis() - time) / 1000);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -109,8 +110,6 @@ public class LaunchController implements Initializable {
 
     private void runMain() throws Exception {
 
-        root.getScene().getWindow().hide();
-
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(MainApp.class.getResource("/fxml/Main.fxml"));
 
@@ -124,7 +123,7 @@ public class LaunchController implements Initializable {
         double height = 600;
 
         Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
-        width = bounds.getWidth() > bounds.getHeight() ? bounds.getWidth() : bounds.getHeight();
+        // width = > bounds.getHeight() ? bounds.getWidth() : bounds.getHeight();
         width = bounds.getWidth() * 0.618d;
         height = width * 0.618d;
 
@@ -132,18 +131,19 @@ public class LaunchController implements Initializable {
 
         stage.getIcons().add(icon);
         ImageView imageView = new ImageView(icon);
-        imageView.setOnMouseClicked(event -> {
-            logger.info("msg");
-        });
         imageView.setFitHeight(24);
         imageView.setFitWidth(24);
         decorator.setGraphic(imageView);
         Scene scene = new Scene(decorator, width, height);
-        // HotkeyUtil.registerHotkey(scene, stage);
         scene.getStylesheets().addAll(getClass().getResource("/styles/main.css").toExternalForm());
         stage.setResizable(true);
         stage.setTitle("MusicFX");
         stage.setScene(scene);
+
+        HotkeyUtil.registerHotkey(scene, stage);
+
+        this.root.getScene().getWindow().hide();
+
         stage.show();
     }
 }

@@ -11,46 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXScrollPane;
-import com.jfoenix.controls.JFXButton.ButtonType;
-import com.jfoenix.effects.JFXDepthManager;
-import com.jfoenix.svg.SVGGlyph;
 
-import io.github.lzw.bean.Artist;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
 import io.github.lzw.core.MusicFx;
+import io.github.lzw.item.AlbumCell;
 import io.github.lzw.item.ArtistCell;
 import io.github.lzw.item.SongOCell;
+import io.github.lzw.util.AlbumUtil;
 import io.github.lzw.util.ArtistUtil;
 import io.github.lzw.util.SongUtil;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 /**
  * LocalController
@@ -64,13 +45,21 @@ public class LocalController implements Initializable, ControllerImpl {
     private ScrollPane scrollPane;
     @FXML
     private JFXMasonryPane masonryPane;
+
+    @FXML
+    private ScrollPane scroll_albums;
+    @FXML
+    private JFXMasonryPane masonry_albums;
     
     ArrayList<Node> children = new ArrayList<>();
+
+    ArrayList<Node> children_albums = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initMusicPane();
         initArtistPane();
+        initAlbumPane();
     }
 
     private void initMusicPane() {
@@ -104,15 +93,17 @@ public class LocalController implements Initializable, ControllerImpl {
     }
 
     private void initArtistPane() {
-        init();
-    }
-
-    public void init() {
-
         ArtistUtil.getArtists().forEach(artist -> children.add(new ArtistCell(artist)));
         masonryPane.getChildren().addAll(children);
         scrollPane.requestLayout();
         JFXScrollPane.smoothScrolling(scrollPane);
+    }
+
+    private void initAlbumPane() {
+        AlbumUtil.getAlbums().forEach(album -> children_albums.add(new AlbumCell(album)));
+        masonry_albums.getChildren().addAll(children_albums);
+        scroll_albums.requestLayout();;
+        JFXScrollPane.smoothScrolling(scroll_albums);
     }
 
     // private void addArtist(Artist artist) {

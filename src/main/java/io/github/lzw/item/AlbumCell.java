@@ -1,45 +1,62 @@
 /*
  * @Author: lzw-723
+ * @Date: 2020-04-15 20:52:19
+ * @LastEditors: lzw-723
+ * @LastEditTime: 2020-04-16 08:31:49
+ * @Description: 描述信息
+ * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\AlbumCell.java
+ */
+/*
+ * @Author: lzw-723
  * @Date: 2020-04-13 12:38:39
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 08:02:07
+ * @LastEditTime: 2020-04-13 17:09:47
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\ArtistCell.java
  */
 package io.github.lzw.item;
-
-import static javafx.animation.Interpolator.EASE_BOTH;
 
 import java.io.IOException;
 
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.github.lzw.MainApp;
+import io.github.lzw.bean.Album;
 import io.github.lzw.bean.Artist;
 import io.github.lzw.core.MusicFx;
+import io.github.lzw.util.AlbumUtil;
 import io.github.lzw.util.ArtistUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import static javafx.animation.Interpolator.EASE_BOTH;
 
-public class ArtistCell extends VBox {
+public class AlbumCell extends VBox {
 
-    public ArtistCell(Artist artist) {
+    private static final Logger logger = LoggerFactory.getLogger(AlbumCell.class);
+
+    public AlbumCell(Album album) {
         
         try {
-            StackPane content = FXMLLoader.load(MainApp.class.getResource("/fxml/item/ItemArtist.fxml"));
+            StackPane content = FXMLLoader.load(MainApp.class.getResource("/fxml/item/ItemAlbum.fxml"));
             VBox.setVgrow(content, Priority.ALWAYS);
-            init(artist, content);
+            init(album, content);
             getChildren().add(content);
 
         } catch (IOException e) {
@@ -48,15 +65,22 @@ public class ArtistCell extends VBox {
         }
     }
 
-    private void init(Artist artist, StackPane content) {
+    private void init(Album album, StackPane content) {
         StackPane header = (StackPane) content.lookup("#header");
         header.setStyle("-fx-background-color: " + getRandomColor());
 
-        Label artistName = (Label) content.lookup("#artist");
-        artistName.setText(artist.getName());
+        Label artistName = (Label) content.lookup("#album");
+        artistName.setText(album.getName());
 
-        Label count = (Label) content.lookup("#count");
-        count.setText(String.valueOf(ArtistUtil.getSongs(artist).size()));
+        // Label count = (Label) content.lookup("#album");
+        // count.setText(String.valueOf(AlbumUtil.getSongs(album).size()));
+
+        ImageView artwork = (ImageView) content.lookup("#artwork");
+        try {
+            artwork.setImage(new Image(album.getPic()));
+        } catch (Exception e) {
+            logger.warn("专辑{}图片加载失败", album.getName());
+        }
 
         StackPane body = (StackPane) content.lookup("#body");
         body.setStyle("-fx-background-color: " + getRandomColor());
@@ -76,7 +100,7 @@ public class ArtistCell extends VBox {
 
         button.setStyle("-fx-background-radius: 50%; -fx-background-color: " + getRandomColor());
 
-        button.setOnAction(event -> MusicFx.get().setList(ArtistUtil.getSongs(artist)));
+        button.setOnAction(event -> MusicFx.get().setList(AlbumUtil.getSongs(album)));
 
         button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
             return header.getBoundsInParent().getHeight() - button.getHeight() / 2;
@@ -88,7 +112,7 @@ public class ArtistCell extends VBox {
         animation.play();
         JFXDepthManager.setDepth(content, 1);
         header.prefHeight(header.getWidth() * 0.618);
-        content.setStyle("-fx-background-radius: 5 5 5 5;");
+        content.setStyle("-fx-background-radius: 5 5 5 5");
     }
 
     private String getRandomColor() {

@@ -50,7 +50,25 @@
             </Tab>
             <Tab text="专辑">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane>
+                     <children>
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <StackPane VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ScrollPane fx:id="scroll_albums" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" StackPane.alignment="CENTER">
+                                       <content>
+                                          <JFXMasonryPane fx:id="masonry_albums">
+                                             <padding>
+                                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                             </padding></JFXMasonryPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
                </content>
             </Tab>
          </tabs>

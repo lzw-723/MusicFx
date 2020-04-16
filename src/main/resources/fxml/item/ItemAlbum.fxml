@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane style="-fx-background-radius: 5 5 5 5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="content">
+         <children>
+            <StackPane fx:id="header" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="artwork" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane fx:id="body">
+               <children>
+                  <Label fx:id="album" text="专辑" textFill="WHITE">
+                     <StackPane.margin>
+                        <Insets bottom="12.0" left="6.0" right="6.0" top="12.0" />
+                     </StackPane.margin>
+                     <padding>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </padding></Label>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+      <JFXButton fx:id="button" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="40.0" prefWidth="40.0" textAlignment="CENTER" StackPane.alignment="TOP_RIGHT">
+         <StackPane.margin>
+            <Insets right="12.0" />
+         </StackPane.margin></JFXButton>
+   </children>
+</StackPane>
