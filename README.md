@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-11 10:51:59
+ * @LastEditTime: 2020-04-16 11:27:39
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -15,7 +15,7 @@
 
 ## 简介
 
-一个基于`Javafx`开发的`Material Design`风格音乐播放器
+一个基于`Javafx`开发的`Material Design`风格`跨平台`音乐播放器，支持本地、在线音乐播放、搜索、快捷键操作
 
 ## 体验
 
@@ -34,9 +34,22 @@
 
 ## 截图
 
-![截图](https://s1.ax1x.com/2020/04/06/GymRZ6.png)
+![界面](https://s1.ax1x.com/2020/04/16/JFDE1U.png)
 
-![GIF](https://s1.ax1x.com/2020/04/06/GymDG4.gif)
+![界面](https://s1.ax1x.com/2020/04/16/JFDp0s.png)
+
+![界面](https://s1.ax1x.com/2020/04/16/JFBRfK.png)
+
+![GIF](https://s1.ax1x.com/2020/04/16/JFBwSU.gif)
+
+![设置](https://s1.ax1x.com/2020/04/16/JFsDOg.png)
+
+![搜索](https://s1.ax1x.com/2020/04/16/JFsgkn.gif)
+
+## 已知问题
+
+[ ] 迁移至jdk11、Javafx-11
+[ ] 内存占用过高
 
 ## 开源使用（部分）
 

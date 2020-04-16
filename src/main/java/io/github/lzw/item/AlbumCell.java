@@ -2,17 +2,9 @@
  * @Author: lzw-723
  * @Date: 2020-04-15 20:52:19
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 08:31:49
+ * @LastEditTime: 2020-04-16 10:20:25
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\AlbumCell.java
- */
-/*
- * @Author: lzw-723
- * @Date: 2020-04-13 12:38:39
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-13 17:09:47
- * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\ArtistCell.java
  */
 package io.github.lzw.item;
 

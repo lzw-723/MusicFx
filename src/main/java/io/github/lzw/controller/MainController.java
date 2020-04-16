@@ -25,6 +25,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -77,6 +78,9 @@ public class MainController implements Initializable {
     private Tooltip tooltip = new Tooltip();
 
     private ControllerImpl controller;
+    private Parent content_search;
+    private Parent content_local;
+    private Parent content_setting;
 
     private void initMain() {
         freshControllBiutton();
@@ -93,8 +97,8 @@ public class MainController implements Initializable {
         });
         Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
         // slider1.setOnTouchMoved(event -> {
-        //     MusicFx.get().seek(slider1.getValue());
-        //     slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+        // MusicFx.get().seek(slider1.getValue());
+        // slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         // });
         slider1.setValueFactory(slider -> Bindings.createStringBinding(
                 () -> TimeFormater.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime())),
@@ -106,8 +110,7 @@ public class MainController implements Initializable {
             slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         });
         slider2.setValueFactory(slider -> Bindings.createStringBinding(
-            () -> String.valueOf(Math.round(slider.getValue() * 100)) + "%",
-            slider.valueProperty()));
+                () -> String.valueOf(Math.round(slider.getValue() * 100)) + "%", slider.valueProperty()));
         MusicFx.get().currentProgressProperty()
                 .addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> time
                         .setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
@@ -218,7 +221,7 @@ public class MainController implements Initializable {
             if (controller instanceof OnlineController) {
                 return;
             }
-            loadContent("/fxml/Online.fxml");
+            loadSearch();
         });
         local.setOnAction(event -> {
             search.setSelected(false);
@@ -227,7 +230,7 @@ public class MainController implements Initializable {
             if (controller instanceof LocalController) {
                 return;
             }
-            loadContent("/fxml/Local.fxml");
+            loadLocal();
         });
         setting.setOnAction(event -> {
             search.setSelected(false);
@@ -236,13 +239,36 @@ public class MainController implements Initializable {
             if (controller instanceof SettingController) {
                 return;
             }
-            loadContent("/fxml/Setting.fxml");
+            loadSetting();
         });
-        loadContent("/fxml/Local.fxml");
+        loadLocal();
     }
 
-    private void loadContent(String fxml) {
+    private void loadSearch() {
+        if (content_search == null) {
+            content_search = getContent("/fxml/Online.fxml");
+        }
         pane.getChildren().clear();
+        pane.getChildren().add(content_search);
+    }
+
+    private void loadLocal() {
+        if (content_local == null) {
+            content_local = getContent("/fxml/Local.fxml");
+        }
+        pane.getChildren().clear();
+        pane.getChildren().add(content_local);
+    }
+
+    private void loadSetting() {
+        if (content_setting == null) {
+            content_setting = getContent("/fxml/Setting.fxml");
+        }
+        pane.getChildren().clear();
+        pane.getChildren().add(content_setting);
+    }
+
+    private Parent getContent(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(fxml));
             Pane content = loader.load();
@@ -251,15 +277,17 @@ public class MainController implements Initializable {
             pane.getChildren().add(content);
             controller = loader.getController();
             title.setText(controller.getTitle());
+            return content;
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
      * @description: 设定控制按钮（初始化、刷新状态）
-     */    
+     */
     private void freshControllBiutton() {
         SVGGlyph playGlyph = MusicFx.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z")
                 : new SVGGlyph("M8 5v14l11-7z");
