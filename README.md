@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-17 10:36:27
+ * @LastEditTime: 2020-04-17 15:45:59
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -10,7 +10,7 @@
 # MusicFX
 
 ![JDK Version](https://img.shields.io/badge/JDK-11-red)
-![JavaFx Version](https://img.shields.io/badge/JavaFx-11-blue)
+![JavaFx Version](https://img.shields.io/badge/JavaFx-14-blue)
 ![Maven](https://img.shields.io/badge/构建工具-Maven-green)
 
 ## 简介
@@ -49,11 +49,14 @@
 ## 已知问题
 
 * [x] 迁移至jdk11、Javafx-11  
-* [ ] 模块化
-* [ ] 迁移至jdk14、Javafx-14
+* [ ] 模块化  
+* [ ] ~~迁移至jdk14、Javafx-14~~(`JFoenix`暂不支持jdk12及以上)
+* [x] 迁移至jdk11、Javafx-14
 * [ ] 内存占用过高
 
 ## 开源使用（部分）
+
+[JFoenix](https://github.com/jfoenixadmin/JFoenix)
 
 [FastJson](https://github.com/alibaba/fastjson)
 
