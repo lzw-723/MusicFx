@@ -1,7 +1,7 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-16 11:31:14
+ * @LastEditTime: 2020-04-17 10:36:27
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\README.md
@@ -9,8 +9,8 @@
 
 # MusicFX
 
-![JDK Version](https://img.shields.io/badge/JDK-1.8-red)
-![JavaFx Version](https://img.shields.io/badge/JavaFx-8-blue)
+![JDK Version](https://img.shields.io/badge/JDK-11-red)
+![JavaFx Version](https://img.shields.io/badge/JavaFx-11-blue)
 ![Maven](https://img.shields.io/badge/构建工具-Maven-green)
 
 ## 简介
@@ -48,7 +48,9 @@
 
 ## 已知问题
 
-* [ ] 迁移至jdk11、Javafx-11  
+* [x] 迁移至jdk11、Javafx-11  
+* [ ] 模块化
+* [ ] 迁移至jdk14、Javafx-14
 * [ ] 内存占用过高
 
 ## 开源使用（部分）
