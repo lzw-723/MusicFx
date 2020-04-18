@@ -33,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class MainController implements Initializable {
@@ -43,6 +44,8 @@ public class MainController implements Initializable {
     private JFXToggleNode local;
     @FXML
     private JFXToggleNode setting;
+    @FXML
+    private JFXToggleNode statistics;
 
     @FXML
     private Label title;
@@ -81,9 +84,11 @@ public class MainController implements Initializable {
     private ControllerImpl controller_search;
     private ControllerImpl controller_local;
     private ControllerImpl controller_setting;
+    private ControllerImpl controller_statistics;
     private Parent content_search;
     private Parent content_local;
     private Parent content_setting;
+    private Parent content_statistics;
 
     private void initMain() {
         freshControllBiutton();
@@ -217,10 +222,15 @@ public class MainController implements Initializable {
         settingSvg.setFill(Paint.valueOf("#FFFFFF"));
         settingSvg.setSize(16);
         setting.setGraphic(settingSvg);
+        SVGGlyph statisticsSvg = new SVGGlyph("M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z");
+        statisticsSvg.setFill(Color.WHITE);
+        statisticsSvg.setSize(16);
+        statistics.setGraphic(statisticsSvg);
         search.setOnAction(event -> {
             search.setSelected(true);
             local.setSelected(false);
             setting.setSelected(false);
+            statistics.setSelected(false);
             if (controller instanceof OnlineController) {
                 return;
             }
@@ -230,6 +240,7 @@ public class MainController implements Initializable {
             search.setSelected(false);
             local.setSelected(true);
             setting.setSelected(false);
+            statistics.setSelected(false);
             if (controller instanceof LocalController) {
                 return;
             }
@@ -239,11 +250,24 @@ public class MainController implements Initializable {
             search.setSelected(false);
             local.setSelected(false);
             setting.setSelected(true);
+            statistics.setSelected(false);
             if (controller instanceof SettingController) {
                 return;
             }
             loadSetting();
         });
+
+        statistics.setOnAction(event -> {
+            search.setSelected(false);
+            local.setSelected(false);
+            setting.setSelected(false);
+            statistics.setSelected(true);
+            if (controller instanceof StatisticsController) {
+                return;
+            }
+            loadStatistics();
+        });
+
         loadLocal();
     }
 
@@ -286,6 +310,19 @@ public class MainController implements Initializable {
         title.setText(controller.getTitle());
     }
 
+    private void loadStatistics() {
+        if (controller instanceof StatisticsController) {
+            return;
+        }
+        if (content_statistics == null) {
+            content_statistics = getContent("/fxml/Statistics.fxml");
+        }
+        pane.getChildren().clear();
+        pane.getChildren().add(content_statistics);
+        controller = controller_statistics;
+        title.setText(controller.getTitle());
+    }
+
     private Parent getContent(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(fxml));
@@ -304,10 +341,14 @@ public class MainController implements Initializable {
                 case "/fxml/Setting.fxml":
                     controller_setting = loader.getController();
                     break;
+                case "/fxml/Statistics.fxml":
+                    controller_statistics = loader.getController();
+                    break;
+
                 default:
                     break;
             }
-            
+
             return content;
         } catch (IOException e) {
             // TODO Auto-generated catch block

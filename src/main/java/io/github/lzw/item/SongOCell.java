@@ -1,8 +1,8 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-03-24 10:31:24
- * @LastEditTime: 2020-04-08 21:20:50
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-18 09:30:39
+ * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\SongOCell.java
  */
@@ -46,9 +46,7 @@ public class SongOCell extends JFXListCell<Song> {
                     if (handler != null)
                         handler.play(item);
                 });
-                selectedProperty().addListener((ChangeListener<Boolean>) (arg1, arg2, arg3) -> {
-                    play.setVisible(arg3);
-                });
+                play.visibleProperty().bind(selectedProperty());
 
                 Label title = (Label) hBox.lookup("#title");
                 title.setText(item.getTitle());

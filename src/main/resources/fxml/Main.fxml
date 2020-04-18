@@ -100,6 +100,11 @@
                         <JFXButton maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;" textFill="WHITE" />
                      </graphic>
                   </JFXToggleNode>
+                  <JFXToggleNode fx:id="statistics" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0" style="-fx-background-radius: 50%;">
+                     <graphic>
+                        <JFXButton textFill="WHITE" />
+                     </graphic>
+                  </JFXToggleNode>
                </children>
             </VBox>
          </center>

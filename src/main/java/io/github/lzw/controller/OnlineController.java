@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:03:40
- * @LastEditTime: 2020-04-11 15:46:52
+ * @LastEditTime: 2020-04-18 09:08:51
  * @LastEditors: lzw-723
  * @Description: 在线音乐搜索面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\OnlineController.java
@@ -47,7 +47,7 @@ public class OnlineController implements Initializable, ControllerImpl {
     @FXML
     private JFXListView<Song> list;
     private SimpleBooleanProperty searchingProperty = new SimpleBooleanProperty(false);
-    private ObservableList<SongO> songs = FXCollections.observableArrayList(new ArrayList<>());
+    private ObservableList<Song> songs = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -67,7 +67,8 @@ public class OnlineController implements Initializable, ControllerImpl {
                 return cell;
             }
         });
-        songs.addListener((ListChangeListener<SongO>) change -> list.getItems().addAll(change.getList()));
+        list.setItems(songs);
+        // songs.addListener((ListChangeListener<SongO>) change -> list.getItems().addAll(change.getList()));
         input.editableProperty().bind(searchingProperty.not());
         search.visibleProperty().bind(searchingProperty.not());
         searching.visibleProperty().bind(searchingProperty);
@@ -81,6 +82,7 @@ public class OnlineController implements Initializable, ControllerImpl {
 
                     @Override
                     public void onSuccess(List<SongO> songs) {
+                        // list.getItems().clear();
                         OnlineController.this.songs.clear();
                         OnlineController.this.songs.addAll(songs);
                         searchingProperty.set(false);
