@@ -1,14 +1,12 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-01-27 17:35:16
- * @LastEditTime: 2020-04-16 15:02:49
+ * @LastEditTime: 2020-04-19 09:12:36
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
  */
 package io.github.lzw;
-
-import com.jfoenix.effects.JFXDepthManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 

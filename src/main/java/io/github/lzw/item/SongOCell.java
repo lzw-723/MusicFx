@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-03-24 10:31:24
- * @LastEditTime: 2020-04-18 09:30:39
+ * @LastEditTime: 2020-04-19 09:14:39
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\SongOCell.java
@@ -17,8 +17,7 @@ import com.jfoenix.svg.SVGGlyph;
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
-import io.github.lzw.util.TimeFormater;
-import javafx.beans.value.ChangeListener;
+import io.github.lzw.util.TimeFormatter;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -64,7 +63,7 @@ public class SongOCell extends JFXListCell<Song> {
                     Label album = (Label) hBox.lookup("#album");
                     album.setText(item.getAlbum());
                     Label time = (Label) hBox.lookup("#time");
-                    time.setText(TimeFormater.format(item.getLength() * 1000));
+                    time.setText(TimeFormatter.format(item.getLength() * 1000));
                 }
 
                 ObservableList<String> stylesheets = hBox.getStylesheets();

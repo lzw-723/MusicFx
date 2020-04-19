@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-05 11:03:40
- * @LastEditTime: 2020-04-18 09:08:51
+ * @LastEditTime: 2020-04-19 09:16:30
  * @LastEditors: lzw-723
  * @Description: 在线音乐搜索面板
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\OnlineController.java
@@ -10,7 +10,6 @@ package io.github.lzw.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,7 +25,6 @@ import io.github.lzw.item.SongOCell;
 import io.github.lzw.service.SongOService;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

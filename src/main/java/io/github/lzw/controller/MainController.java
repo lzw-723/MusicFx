@@ -14,11 +14,13 @@ import com.jfoenix.svg.SVGGlyph;
 import io.github.lzw.Config;
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
+import io.github.lzw.bean.SongL;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.core.MusicFx.Handler;
 import io.github.lzw.core.MusicFx.Method;
 import io.github.lzw.item.SongList;
-import io.github.lzw.util.TimeFormater;
+import io.github.lzw.util.StatisticsUtil;
+import io.github.lzw.util.TimeFormatter;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -109,7 +111,7 @@ public class MainController implements Initializable {
         // slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         // });
         slider1.setValueFactory(slider -> Bindings.createStringBinding(
-                () -> TimeFormater.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime())),
+                () -> TimeFormatter.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime())),
                 slider.valueProperty()));
         slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
         slider1.setOnMousePressed(event -> slider1.valueProperty().unbind());
@@ -121,8 +123,8 @@ public class MainController implements Initializable {
                 () -> String.valueOf(Math.round(slider.getValue() * 100)) + "%", slider.valueProperty()));
         MusicFx.get().currentProgressProperty()
                 .addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> time
-                        .setText(TimeFormater.format(MusicFx.get().getCurrentTime() * 1000) + " : "
-                                + TimeFormater.format(MusicFx.get().getTotalTime() * 1000)));
+                        .setText(TimeFormatter.format(MusicFx.get().getCurrentTime() * 1000) + " : "
+                                + TimeFormatter.format(MusicFx.get().getTotalTime() * 1000)));
 
         MusicFx.get().setHandler(new Handler() {
 
@@ -146,6 +148,10 @@ public class MainController implements Initializable {
 
             @Override
             public void OnEnd() {
+                Song song = MusicFx.get().getCurrentSong();
+                if (song instanceof SongL) {
+                    StatisticsUtil.add((SongL) song);
+                }
                 freshControllBiutton();
             }
 

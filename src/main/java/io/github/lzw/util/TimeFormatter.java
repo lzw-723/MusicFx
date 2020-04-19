@@ -12,9 +12,17 @@ import java.util.Date;
 /**
  * TimeFormater
  */
-public class TimeFormater {
+public class TimeFormatter {
 
     public static String format(long time) {
         return new SimpleDateFormat("mm:ss").format(new Date(time));
+    }
+
+    public static boolean isDaytime(Date date) {
+        return Integer.valueOf(new SimpleDateFormat("hh").format(date)) < 18;
+    }
+
+    public static String getDay(Date date) {
+        return new SimpleDateFormat("MM-dd").format(date);
     }
 }

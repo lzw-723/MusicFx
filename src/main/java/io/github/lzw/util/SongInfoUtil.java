@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-01 14:55:10
- * @LastEditTime: 2020-04-13 17:55:20
+ * @LastEditTime: 2020-04-19 09:14:31
  * @LastEditors: lzw-723
  * @Description: 获取本地音频信息的工具类
  */
@@ -102,7 +102,7 @@ public class SongInfoUtil {
     }
 
     public static String getArtistCover(File file) {
-        if (1 > 0) {
+        if (Integer.valueOf(0).intValue() == 0) {
             return "";
         }
         File cover_art = FileUtil.getFile("artist/" + getArtist(file).hashCode() + ".jpg");

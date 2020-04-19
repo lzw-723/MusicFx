@@ -2,11 +2,13 @@
  * @Author: lzw-723
  * @Date: 2020-04-15 20:52:19
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 14:14:30
+ * @LastEditTime: 2020-04-19 09:16:10
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\AlbumCell.java
  */
 package io.github.lzw.item;
+
+import static javafx.animation.Interpolator.EASE_BOTH;
 
 import java.io.IOException;
 
@@ -18,26 +20,20 @@ import org.slf4j.LoggerFactory;
 
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Album;
-import io.github.lzw.bean.Artist;
 import io.github.lzw.core.MusicFx;
 import io.github.lzw.util.AlbumUtil;
-import io.github.lzw.util.ArtistUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import static javafx.animation.Interpolator.EASE_BOTH;
 
 public class AlbumCell extends VBox {
 
@@ -52,7 +48,7 @@ public class AlbumCell extends VBox {
             getChildren().add(content);
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            logger.error("{}布局加载失败，{}", album.getName(), e.getMessage());
             e.printStackTrace();
         }
     }
