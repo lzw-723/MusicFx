@@ -93,7 +93,7 @@ public class MainController implements Initializable {
     private Parent content_statistics;
 
     private void initMain() {
-        freshControllBiutton();
+        freshControlButton();
         slider2.setValue(Config.getInstance().getVolume());
         MusicFx.get().volumeProperty().bind(slider2.valueProperty());
         play.setOnAction(event -> MusicFx.get().playOrPause());
@@ -131,13 +131,13 @@ public class MainController implements Initializable {
             @Override
             public void onStart() {
                 // TODO Auto-generated method stub
-                freshControllBiutton();
+                freshControlButton();
             }
 
             @Override
             public void onPause() {
                 // TODO Auto-generated method stub
-                freshControllBiutton();
+                freshControlButton();
             }
 
             @Override
@@ -152,7 +152,7 @@ public class MainController implements Initializable {
                 if (song instanceof SongL) {
                     StatisticsUtil.add((SongL) song);
                 }
-                freshControllBiutton();
+                freshControlButton();
             }
 
             @Override
@@ -209,7 +209,7 @@ public class MainController implements Initializable {
 
             @Override
             public void OnSetNewList() {
-                freshControllBiutton();
+                freshControlButton();
                 MusicFx.get().play(0);
             }
         });
@@ -366,7 +366,7 @@ public class MainController implements Initializable {
     /**
      * @description: 设定控制按钮（初始化、刷新状态）
      */
-    private void freshControllBiutton() {
+    private void freshControlButton() {
         SVGGlyph playGlyph = MusicFx.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z")
                 : new SVGGlyph("M8 5v14l11-7z");
         playGlyph.setFill(Paint.valueOf("#FFFFFF"));
