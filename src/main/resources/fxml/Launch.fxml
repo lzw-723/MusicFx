@@ -41,32 +41,36 @@
          <children>
             <HBox alignment="CENTER" GridPane.columnIndex="1">
                <children>
-                  <Label text="MusicFx" textFill="WHITE">
+                  <Label contentDisplay="CENTER" text="MusicFx" textFill="WHITE">
                      <font>
-                        <Font size="36.0" />
+                        <Font name="Courier New" size="36.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_CENTER" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <children>
-                  <Label text="by lzw-723" textFill="WHITE" />
+                  <Label text="by lzw-723" textAlignment="JUSTIFY" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                </children>
             </HBox>
-            <VBox alignment="TOP_CENTER" spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <JFXSpinner VBox.vgrow="ALWAYS" />
-                  <Label text="资源加载中" textFill="WHITE" />
-               </children>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-               <padding>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-               </padding>
-            </VBox>
             <VBox alignment="BOTTOM_CENTER" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <children>
+                  <VBox alignment="TOP_CENTER" spacing="6.0">
+                     <children>
+                        <JFXSpinner VBox.vgrow="ALWAYS" />
+                        <Label text="加载中" textFill="WHITE">
+                           <font>
+                              <Font name="HoloLens MDL2 Assets" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </padding>
+                  </VBox>
                   <JFXProgressBar maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>

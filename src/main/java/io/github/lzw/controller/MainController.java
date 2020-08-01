@@ -96,9 +96,9 @@ public class MainController implements Initializable {
         freshControlButton();
         slider2.setValue(Config.getInstance().getVolume());
         MusicFx.get().volumeProperty().bind(slider2.valueProperty());
-        play.setOnAction(event -> MusicFx.get().playOrPause());
-        previous.setOnAction(event -> MusicFx.get().previous());
-        next.setOnAction(event -> MusicFx.get().next());
+        play.setOnAction(event -> new Thread(() -> MusicFx.get().playOrPause()).start());
+        previous.setOnAction(event -> new Thread(() -> MusicFx.get().previous()).start());
+        next.setOnAction(event -> new Thread(() -> MusicFx.get().next()).start());
         method.setOnAction(event -> MusicFx.get().changeMethod());
         Tooltip.install(method, tooltip);
         play_list.setOnAction(event -> {

@@ -3,14 +3,19 @@ package io.github.lzw.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class MusicFx {
+    private final static Logger LOGGER = LoggerFactory.getLogger(MusicFx.class);
     private static final MusicFx musicfx = new MusicFx();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(Config.getInstance().getVolume());
@@ -72,7 +77,7 @@ public class MusicFx {
         this.volume.set(volume);
     }
 
-    public void seek(Double progress) {
+    public synchronized void seek(Double progress) {
         if (mediaPlayer != null) {
             mediaPlayer.seek(Duration.seconds(getTotalTime() * progress));
         }
@@ -90,7 +95,7 @@ public class MusicFx {
         return musicfx;
     }
 
-    public void setHandler(Handler handler) {
+    public synchronized void setHandler(Handler handler) {
         this.handler = handler;
         this.handler.onMethodChanged(method);
     }
@@ -102,7 +107,16 @@ public class MusicFx {
             mediaPlayer.dispose();
             mediaPlayer = null;
         }
-        mediaPlayer = new MediaPlayer(new Media(song.getUri()));
+        try {
+            mediaPlayer = new MediaPlayer(new Media(song.getUri()));
+        } catch (MediaException e) {
+            LOGGER.error("Media初始化失败", e);
+            if (handler != null) {
+                handler.onError();
+            }
+            LOGGER.warn("Media（{}）初始化失败，尝试重试/下一首", song.getUri());
+            next();
+        }
         mediaPlayer.volumeProperty().bind(volume);
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
             setCurrentProgress(newValue.toSeconds() / mediaPlayer.getTotalDuration().toSeconds());
@@ -112,6 +126,7 @@ public class MusicFx {
             mediaPlayer.setOnPlaying(() -> handler.onStart());
             mediaPlayer.setOnPaused(() -> handler.onPause());
             mediaPlayer.setOnError(() -> {
+                LOGGER.error("MediaPlayer播放错误", mediaPlayer.getError().getCause());
                 handler.onError();
                 next();
             });
@@ -123,29 +138,31 @@ public class MusicFx {
     }
 
     private synchronized void play(Song song) {
+        LOGGER.info("播放歌曲{}", song.toString());
         getNewPlayer(song);
         mediaPlayer.play();
         currentSong = song;
     }
 
-    public void play(int index) {
+    public synchronized void play(int index) {
         if (index < 0) {
             index = list.size() + index;
         }
+        index %= list.size();
         this.index = index;
-        play(list.get(index % list.size()));
+        play(list.get(index));
     }
 
-    public void playInList(Song song) {
+    public synchronized void playInList(Song song) {
         for (int i = 0; i < list.size(); i++) {
-            if (song.toString().equals(list.get(i).toString())) {
+            if (song.getUri().equals(list.get(i).getUri())) {
                 play(i);
                 return;
             }
         }
     }
 
-    public void previous() {
+    public synchronized void previous() {
         switch (method) {
             case Loop:
                 play(--index);
@@ -164,7 +181,7 @@ public class MusicFx {
         }
     }
 
-    public void next() {
+    public synchronized void next() {
         switch (method) {
             case Loop:
                 play(++index);
@@ -258,7 +275,7 @@ public class MusicFx {
         return method;
     }
 
-    public void changeMethod() {
+    public synchronized void changeMethod() {
         switch (method) {
             case Loop:
                 method = Method.Repeat;

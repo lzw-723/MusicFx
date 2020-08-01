@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-02-02 13:32:29
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-17 11:29:45
+ * @LastEditTime: 2020-08-01 21:26:09
  * @Description: 本地歌曲工具类
  */
 package io.github.lzw.util;
@@ -40,7 +40,7 @@ public class SongUtil {
             if (dir.exists() && dir.listFiles().length > 0)
                 for (File file : dir.listFiles()) {
                     String path = file.getAbsolutePath().toLowerCase();
-                    if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma")) {
+                    if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma") && SongInfoUtil.checkAvailable(file)) {
                         songs.add(new SongL(file.toPath().toUri().toString()));
                     }
                 }

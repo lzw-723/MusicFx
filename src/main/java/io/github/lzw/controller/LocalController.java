@@ -74,7 +74,9 @@ public class LocalController implements Initializable, ControllerImpl {
                     @Override
                     public void play(Song song) {
                         MusicFx.get().setList(songs);
-                        MusicFx.get().playInList(song);
+                        new Thread(() -> {
+                            MusicFx.get().playInList(song);
+                        }).start();
                     }
                 });
                 return cell;

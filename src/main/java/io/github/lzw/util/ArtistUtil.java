@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-04-12 15:59:33
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-14 11:21:28
+ * @LastEditTime: 2020-07-31 16:39:59
  * @Description: 艺术家工具类
  */
 package io.github.lzw.util;
@@ -44,8 +44,10 @@ public class ArtistUtil {
                 }
 
             } catch (URISyntaxException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error("艺术家列表获取失败(URI错误)", e);
+            }
+            catch (IllegalArgumentException e){
+                logger.error("艺术家列表获取失败", e);
             }
         });
         return artists;

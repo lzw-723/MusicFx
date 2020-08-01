@@ -1,7 +1,7 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-01 14:55:10
- * @LastEditTime: 2020-04-19 09:14:31
+ * @LastEditTime: 2020-08-01 21:24:07
  * @LastEditors: lzw-723
  * @Description: 获取本地音频信息的工具类
  */
@@ -23,6 +23,10 @@ import org.slf4j.LoggerFactory;
 
 public class SongInfoUtil {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SongInfoUtil.class);
+
+    public static boolean checkAvailable(File file) {
+        return file.exists() && getLength(file) > 0;
+    }
 
     public static AudioFile getAudioFile(File file) {
         try {

@@ -1,10 +1,9 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-09 19:54:03
- * @LastEditTime: 2020-04-12 11:41:00
+ * @LastEditTime: 2020-07-31 16:41:40
  * @LastEditors: lzw-723
  * @Description: 文件工具类
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\FileUtil.java
  */
 package io.github.lzw.util;
 
@@ -29,7 +28,7 @@ public class FileUtil {
 
     /**
      * @description: 获取当前Jar所在目录名为child的文件 
-     * @param 文件名 
+     * @param child 文件名 
      * @return: file
      */    
     public static File getFile(String child) {

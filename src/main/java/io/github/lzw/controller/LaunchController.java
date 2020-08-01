@@ -2,7 +2,7 @@
  * @Author: lzw-723
  * @Date: 2020-04-13 15:51:34
  * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 08:18:59
+ * @LastEditTime: 2020-08-01 20:10:22
  * @Description: 描述信息
  * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\LaunchController.java
  */
@@ -85,12 +85,12 @@ public class LaunchController implements Initializable {
         ArtistUtil.getArtists().forEach(artist -> ArtistUtil.getSongs(artist));
         AlbumUtil.getAlbums().forEach(album -> AlbumUtil.getSongs(album));
         logger.info("配置加载完成，耗时{}秒，即将启动", (System.currentTimeMillis() - time) / 1000);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // try {
+        //     Thread.sleep(2000);
+        // } catch (InterruptedException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
     }
 
     private boolean usable() {
