@@ -1,9 +1,8 @@
 <!--
  * @Author: lzw-723
  * @Date: 2020-03-27 18:37:23
- * @LastEditTime: 2020-04-17 15:45:59
- * @LastEditors: lzw-723
- * @Description: In User Settings Edit
+ * @LastEditTime: 2020-10-31 15:04:25
+ * @LastEditors: Please set LastEditors
  * @FilePath: \MusicFx\README.md
  -->
 
@@ -49,6 +48,7 @@
 ## 已知问题
 
 * [x] 迁移至jdk11、Javafx-11  
+* [ ] 添加测试
 * [ ] 模块化  
 * [ ] ~~迁移至jdk14、Javafx-14~~(`JFoenix`暂不支持jdk12及以上)
 * [x] 迁移至jdk11、Javafx-14

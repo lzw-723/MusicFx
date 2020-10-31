@@ -1,15 +1,17 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-02 13:32:29
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-08-01 21:26:09
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-10-31 14:58:09
  * @Description: 本地歌曲工具类
  */
 package io.github.lzw.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSON;
 
@@ -25,6 +27,16 @@ public class SongUtil {
         return songs;
     }
 
+    /**
+     * 验证文件后缀是否为音乐文件（mp3 wav wma) 
+     * @param file
+     * @return boolean
+     */
+    public static boolean verifyFileSuffix(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".mp3") || fileName.endsWith(".wav") || fileName.endsWith(".wma");
+    }
+
     public static List<SongL> getSongsIgnoreCache() {
         File dir = new File(Config.getInstance().getDir());
         songs.clear();
@@ -38,9 +50,11 @@ public class SongUtil {
             read(ser);
         } else {
             if (dir.exists() && dir.listFiles().length > 0)
+
+            
                 for (File file : dir.listFiles()) {
                     String path = file.getAbsolutePath().toLowerCase();
-                    if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".wma") && SongInfoUtil.checkAvailable(file)) {
+                    if (verifyFileSuffix(file) && SongInfoUtil.checkAvailable(file)) {
                         songs.add(new SongL(file.toPath().toUri().toString()));
                     }
                 }
@@ -51,6 +65,10 @@ public class SongUtil {
             }
         }
 
+    }
+
+    public static List<SongL> scanSongs(File dir) {
+        return Arrays.asList(dir.listFiles()).parallelStream().filter(SongUtil::verifyFileSuffix).map(file -> file.toPath().toUri().toString()).map(SongL::new).collect(Collectors.toList());
     }
 
     private static void save(File file) {
