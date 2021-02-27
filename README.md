@@ -12,6 +12,7 @@
 ![JDK Version](https://img.shields.io/badge/JDK-11-red)
 ![JavaFx Version](https://img.shields.io/badge/JavaFx-14-blue)
 ![Maven](https://img.shields.io/badge/构建工具-Maven-green)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flzw-723%2FMusicFx.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flzw-723%2FMusicFx?ref=badge_shield)
 
 ## 简介
 
@@ -74,3 +75,7 @@
 2. 新建 Feat_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flzw-723%2FMusicFx.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flzw-723%2FMusicFx?ref=badge_large)
