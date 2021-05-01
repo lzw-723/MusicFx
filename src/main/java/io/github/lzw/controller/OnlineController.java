@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-04-19 09:16:30
  * @LastEditors: lzw-723
  * @Description: 在线音乐搜索面板
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\OnlineController.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\controller\OnlineController.java
  */
 package io.github.lzw.controller;
 
@@ -20,7 +20,7 @@ import com.jfoenix.svg.SVGGlyph;
 import io.github.lzw.Config;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongO;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import io.github.lzw.item.SongOCell;
 import io.github.lzw.service.SongOService;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -59,8 +59,8 @@ public class OnlineController implements Initializable, ControllerImpl {
             public ListCell<Song> call(ListView<Song> listview) {
                 SongOCell cell = new SongOCell();
                 cell.setHandler(song -> {
-                    MusicFx.get().setList(songs);
-                    MusicFx.get().playInList(song);
+                    MusicFXSingleton.get().setList(songs);
+                    MusicFXSingleton.get().playInList(song);
                 });
                 return cell;
             }
@@ -96,19 +96,16 @@ public class OnlineController implements Initializable, ControllerImpl {
 
     @Override
     public String getTitle() {
-        // TODO Auto-generated method stub
         return "在线搜索";
     }
 
     @Override
     public ControllerImpl getController() {
-        // TODO Auto-generated method stub
         return this;
     }
 
     @Override
-    public void play(Song song) {
-        // TODO Auto-generated method stub
+    public void onPlay(Song song) {
         if (song instanceof SongO) {
             list.getSelectionModel().select(song);
         }

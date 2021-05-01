@@ -5,7 +5,7 @@ import java.util.List;
 import com.jfoenix.controls.JFXListView;
 
 import io.github.lzw.bean.Song;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
@@ -28,7 +28,7 @@ public class SongList extends JFXListView<Song>{
                 
                     @Override
                     public void play(Song song) {
-                        MusicFx.get().playInList(song);
+                        MusicFXSingleton.get().playInList(song);
                     }
                 });
                 return cell;

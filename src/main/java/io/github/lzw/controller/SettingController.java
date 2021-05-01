@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-04-11 15:47:34
  * @LastEditors: lzw-723
  * @Description: 设置面板
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\SettingController.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\controller\SettingController.java
  */
 package io.github.lzw.controller;
 
@@ -143,18 +143,16 @@ public class SettingController implements Initializable, ControllerImpl {
 
     @Override
     public String getTitle() {
-        // TODO Auto-generated method stub
         return "设置";
     }
 
     @Override
     public ControllerImpl getController() {
-        // TODO Auto-generated method stub
         return this;
     }
 
     @Override
-    public void play(Song song) {
+    public void onPlay(Song song) {
 
     }
 

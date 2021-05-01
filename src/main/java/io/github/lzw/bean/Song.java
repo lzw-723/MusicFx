@@ -4,13 +4,17 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-12 15:57:12
  * @Description: 音乐
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\Song.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\Song.java
  */
 package io.github.lzw.bean;
 
 import java.io.Serializable;
 
 public class Song implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private String uri;
     private String title;
     private String artist;

@@ -17,7 +17,7 @@ import com.jfoenix.controls.JFXScrollPane;
 
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import io.github.lzw.item.AlbumCell;
 import io.github.lzw.item.ArtistCell;
 import io.github.lzw.item.SongOCell;
@@ -73,9 +73,9 @@ public class LocalController implements Initializable, ControllerImpl {
 
                     @Override
                     public void play(Song song) {
-                        MusicFx.get().setList(songs);
+                        MusicFXSingleton.get().setList(songs);
                         new Thread(() -> {
-                            MusicFx.get().playInList(song);
+                            MusicFXSingleton.get().playInList(song);
                         }).start();
                     }
                 });
@@ -87,9 +87,9 @@ public class LocalController implements Initializable, ControllerImpl {
         new Thread(() -> {
             songs.addAll(SongUtil.getSongs());
             table.getItems().addAll(FXCollections.observableList(songs));
-            Song song = MusicFx.get().getCurrentSong();
+            Song song = MusicFXSingleton.get().getCurrentSong();
             if (song != null && song instanceof SongL) {
-                play(song);
+                onPlay(song);
             }
         }).start();
     }
@@ -112,19 +112,16 @@ public class LocalController implements Initializable, ControllerImpl {
 
     @Override
     public String getTitle() {
-        // TODO Auto-generated method stub
         return "本地音乐";
     }
 
     @Override
     public ControllerImpl getController() {
-        // TODO Auto-generated method stub
         return this;
     }
 
     @Override
-    public void play(Song song) {
-        // TODO Auto-generated method stub
+    public void onPlay(Song song) {
         if (song instanceof SongL) {
             table.getSelectionModel().select(song);
         }

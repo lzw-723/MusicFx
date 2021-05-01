@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-14 15:40:22
  * @Description: 专辑
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\Album.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\Album.java
  */
 package io.github.lzw.bean;
 

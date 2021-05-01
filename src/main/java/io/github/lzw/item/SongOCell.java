@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-04-19 09:14:39
  * @LastEditors: lzw-723
  * @Description: In User Settings Edit
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\SongOCell.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\item\SongOCell.java
  */
 package io.github.lzw.item;
 
@@ -83,7 +83,6 @@ public class SongOCell extends JFXListCell<Song> {
                 });
                 setGraphic(hBox);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else {

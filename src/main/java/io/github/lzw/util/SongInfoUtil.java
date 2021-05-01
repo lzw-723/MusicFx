@@ -79,7 +79,7 @@ public class SongInfoUtil {
     }
 
     public static String getArtWork(File file) {
-        File pic = FileUtil.getFile("pic/" + getAlbum(file).hashCode() + ".jpg");
+        File pic = FileUtil.getFileOnAppDir("pic/" + getAlbum(file).hashCode() + ".jpg");
         if (!pic.exists()) {
             Tag tag = getAudioFile(file).getTag();
             byte[] artWork = null;

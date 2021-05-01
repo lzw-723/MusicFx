@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-12 15:56:39
  * @Description: 艺术家
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\Artist.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\Artist.java
  */
 package io.github.lzw.bean;
 

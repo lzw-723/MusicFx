@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-19 10:03:06
  * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\StatisticsController.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\controller\StatisticsController.java
  */
 package io.github.lzw.controller;
 
@@ -74,19 +74,16 @@ public class StatisticsController implements Initializable, ControllerImpl {
 
     @Override
     public String getTitle() {
-        // TODO Auto-generated method stub
         return "数据统计";
     }
 
     @Override
     public ControllerImpl getController() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void play(Song song) {
-        // TODO Auto-generated method stub
+    public void onPlay(Song song) {
 
     }
 

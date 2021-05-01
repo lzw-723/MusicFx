@@ -1,10 +1,10 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-13 15:51:34
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-08-01 20:10:22
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-01 14:04:13
  * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\controller\LaunchController.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\controller\LaunchController.java
  */
 package io.github.lzw.controller;
 
@@ -88,7 +88,6 @@ public class LaunchController implements Initializable {
         // try {
         //     Thread.sleep(2000);
         // } catch (InterruptedException e) {
-        //     // TODO Auto-generated catch block
         //     e.printStackTrace();
         // }
     }
@@ -102,7 +101,6 @@ public class LaunchController implements Initializable {
             try {
                 runMain();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         });
@@ -137,7 +135,7 @@ public class LaunchController implements Initializable {
         Scene scene = new Scene(decorator, width, height);
         scene.getStylesheets().addAll(getClass().getResource("/styles/main.css").toExternalForm());
         stage.setResizable(true);
-        stage.setTitle("MusicFX");
+        stage.setTitle("MusicFXSingleton");
         stage.setScene(scene);
 
         HotkeyUtil.registerHotkey(scene, stage);

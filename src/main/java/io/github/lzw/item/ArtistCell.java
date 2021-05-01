@@ -1,10 +1,10 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-13 12:38:39
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-16 08:02:07
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-01-01 10:16:39
  * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\ArtistCell.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\item\ArtistCell.java
  */
 package io.github.lzw.item;
 
@@ -17,7 +17,7 @@ import com.jfoenix.svg.SVGGlyph;
 
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Artist;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import io.github.lzw.util.ArtistUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -43,7 +43,6 @@ public class ArtistCell extends VBox {
             getChildren().add(content);
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -76,7 +75,7 @@ public class ArtistCell extends VBox {
 
         button.setStyle("-fx-background-radius: 50%; -fx-background-color: " + getRandomColor());
 
-        button.setOnAction(event -> MusicFx.get().setList(ArtistUtil.getSongs(artist)));
+        button.setOnAction(event -> MusicFXSingleton.get().setList(ArtistUtil.getSongs(artist)));
 
         button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
             return header.getBoundsInParent().getHeight() - button.getHeight() / 2;

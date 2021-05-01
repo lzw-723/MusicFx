@@ -18,7 +18,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import org.slf4j.LoggerFactory;
 
 import io.github.lzw.Config;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -49,19 +49,19 @@ public class HotkeyUtil {
         // Ctrl + P 暂停或播放
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN), () -> {
             if (Config.getInstance().getHotkeyAble()) {
-                MusicFx.get().playOrPause();
+                MusicFXSingleton.get().playOrPause();
             }
         });
         // Ctrl + Left 上一首
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHORTCUT_DOWN), () -> {
             if (Config.getInstance().getHotkeyAble()) {
-                MusicFx.get().previous();
+                MusicFXSingleton.get().previous();
             }
         });
         // Ctrl + Right 下一首
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHORTCUT_DOWN), () -> {
             if (Config.getInstance().getHotkeyAble()) {
-                MusicFx.get().next();
+                MusicFXSingleton.get().next();
             }
         });
     }
@@ -113,17 +113,17 @@ public class HotkeyUtil {
 
                         // 按下 P
                         if (keys.get(NativeKeyEvent.VC_P) != null && keys.get(NativeKeyEvent.VC_P)) {
-                            MusicFx.get().playOrPause();
+                            MusicFXSingleton.get().playOrPause();
                         }
 
                         // 按下 Left
                         if (keys.get(NativeKeyEvent.VC_LEFT) != null && keys.get(NativeKeyEvent.VC_LEFT)) {
-                            MusicFx.get().previous();
+                            MusicFXSingleton.get().previous();
                         }
 
                         // 按下 Right
                         if (keys.get(NativeKeyEvent.VC_RIGHT) != null && keys.get(NativeKeyEvent.VC_RIGHT)) {
-                            MusicFx.get().next();
+                            MusicFXSingleton.get().next();
                         }
                     }
                 }

@@ -15,9 +15,9 @@ import io.github.lzw.Config;
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Song;
 import io.github.lzw.bean.SongL;
-import io.github.lzw.core.MusicFx;
-import io.github.lzw.core.MusicFx.Handler;
-import io.github.lzw.core.MusicFx.Method;
+import io.github.lzw.core.MusicFXSingleton;
+import io.github.lzw.core.MusicFXSingleton.Handler;
+import io.github.lzw.core.MusicFXSingleton.Method;
 import io.github.lzw.item.SongList;
 import io.github.lzw.util.StatisticsUtil;
 import io.github.lzw.util.TimeFormatter;
@@ -95,60 +95,57 @@ public class MainController implements Initializable {
     private void initMain() {
         freshControlButton();
         slider2.setValue(Config.getInstance().getVolume());
-        MusicFx.get().volumeProperty().bind(slider2.valueProperty());
-        play.setOnAction(event -> new Thread(() -> MusicFx.get().playOrPause()).start());
-        previous.setOnAction(event -> new Thread(() -> MusicFx.get().previous()).start());
-        next.setOnAction(event -> new Thread(() -> MusicFx.get().next()).start());
-        method.setOnAction(event -> MusicFx.get().changeMethod());
+        MusicFXSingleton.get().volumeProperty().bind(slider2.valueProperty());
+        play.setOnAction(event -> new Thread(() -> MusicFXSingleton.get().playOrPause()).start());
+        previous.setOnAction(event -> new Thread(() -> MusicFXSingleton.get().previous()).start());
+        next.setOnAction(event -> new Thread(() -> MusicFXSingleton.get().next()).start());
+        method.setOnAction(event -> MusicFXSingleton.get().changeMethod());
         Tooltip.install(method, tooltip);
         play_list.setOnAction(event -> {
-            jfxPopup = new JFXPopup(new SongList(MusicFx.get().getList()));
+            jfxPopup = new JFXPopup(new SongList(MusicFXSingleton.get().getList()));
             jfxPopup.show(play_list, PopupVPosition.BOTTOM, PopupHPosition.RIGHT);
         });
-        Config.getInstance().volumeProperty().bind(MusicFx.get().volumeProperty());
+        Config.getInstance().volumeProperty().bind(MusicFXSingleton.get().volumeProperty());
         // slider1.setOnTouchMoved(event -> {
-        // MusicFx.get().seek(slider1.getValue());
-        // slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+        // MusicFXSingleton.get().seek(slider1.getValue());
+        // slider1.valueProperty().bind(MusicFXSingleton.get().currentProgressProperty());
         // });
         slider1.setValueFactory(slider -> Bindings.createStringBinding(
-                () -> TimeFormatter.format((long) (1000 * slider.getValue() * MusicFx.get().getTotalTime())),
+                () -> TimeFormatter.format((long) (1000 * slider.getValue() * MusicFXSingleton.get().getTotalTime())),
                 slider.valueProperty()));
-        slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+        slider1.valueProperty().bind(MusicFXSingleton.get().currentProgressProperty());
         slider1.setOnMousePressed(event -> slider1.valueProperty().unbind());
         slider1.setOnMouseReleased(event -> {
-            MusicFx.get().seek(slider1.getValue());
-            slider1.valueProperty().bind(MusicFx.get().currentProgressProperty());
+            MusicFXSingleton.get().seek(slider1.getValue());
+            slider1.valueProperty().bind(MusicFXSingleton.get().currentProgressProperty());
         });
         slider2.setValueFactory(slider -> Bindings.createStringBinding(
                 () -> String.valueOf(Math.round(slider.getValue() * 100)) + "%", slider.valueProperty()));
-        MusicFx.get().currentProgressProperty()
+        MusicFXSingleton.get().currentProgressProperty()
                 .addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> time
-                        .setText(TimeFormatter.format(MusicFx.get().getCurrentTime() * 1000) + " : "
-                                + TimeFormatter.format(MusicFx.get().getTotalTime() * 1000)));
+                        .setText(TimeFormatter.format(MusicFXSingleton.get().getCurrentTime() * 1000) + " : "
+                                + TimeFormatter.format(MusicFXSingleton.get().getTotalTime() * 1000)));
 
-        MusicFx.get().setHandler(new Handler() {
+        MusicFXSingleton.get().setHandler(new Handler() {
 
             @Override
             public void onStart() {
-                // TODO Auto-generated method stub
                 freshControlButton();
             }
 
             @Override
             public void onPause() {
-                // TODO Auto-generated method stub
                 freshControlButton();
             }
 
             @Override
             public void init() {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void OnEnd() {
-                Song song = MusicFx.get().getCurrentSong();
+                Song song = MusicFXSingleton.get().getCurrentSong();
                 if (song instanceof SongL) {
                     StatisticsUtil.add((SongL) song);
                 }
@@ -157,7 +154,7 @@ public class MainController implements Initializable {
 
             @Override
             public void onReady(Song song) {
-                controller.play(song);
+                controller.onPlay(song);
                 title_song.setText(song.getTitle());
                 artist.setText(song.getArtist());
                 try {
@@ -204,13 +201,12 @@ public class MainController implements Initializable {
 
             @Override
             public void onError() {
-                // TODO Auto-generated method stub
             }
 
             @Override
             public void OnSetNewList() {
                 freshControlButton();
-                MusicFx.get().play(0);
+                MusicFXSingleton.get().play(0);
             }
         });
 
@@ -357,7 +353,6 @@ public class MainController implements Initializable {
 
             return content;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -367,7 +362,7 @@ public class MainController implements Initializable {
      * @description: 设定控制按钮（初始化、刷新状态）
      */
     private void freshControlButton() {
-        SVGGlyph playGlyph = MusicFx.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z")
+        SVGGlyph playGlyph = MusicFXSingleton.get().isPlaying() ? new SVGGlyph("M6 19h4V5H6v14zm8-14v14h4V5h-4z")
                 : new SVGGlyph("M8 5v14l11-7z");
         playGlyph.setFill(Paint.valueOf("#FFFFFF"));
         playGlyph.setSize(16);
@@ -380,7 +375,7 @@ public class MainController implements Initializable {
         nextGlyph.setFill(Paint.valueOf("#FFFFFF"));
         nextGlyph.setSize(12);
         next.setGraphic(nextGlyph);
-        play_list.setText(String.valueOf(MusicFx.get().count()));
+        play_list.setText(String.valueOf(MusicFXSingleton.get().count()));
         SVGGlyph play_list_Glyph = new SVGGlyph("M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z");
         play_list_Glyph.setSize(10);
         play_list.setGraphic(play_list_Glyph);

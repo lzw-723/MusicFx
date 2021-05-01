@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-04-19 09:12:36
  * @LastEditors: lzw-723
  * @Description: 启动类（Java-8）
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\MainApp.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\MainApp.java
  */
 package io.github.lzw;
 
@@ -24,7 +24,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        logger.info("MusicFx启动，Java版本{}，Javafx版本{}", SystemInfo.javaVersion(), SystemInfo.javafxVersion());
+        logger.info("MusicFXSingleton启动，Java版本{}，Javafx版本{}", SystemInfo.javaVersion(), SystemInfo.javafxVersion());
         StackPane root = FXMLLoader.load(getClass().getResource("/fxml/Launch.fxml"));
         double width = 600;
         double height = 500;

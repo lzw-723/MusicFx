@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-12 15:58:24
  * @Description: 本地歌曲
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\SongL.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\SongL.java
  */
 package io.github.lzw.bean;
 
@@ -16,6 +16,11 @@ import io.github.lzw.util.SongInfoUtil;
 
 public class SongL extends Song {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public SongL(String uri) {
         try {
             File file = new File(new URI(uri));
@@ -26,7 +31,6 @@ public class SongL extends Song {
             setLength(SongInfoUtil.getLength(file));
             setArtwork(SongInfoUtil.getArtWork(file));
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-04-13 16:22:02
  * @LastEditors: lzw-723
  * @Description: 启动类(Java-11，非模块化，需要将OpenJfx打包进Jar)
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\Main.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\Main.java
  */
 package io.github.lzw;
 

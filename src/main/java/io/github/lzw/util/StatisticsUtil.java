@@ -1,8 +1,8 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-04-18 09:25:40
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-19 09:12:04
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-02-10 20:04:55
  * @Description: 统计工具类
  */
 package io.github.lzw.util;
@@ -58,12 +58,11 @@ public class StatisticsUtil {
     }
 
     private static File getFile() {
-        File file = FileUtil.getFile("statistics.json");
+        File file = FileUtil.getFileOnAppDir("statistics.json");
         if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

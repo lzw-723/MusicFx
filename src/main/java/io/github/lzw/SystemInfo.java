@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-09 21:34:38
  * @Description: 系统信息类
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\SystemInfo.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\SystemInfo.java
  */
 
 package io.github.lzw;
@@ -17,6 +17,10 @@ public class SystemInfo {
 
     public static String javafxVersion() {
         return System.getProperty("javafx.version");
+    }
+
+    public static String userHome() {
+        return System.getProperty("user.home");
     }
 
 }

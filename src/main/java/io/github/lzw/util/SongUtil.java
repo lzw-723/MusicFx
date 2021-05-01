@@ -45,7 +45,7 @@ public class SongUtil {
     }
 
     private synchronized static void getSongs(File dir, boolean cacheable) {
-        File ser = FileUtil.getFile("songs.json");
+        File ser = FileUtil.getFileOnAppDir("songs.json");
         if (ser.exists() && cacheable) {
             read(ser);
         } else {

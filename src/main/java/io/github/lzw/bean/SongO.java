@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-12 15:59:06
  * @Description: 网络歌曲
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\SongO.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\SongO.java
  */
 
 package io.github.lzw.bean;
@@ -15,6 +15,8 @@ import io.github.lzw.bean.SongBean.SongBeanO;
  * SongO
  */
 public class SongO extends Song {
+
+    private static final long serialVersionUID = 1L;
 
     public SongO(SongBeanO beanO) {
         setUri(beanO.getUrl());

@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-19 09:16:10
  * @Description: 描述信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\item\AlbumCell.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\item\AlbumCell.java
  */
 package io.github.lzw.item;
 
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import io.github.lzw.MainApp;
 import io.github.lzw.bean.Album;
-import io.github.lzw.core.MusicFx;
+import io.github.lzw.core.MusicFXSingleton;
 import io.github.lzw.util.AlbumUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -88,7 +88,7 @@ public class AlbumCell extends VBox {
 
         button.setStyle("-fx-background-radius: 50%; -fx-background-color: " + getRandomColor());
 
-        button.setOnAction(event -> MusicFx.get().setList(AlbumUtil.getSongs(album)));
+        button.setOnAction(event -> MusicFXSingleton.get().setList(AlbumUtil.getSongs(album)));
 
         button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
             return header.getBoundsInParent().getHeight() - button.getHeight() / 2;

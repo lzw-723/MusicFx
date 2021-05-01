@@ -1,10 +1,10 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-02-19 16:29:34
- * @LastEditors: lzw-723
- * @LastEditTime: 2020-04-13 12:20:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-02-10 20:03:36
  * @Description: 配置信息
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\Config.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\Config.java
  */
 package io.github.lzw;
 
@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -151,16 +152,12 @@ public class Config {
         });
     }
 
+    public File getConfigDir() {
+        return FileUtil.getDirOnAppDir("config");
+    }
     private File getConfigFile() {
-        File file = FileUtil.getFile("settings.properties");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                logger.error("配置文件新建失败，{}", e.getMessage());
-                e.printStackTrace();
-            }
-        }
+        File file = new File(getConfigDir(), "settings.properties");
+        FileUtil.checkFile(file);
         return file;
     }
 

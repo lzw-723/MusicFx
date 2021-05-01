@@ -14,9 +14,9 @@ import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class MusicFx {
-    private final static Logger LOGGER = LoggerFactory.getLogger(MusicFx.class);
-    private static final MusicFx musicfx = new MusicFx();
+public class MusicFXSingleton {
+    private final static Logger LOGGER = LoggerFactory.getLogger(MusicFXSingleton.class);
+    private static final MusicFXSingleton MusicFXSingleton = new MusicFXSingleton();
     private MediaPlayer mediaPlayer;
     private SimpleDoubleProperty volume = new SimpleDoubleProperty(Config.getInstance().getVolume());
     private int index = 0;
@@ -33,7 +33,7 @@ public class MusicFx {
     //     list.addAll(songs);
     // }
 
-    public synchronized void setList(List<? extends Song> songs) {
+    public void setList(List<? extends Song> songs) {
         if (list.equals(songs)) {
             // System.out.println("重复设置列表");
             return;
@@ -85,22 +85,22 @@ public class MusicFx {
 
     private Handler handler;
 
-    private MusicFx() {
-        if (musicfx != null) {
+    private MusicFXSingleton() {
+        if (MusicFXSingleton != null) {
             throw new RuntimeException("单例异常");
         }
     }
 
-    public static MusicFx get() {
-        return musicfx;
+    public static MusicFXSingleton get() {
+        return MusicFXSingleton;
     }
 
-    public synchronized void setHandler(Handler handler) {
+    public void setHandler(Handler handler) {
         this.handler = handler;
         this.handler.onMethodChanged(method);
     }
 
-    private synchronized void getNewPlayer(Song song) {
+    private void getNewPlayer(Song song) {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
             mediaPlayer.stop();
@@ -137,14 +137,14 @@ public class MusicFx {
         }
     }
 
-    private synchronized void play(Song song) {
+    private void play(Song song) {
         LOGGER.info("播放歌曲{}", song.toString());
         getNewPlayer(song);
         mediaPlayer.play();
         currentSong = song;
     }
 
-    public synchronized void play(int index) {
+    public void play(int index) {
         if (index < 0) {
             index = list.size() + index;
         }
@@ -153,7 +153,7 @@ public class MusicFx {
         play(list.get(index));
     }
 
-    public synchronized void playInList(Song song) {
+    public void playInList(Song song) {
         for (int i = 0; i < list.size(); i++) {
             if (song.getUri().equals(list.get(i).getUri())) {
                 play(i);
@@ -162,7 +162,7 @@ public class MusicFx {
         }
     }
 
-    public synchronized void previous() {
+    public void previous() {
         switch (method) {
             case Loop:
                 play(--index);
@@ -181,7 +181,7 @@ public class MusicFx {
         }
     }
 
-    public synchronized void next() {
+    public void next() {
         switch (method) {
             case Loop:
                 play(++index);

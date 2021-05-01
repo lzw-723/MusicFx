@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-12 15:58:02
  * @Description: 来自网络的歌曲数据
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\SongBean.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\SongBean.java
  */
 package io.github.lzw.bean;
 

@@ -1,14 +1,15 @@
 /*
  * @Author: lzw-723
  * @Date: 2020-10-31 13:31:38
- * @LastEditTime: 2020-10-31 14:56:29
+ * @LastEditTime: 2021-01-01 16:51:21
  * @Description: SongUtil测试类
  */
 package io.github.lzw.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 

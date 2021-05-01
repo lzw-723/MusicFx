@@ -4,7 +4,7 @@
  * @LastEditors: lzw-723
  * @LastEditTime: 2020-04-19 08:46:22
  * @Description: 记录
- * @FilePath: \MusicFx\src\main\java\io\github\lzw\bean\Record.java
+ * @FilePath: \MusicFXSingleton\src\main\java\io\github\lzw\bean\Record.java
  */
 package io.github.lzw.bean;
 
